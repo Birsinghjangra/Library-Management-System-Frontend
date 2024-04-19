@@ -1,0 +1,66 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-left">
+          <li class="breadcrumb-item"><a [routerLink]="'/admin/dashboard'">Home</a></li>
+          <li class="breadcrumb-item active"><a [routerLink]="'/admin/addproduct'">DataTables</a></li>
+        </ol>
+      </div>
+      <div class="col-sm-6 ">
+        <span class="float-sm-right">
+          <!-- <a routerLink="/admin/addproduct/add/"> -->
+            <button type="button" class="btn btn-primary mr-2" (click)="opencategoryDialogue()">Add Category</button>
+            <button type="button" class="btn btn-primary" (click)="openProductDialogue()">Add Product</button>
+          <!-- </a> -->
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+        <div class="form-group row" *ngFor="let field of formFields">
+          <label class="col-sm-3 col-form-label">{{ field.label }} <span class="text-danger">{{ field.isRequired ? '*' : '' }}</span></label>
+          <div class="col-sm-8">
+            <ng-container *ngIf="field.type === 'text' || field.type === 'number'">
+              <input class="form-control"
+                     [type]="field.type"
+                     [formControlName]="field.name"
+                     [placeholder]="field.placeholder">
+            </ng-container>
+            <ng-container *ngIf="field.type === 'date'">
+              <input class="form-control"
+                     type="date"
+                     [formControlName]="field.name"
+                     [placeholder]="field.placeholder">
+            </ng-container>
+            <ng-container *ngIf="field.type =='select'">
+              <select class="form-control" [formControlName]="field.name" (change)="field.name === 'category' ? onCategorySelect($event) : null">
+                <option value="" disabled selected>{{ field.placeholder }}</option>
+                <option *ngFor="let option of field.name === 'category' ? categoryOptions : productOptions" [value]="field.name === 'category' ? option.id : option.product_id">{{ field.name === 'category' ? option.name : option.product_name }}</option>
+              </select>
+            </ng-container>
+            
+            <div *ngIf="addProductForm.get(field.name)?.errors && addProductForm.get(field.name)?.touched" class="text-danger">
+              <div *ngFor="let validation of field.validations">
+                <div *ngIf="addProductForm.get(field.name)?.hasError(validation.validator)">
+                  {{ validation.message }}
+                </div>
+              </div>
+              <!-- Additional check for 'required' validation -->
+              <div *ngIf="addProductForm.get(field.name)?.hasError('required') && !addProductForm.get(field.name)?.touched">
+                {{ field.label }} is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
+        <button type="reset" class="btn btn-light float-right mr-2" (click)="resetform()" >Reset</button>
+      </form>
+      
+    </div>
+  </div>
+</div>

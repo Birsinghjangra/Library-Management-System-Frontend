@@ -1,0 +1,28 @@
+<div class="row m-2">
+    <div class="col-md-6">
+
+    </div>
+
+    <div class="col-sm-6 ">
+        <span class="float-sm-right">
+            <!-- <a routerLink="/admin/addproduct/add/"> -->
+            <button mat-button (click)="closeDialog()" class="btn btn-danger">X</button>
+            <!-- </a> -->
+        </span>
+    </div>
+</div>
+
+<div class="container p-2">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="category">Category <span class="text-danger">*</span> </label>
+            <input type="text" class="form-control" id="category" formControlName="category"
+                placeholder="Enter category">
+            <!-- <div *ngIf="categoryForm.get('category').invalid && (categoryForm.get('category').dirty || categoryForm.get('category').touched)"
+                class="invalid-feedback">
+                <div *ngIf="categoryForm.get('category').errors.required">Category is required.</div>
+            </div> -->
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

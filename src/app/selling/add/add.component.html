@@ -1,0 +1,47 @@
+<br>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                    <li class="breadcrumb-item"><a [routerLink]="'/admin/dashboard'">Home</a></li>
+                    <li class="breadcrumb-item active"><a [routerLink]="'/admin/selling'">DataTables</a></li>
+                </ol>
+            </div>
+            <div class="col-sm-6 ">
+                <!-- <span class="float-sm-right">
+                    <a routerLink="/admin/selling/add">
+                        <button type="button" class="btn btn-primary">Add</button>
+                    </a>
+                </span> -->
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="sellProductForm" (ngSubmit)="sellProduct()">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="id">Select Product Name:</label>
+                        <select class="form-control" formControlName="product_id" required (change)="onProductSelect($event)">
+                            <option value="" disabled selected>Select product</option>
+                            <option *ngFor="let option of productOptions" [value]="option.id">{{ option.productName }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="sellQuantity">Sell Quantity:</label>
+                        <input type="number" class="form-control" formControlName="sell_quantity" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="unitSellingPrice">Unit Selling Price:</label>
+                        <input type="number" class="form-control" formControlName="unit_sellingPrice" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary float-right">Sell Product</button>
+                <button type="reset" class="btn btn-light float-right mr-2" (click)="resetform()" >Reset</button>
+            </form>
+        </div>
+    </div>
+</div>

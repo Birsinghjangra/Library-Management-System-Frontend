@@ -1,0 +1,81 @@
+[
+    {
+      "type": "select",
+      "name": "category",
+      "label": "Category",
+      "placeholder": "Select Category",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Category is required"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "productName",
+      "label": "Product Name",
+      "placeholder": "Select Product Name",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Product Name is required"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "name": "costPrice",
+      "label": "Cost Price",
+      "placeholder": "Enter Cost Price",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Cost Price is required"
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "name": "quantity",
+      "label": "Quantity",
+      "placeholder": "Enter Quantity",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Quantity is required"
+        }
+      ]
+    },
+    {
+      "type": "date",
+      "name": "manufacturingDate",
+      "label": "Manufacturing Date",
+      "placeholder": "Select Manufacturing Date",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Manufacturing Date is required"
+        }
+      ]
+    },
+    {
+      "type": "date",
+      "name": "expiryDate",
+      "label": "Expiry Date",
+      "placeholder": "Select Expiry Date",
+      "validations": [
+        {
+          "name": "required",
+          "validator": "required",
+          "message": "Expiry Date is required"
+        }
+      ]
+    }
+  ]
+  
