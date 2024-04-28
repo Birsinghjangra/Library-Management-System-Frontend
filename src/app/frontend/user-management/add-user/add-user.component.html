@@ -1,0 +1,80 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>User Management</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item active">User Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="card card-dark">
+        <div class="card-header">
+            <span class="card-header-title">Add/Update User Details</span>
+            <button class="btn btn-sm float-right" type="button">
+                <i class="text-white fas fa-times-circle" [routerLink]="['/admin/user_management']"></i>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <div class="row mb-2">
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="col-12 p-1">
+                    <input type="hidden" value="create" />
+                    <div class="form-row">
+                        <div class="col-md-12 col-12">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Full Name</span>
+                                        </div>
+                                        <input type="text" class="form-control" formControlName="Bname"
+                                            required="" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Phone</span>
+                                        </div>
+                                        <input type="number" class="form-control" formControlName="Phone"
+                                            required="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-9 col-12">
+                                    <div class="input-group form-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Address</span>
+                                        </div>
+                                        <textarea class="form-control" 
+                                            formControlName="Address"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <button class="btn btn-sm btn-dark" type="submit">
+                            <i class="fas fa-save mr-1"></i>Create User
+                        </button>
+                        <button class="btn btn-sm btn-danger ml-1" (click)="userForm.reset()">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

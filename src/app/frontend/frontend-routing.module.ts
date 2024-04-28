@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { FrontendComponent } from "./frontend.component";
-import { DashboardComponent } from "../dashboard/dashboard.component";
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -21,40 +21,44 @@ const routes: Routes = [
       {
         path: 'user_management',
         loadChildren: () =>
-          import('../user-management/user-management.module').then(
+          import('../frontend/user-management/user-management.module').then(
             (m) => m.UserManagementModule
           ),
       },
       {
-        path: 'addproduct',
+        path: 'user_management/add_user',
         loadChildren: () =>
-          import('../addproduct/addproduct.module').then(
-            (m) => m.AddproductModule
+          import('../frontend/user-management/add-user/add-user.module').then(
+            (m) => m.AddUserModule
           ),
       },
       {
-        path: 'addproduct/add/:id',
+        path: 'role_permission',
         loadChildren: () =>
-          import('../addproduct/adddetails/adddetails.module').then(
-            (m) => m.AddDetailsModule
+          import('../frontend/role-permission/role-permission.module').then(
+            (m) => m.RolePermissionModule
           ),
       },
       {
-        path: 'addproduct/add',
+        path: 'add_books',
         loadChildren: () =>
-          import('../addproduct/adddetails/adddetails.module').then(
-            (m) => m.AddDetailsModule
+          import('../add-books/add-books.module').then(
+            (m) => m.AddBooksModule
           ),
       },
       {
-        path: 'selling',
+        path: 'manage_books',
         loadChildren: () =>
-          import('../selling/selling.module').then((m) => m.sellingModule),
+          import('./manage-books/manage-books.module').then(
+            (m) => m.ManageBooksModule
+          ),
       },
       {
-        path:'selling/add',
+        path: 'issue_books',
         loadChildren: () =>
-          import('../selling/add/add.module').then((m) => m.AddsellerModule),
+          import('./issue-books/issue-books.module').then(
+            (m) => m.IssueBooksModule
+          ),
       },
       
     ],

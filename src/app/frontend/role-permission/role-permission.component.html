@@ -1,0 +1,310 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Role Permission Management</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">User Management</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="card-body pb-0">
+    <div class="row">
+        <div class="card col-md-6 col-12">
+            <div class="card-body">
+                <form role="form" wire:submit.prevent="saveRole">
+                    <div class="input-group">
+                        <input type="text" placeholder="Enter role name" wire:model.lazy="role_name"
+                            class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-dark" type="submit"><i class="fas fa-save mr-1"></i>Save Role
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label>Select Role : </label>
+                        <form role="form" wire:submit.prevent="deleteRole">
+                            <div class="input-group">
+                                <select class="custom-select" wire:model="role_id">
+                                    <option value="">--Select Role--
+                                    </option>
+                                    <option value="1">Super Admin</option>
+                                    <option value="2">Student</option>
+                                    <option value="6">Teacher</option>
+                                    <option value="7">Librarian</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" wire:click="editRoleName()" class="btn btn-sm btn-dark">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+
+                                    <button
+                                        onclick="lv_confirm_then_submit(this,'Confirm delete role?','deleteRole','{\'id\':}')"
+                                        type="button" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-group col-6">
+                        <label class="d-none d-sm-block">Choose Permission from here </label>
+                        <label class="d-block d-sm-none">Choose Perm </label>
+                        <form role="form" wire:submit.prevent="deletePermission">
+                            <div class="input-group">
+                                <select class="custom-select" wire:model="permission_id">
+                                    <option value="">--Select Permission
+                                        --
+                                    </option>
+                                    <option value="1">mng-setting</option>
+                                    <option value="2">mng-user</option>
+                                    <option value="6">mng-slide</option>
+                                    <option value="7">mng-subscriber</option>
+                                    <option value="8">mng-notice</option>
+                                    <option value="9">mng-role-permission</option>
+                                    <option value="10">mng-slider</option>
+                                    <option value="11">mng-class</option>
+                                    <option value="12">mng-book</option>
+                                    <option value="13">mng-enquiry</option>
+                                    <option value="14">mng-dashboard</option>
+                                    <option value="15">mng-lib-stat</option>
+                                    <option value="16">mng-graph-stat</option>
+                                    <option value="17">mng-report</option>
+                                    <option value="19">mng-transaction</option>
+                                    <option value="20">view-transaction</option>
+                                    <option value="21">mng-note</option>
+                                    <option value="22">mng-translation</option>
+                                    <option value="25">mng-author</option>
+                                    <option value="26">mng-publisher</option>
+                                    <option value="27">mng-tag</option>
+                                    <option value="28">mng-borrow-book</option>
+                                    <option value="29">mng-classification</option>
+                                    <option value="30">rewe</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" wire:click="editPermissionName()" class="btn btn-sm btn-dark">
+                                        <i class="far fa-edit"></i>
+                                    </button>
+                                    <button type="button"
+                                        onclick="lv_confirm_then_submit(this,'Confirm delete permission?','deletePermission','{\'id\':}')"
+                                        class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <button type="button" wire:click="assignPermissionToRole"
+                            class="btn btn-sm btn-block btn-dark">Assign permission to Role
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card col-md-6 col-12">
+            <div class="card-body">
+                <form role="form" wire:submit.prevent="savePermission">
+                    <div class="input-group">
+                        <input type="text" placeholder="Enter permission name" wire:model.lazy="permission_name"
+                            class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-dark" type="submit"><i class="fas fa-save mr-1"></i>Save
+                                Permission
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <form role="form" wire:submit.prevent="">
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label>Select User : </label>
+                            <select class="custom-select" wire:model="user_id">
+                                <option value="">--Select User--</option>
+                                <option value="1">Admin</option>
+                                <option value="369">Fedrik</option>
+                                <option value="370">Rosy</option>
+                                <option value="371">Johnny</option>
+                                <option value="372">Ben</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="d-none d-sm-block">Choose Role from here</label>
+                            <label class="d-block d-sm-none">Choose Role</label>
+                            <select class="custom-select" wire:model="assigned_role_id">
+                                <option value="">--Select Role--</option>
+                                <option value="1">Super Admin</option>
+                                <option value="2">Student</option>
+                                <option value="6">Teacher</option>
+                                <option value="7">Librarian</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <button type="button" wire:click="attachRoleToUser"
+                                class="btn btn-sm btn-block btn-dark">Assign role to User
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped table-hover table-sm mt-2">
+    <thead>
+        <tr>
+            <th scope="col">Roles</th>
+            <th scope="col">Permissions</th>
+            <th style="width: 20%;" scope="col">User Attached</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><span class="badge rounded-pill bg-danger">Super Admin</span>
+            </td>
+            <td>
+                <span class="badge rounded-pill badge-dark">
+                    mng-user
+
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete permission from role?','detachPermissionFromRole','{\'id\':2,\'role_id\':2}')"
+                        type="button" class="close no-outline">
+                        <span aria-hidden="true">×</span>
+                    </button>
+
+                </span>
+            </td>
+            <td>
+                <span class="badge bg-info rounded-pill text-dark">
+                    Admin
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete user from role?','detachUserFromRole','{\'id\':1,\'role_id\':1}')"
+                        type="button" class="close no-outline" aria-label="Dismiss">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </span>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td><span class="badge rounded-pill bg-danger">Student</span>
+            </td>
+            <td>
+
+
+                <span class="badge rounded-pill badge-dark">
+                    mng-user
+
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete permission from role?','detachPermissionFromRole','{\'id\':2,\'role_id\':2}')"
+                        type="button" class="close no-outline">
+                        <span aria-hidden="true">×</span>
+                    </button>
+
+                </span>
+            </td>
+            <td>
+
+
+
+                <span class="badge bg-info rounded-pill text-dark">
+                    Fedrik
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete user from role?','detachUserFromRole','{\'id\':369,\'role_id\':2}')"
+                        type="button" class="close no-outline" aria-label="Dismiss">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </span>
+                <span class="badge bg-info rounded-pill text-dark">
+                    Rosy
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete user from role?','detachUserFromRole','{\'id\':370,\'role_id\':2}')"
+                        type="button" class="close no-outline" aria-label="Dismiss">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </span>
+            </td>
+        </tr>
+
+        <tr>
+            <td><span class="badge rounded-pill bg-danger">Teacher</span>
+            </td>
+            <td>
+
+
+                <span class="badge rounded-pill badge-dark">
+                    view-transaction
+
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete permission from role?','detachPermissionFromRole','{\'id\':20,\'role_id\':6}')"
+                        type="button" class="close no-outline">
+                        <span aria-hidden="true">×</span>
+                    </button>
+
+                </span>
+            </td>
+            <td>
+
+
+
+                <span class="badge bg-info rounded-pill text-dark">
+                    Johnny
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete user from role?','detachUserFromRole','{\'id\':371,\'role_id\':6}')"
+                        type="button" class="close no-outline" aria-label="Dismiss">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </span>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td><span class="badge rounded-pill bg-danger">Librarian</span>
+            </td>
+            <td>
+                <span class="badge rounded-pill badge-dark">
+                    mng-lib-stat
+
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete permission from role?','detachPermissionFromRole','{\'id\':15,\'role_id\':7}')"
+                        type="button" class="close no-outline">
+                        <span aria-hidden="true">×</span>
+                    </button>
+
+                </span>
+            </td>
+            <td>
+                <span class="badge bg-info rounded-pill text-dark">
+                    Ben
+                    <button
+                        onclick="lv_confirm_then_submit(this,'Delete user from role?','detachUserFromRole','{\'id\':372,\'role_id\':7}')"
+                        type="button" class="close no-outline" aria-label="Dismiss">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </span>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

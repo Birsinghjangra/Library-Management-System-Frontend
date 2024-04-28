@@ -1,8 +1,0 @@
-::ng-deep .mat-snack-bar-container.success-snackbar {
-  background-color: green !important; 
-  color: white !important; 
-}
-::ng-deep .mat-snack-bar-container.error-snackbar {
-  background-color: red !important;
-  color: white !important; 
-}

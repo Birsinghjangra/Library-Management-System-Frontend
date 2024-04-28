@@ -19,22 +19,42 @@ export const sidebarMenuConfig = [
     route: 'dashboard',
     icon: 'nav-icon fas fa-chart-pie',
   },
+  // {
+  //   label: 'Manage Library',
+  //   icon: 'nav-icon far fa-plus-square',
+  //   children: [
+      // {
+      //   label: 'Manage Books',
+      //   route: 'manage_books',
+      //   icon: 'nav-icon far fa-plus-square',
+      // },
+  //   ]
+  // },
   {
-    label: 'User-management',
+    label: 'Add Books',
+    route: 'add_books',
+    icon: 'nav-icon far fa-plus-square',
+  },
+
+  {
+    label: 'Manage Books',
+    route: 'manage_books',
+    icon: 'nav-icon far fa-plus-square',
+  },
+  {
+    label: 'Issue Books',
+    route: 'issue_books',
+    icon: 'nav-icon far fa-plus-square',
+  },
+  {
+    label: 'User Management',
     route: 'user_management',
     icon: 'nav-icon far fa-plus-square',
   },
-
   {
-    label: 'Add Product',
-    route: 'addproduct',
+    label: 'Role Permission',
+    route: 'role_permission',
     icon: 'nav-icon far fa-plus-square',
-  },
-  {
-    label: 'Sell Product',
-    route: 'selling',
-    icon: 'nav-icon fa fa-cart-arrow-down',
   },
 
 ];
-  

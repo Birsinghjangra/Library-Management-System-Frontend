@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './frontend/dashboard/dashboard.component';
 import { LoginComponent } from './common/login/login.component';
 // import { CommonsModule } from './common/commons.module';
 // import { AuthGuard } from '../app/auth.service/./auth.guard';
