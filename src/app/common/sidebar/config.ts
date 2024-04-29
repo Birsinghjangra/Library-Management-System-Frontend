@@ -47,6 +47,11 @@ export const sidebarMenuConfig = [
     icon: 'nav-icon far fa-plus-square',
   },
   {
+    label: 'Issued Books',
+    route: 'issued_books',
+    icon: 'nav-icon far fa-plus-square',
+  },
+  {
     label: 'User Management',
     route: 'user_management',
     icon: 'nav-icon far fa-plus-square',

@@ -18,7 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserManagementComponent } from '../app/frontend/user-management/user-management.component';
 import { RolePermissionComponent } from '../app/frontend/role-permission/role-permission.component';
 import { ManageBooksComponent } from './frontend/manage-books/manage-books.component';
-import { AddBooksComponent } from './add-books/add-books.component';
+import { AddBooksComponent } from './frontend/add-books/add-books.component';
 import { IssueBooksComponent } from './frontend/issue-books/issue-books.component';
 import { AddUserComponent } from '../app/frontend/user-management/add-user/add-user.component';
 import { MatTableModule } from '@angular/material/table';

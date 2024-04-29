@@ -42,7 +42,7 @@ const routes: Routes = [
       {
         path: 'add_books',
         loadChildren: () =>
-          import('../add-books/add-books.module').then(
+          import('./add-books/add-books.module').then(
             (m) => m.AddBooksModule
           ),
       },

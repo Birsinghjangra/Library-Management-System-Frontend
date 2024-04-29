@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
@@ -13,20 +13,22 @@ import { environment } from 'src/environment';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent {
+export class AddUserComponent implements OnInit {
 
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder, 
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
     private CommonService: CommonService,
     private SnackBarService: SnackBarService,
     private router: Router) {
     this.userForm = this.fb.group({
-      Bname: ['', Validators.required],
-      Phone: ['', Validators.required],
-      Address: ['', Validators.required]
+      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]], // Only alphabets and spaces allowed
+      Phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // 10-digit number validation
+      Address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]] // Only specified characters allowed
     });
+  }
+  ngOnInit(): void {
   }
 
   onSubmit() {
@@ -42,34 +44,12 @@ export class AddUserComponent {
       console.log(data)
       let message = data.message
       if (data.status === 'success') {
-          this.SnackBarService.openSnackBarSuccess([message])
-          this.router.navigate(['/admin/user-management']);
+        this.SnackBarService.openSnackBarSuccess([message])
+        this.router.navigate(['/admin/user-management']);
       } else {
-          this.SnackBarService.openSnackBarError([message])
+        this.SnackBarService.openSnackBarError([message])
       }
     })
-    // if (this.userForm.valid) {
-    // Make API call to /createuser
-    // this.http.post(`${environment.apiUrl}/db_operation`, value).subscribe(
-    //   (response) => {
-    //     // Handle success
-    //     console.log('User created successfully:', response);
-
-    //     // Reset form
-    //     this.userForm.reset();
-    //   },
-    //   (error) => {
-    //     // Handle error
-    //     console.error('Error creating user:', error);
-    //   }
-    // );
-    // } 
-    //  {
-    //   // Handle form validation errors
-    //   console.error('Form is invalid');
-    // }
-
-
   }
-
+  
 }

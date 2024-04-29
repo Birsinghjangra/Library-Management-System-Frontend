@@ -3,10 +3,6 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/* aside.main-sidebar.sidebar-dark-primary.elevation-4 {
-  width: 290px;
-} */
-
 body.sidebar-mini.layout-fixed.mat-typography {
   font-size: 14px;
 }
@@ -42,13 +38,14 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
   }
 }
 
+.error-message {
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
 .card-header {
   padding: 17px;
 }
 
-/* button{
-  height: 40px;
-} */
 .iconbutton {
   height: 30px;
   width: 70px;
