@@ -2,169 +2,122 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>View All Books</h1>
+                <h1>Issue Book</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">View All Books</li>
+                    <li class="breadcrumb-item active">Issue Book</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container" style="width: 100%;">
-    <div class="card" style="width: 100%;">
-        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
-            <span class="card-title font-weight-bold">Manage Books</span>
+<div class="container" style="width: 100%">
+    <div class="card" style="width: 100%">
+        <div class="card-header" style="border-bottom: 2px solid #dd4b39">
+            <span class="card-title font-weight-bold">Issue Books</span>
         </div>
         <div class="card-body">
-            <div class="form-row no-gutters ">
-                <div class="col-md-12">
-                    <div class="form-row no-gutters">
-                        <div class="col-md-6">
-                            <form method="post" class="frm_export" action="https://library-management.com/books-import"
-                                enctype="multipart/form-data">
-                                <input type="hidden" name="_token" value="lxLRGbuIsVQ1TnUbzA1B8Jva6p3e4EQHQjNbcLft">
-                                <div class="input-group">
-
-                                    <input type="file" name="file" accept=".csv"
-                                        class="form-control text-xs file_upload">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-xs btn-dark mr-1" type="submit"><i
-                                                class="fa fa-upload mr-1" aria-hidden="true"></i>Import
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                        <div class="col-12 col-md-4">
+            <div class="form-row mb-10">
+                <div class="col-md col-6 mb-10">
+                    <div class="form-row mb-10">
+                        <div class="col-md-12 mb-2">
                             <div class="input-group">
-                                <div class="input-group-prepend "><span class="input-group-text ">Category</span> </div>
-                                <select wire:model="sel_parent_cat" class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="1">Computer science</option>
-                                    <option value="2">Philosophy &amp; psychology</option>
-                                    <option value="3">Religion</option>
-                                    <option value="4">Social Sciences</option>
-                                    <option value="5">Language</option>
-                                    <option value="6">Science</option>
-                                    <option value="7">Technology</option>
-                                    <option value="8">Arts &amp; recreation</option>
-                                    <option value="9">Literature</option>
-                                    <option value="10">History &amp; geography</option>
-                                    <option value="23">Business</option>
-                                    <option value="25">Architecture</option>
-                                </select>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Search User</span>
+                                </div>
+                                <input id="user_autocomplete" placeholder="Type to search." type="text" class="form-control ui-autocomplete-input" autocomplete="off" />
                             </div>
                         </div>
-                        <div class="mb-2 col-12 col-md-2">
-                            <button class="btn btn-dark" type="button" wire:click="bulkSaveCategory"><i
-                                    class="fas fa-plus-circle mr-1"></i>Attach Categories</button>
-                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="form-row no-gutters mb-10">
-                <div class="col-12 col-md-12 mrb-2">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Advanced Filter</span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Type to search.">
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-sm">
-                        <thead>
-                            <tr>
-                                <td>#</td>
-                                <td>Id</td>
-                                <td>Image</td>
-                                <td>ISBN 10</td>
-                                <td>ISBN 13</td>
-                                <td>Name</td>
-                                <td>Category</td>
-                                <td>Author</td>
-                                <td style="width: 80px;">Action
-                                    <input data-toggle="tooltip" data-placement="top" title="Show Inactive"
-                                        class="mt-1 ml-1" type="checkbox" wire:model="show_inactive">
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-
-                            <tr>
-                                <td><input type="checkbox" wire:model.defer="sel_sb_id_bulk" value="57">
-                                </td>
-                                <td>57</td>
-                                <td><img style="width: 50px;" class="img-thumbnail"
-                                        src="https://library-management.com/uploads/W149zCKase.jpg">
-                                </td>
-                                <td class="text-sm">9386316579</td>
-                                <td class="text-sm">9789386316578</td>
-                                <td class="text-sm"><a target="_blank"
-                                        href="https://library-management.com/details/The-Solar-System-and-its-Dwarf-Planet">The
-                                        Solar System and its Dwarf Planet</a>
-                                    <!-- <div>
-                                        <span class="text-sm font-weight-bold">Shelf No : 26</span>
-                                    </div> -->
-                                </td>
-                                <td class="text-sm">
-                                    Science                               
-                                </td>
-                                <td class="text-sm">
-                                    <a target="_blank" href="https://library-management.com?search=Kevin Mitnik#books"
-                                        class="btn-link text-sm">Kevin Mitnik</a>
-                                </td>
-                                <td class="d-flex">
-                                    <button class="btn btn-warning cm_edit" type="button" onclick="lv_confirm_then_submit(this,'Confirm deactivate?','toggleActiveMainBook',
-                                '{\'id\':57}')"><i class="far fa-eye"></i></button>
-                                    <a class="btn btn-dark cm_edit"
-                                        href="https://library-management.com/books/57/edit"><i
-                                            class="fas fa-pencil-alt"></i></a>
-                                    <button data-toggle="tooltip" data-placement="left"
-                                        title="Danger: Delete main book Plus ALL THE BOOKS UNDER IT." type="button"
-                                        onclick="lv_confirm_then_submit(this,'Confirm Delete?','deleteMainBook','{\'id\':57}')"
-                                        class="btn btn-danger cm_del"><i class="far fa-trash-alt"></i></button>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <nav>
-                            <ul class="pagination">
-
-                                <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
-                                    <span class="page-link" aria-hidden="true">‹</span>
+                    <div class="form-row">
+                        <div class="col-md-9">
+                            <ul class="list-group text-sm">
+                                <li class="list-group-item text-capitalize" >
+                                    Card ID : <span class="user_field_val" id="spn_user_id">N/A</span>
                                 </li>
-                                <li class="page-item active" wire:key="paginator-page-1" aria-current="page"><span
-                                        class="page-link">1</span></li>
-                                <li class="page-item" wire:key="paginator-page-2"><button type="button"
-                                        class="page-link" wire:click="gotoPage(2)">2</button></li>
-                                <li class="page-item" wire:key="paginator-page-3"><button type="button"
-                                        class="page-link" wire:click="gotoPage(3)">3</button></li>
-                                <li class="page-item" wire:key="paginator-page-4"><button type="button"
-                                        class="page-link" wire:click="gotoPage(4)">4</button></li>
-                                <li class="page-item" wire:key="paginator-page-5"><button type="button"
-                                        class="page-link" wire:click="gotoPage(5)">5</button></li>
-                                <li class="page-item" wire:key="paginator-page-6"><button type="button"
-                                        class="page-link" wire:click="gotoPage(6)">6</button></li>
-                                <li class="page-item">
-                                    <button type="button" dusk="nextPage" class="page-link" wire:click="nextPage"
-                                        wire:loading.attr="disabled" rel="next" aria-label="Next »">›</button>
+                                <li class="list-group-item">
+                                    Phone : <span class="user_field_val" id="user_phone">N/A</span>
+                                </li>
+                                <li class="list-group-item address_li">
+                                    Address : <span class="user_field_val" id="user_address">N/A</span>
+                                </li>
+                                <li class="list-group-item address_li">
+                                    Limit Allowed : <span class="user_field_val" id="user_limit">N/A</span>
                                 </li>
                             </ul>
-                        </nav>
+                        </div>
                     </div>
+                </div>
+                <div class="col-md col-6 mb-10">
+                    <div class="form-row mb-10">
+                        <div class="col-md-12 mb-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Search Book</span>
+                                </div>
+                                <input id="book_autocomplete" placeholder="Type to search." type="text" class="form-control ui-autocomplete-input" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-9">
+                            <ul class="list-group text-sm">
+                                <li class="list-group-item text-capitalize">
+                                    Book Code : <span class="book_field_val" id="book_span_code">N/A</span>
+                                </li>
+                                <li class="list-group-item text-capitalize">
+                                    Book Title : <span class="book_field_val" id="book_title">N/A</span>
+                                </li>
+                                <li class="list-group-item">
+                                    ISBN : <span class="book_field_val" id="book_isbn">N/A</span>
+                                </li>
+                                <li class="list-group-item text-capitalize">
+                                    Book Price : <span class="book_field_val" id="book_price">N/A</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
 
+            <div class="row mt-3">
+                <div class="col-md-5 mb-10">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Issue Date</span>
+                        </div>
+                        <input type="date" id="issue_date_tmp" class="form-control hasDatepicker" />
+                        <input type="hidden" id="issue_date" />
+                    </div>
+                </div>
+                <div class="col-md-5 mb-10">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Return Date</span>
+                        </div>
+                        <input type="date" id="return_date_tmp" class="form-control hasDatepicker" />
+                        <input type="hidden" id="return_date" />
+                    </div>
+                </div>
+                <div class="col-md-2 mb-10">
+                    <button type="button" disabled="" class="btn btn-danger">
+                        Issue Book
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-row mt-3">
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Remark</span>
+                        </div>
+                        <textarea class="form-control"></textarea>
+                    </div>
                 </div>
             </div>
         </div>

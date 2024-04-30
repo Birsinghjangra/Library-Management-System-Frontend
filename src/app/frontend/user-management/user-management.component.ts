@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
@@ -10,39 +10,34 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']
 })
-export class UserManagementComponent {
+export class UserManagementComponent implements OnInit {
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   hasData: boolean = false;
   userdata: any = [];
   selection = new SelectionModel<any>(true, []);
 
+  displayedColumns = ['checkbox', 'id', 'Bname', 'Phone', 'createdOn', 'action'];
 
-  displayedColumns = ['checkbox', 'id', 'Bname','Phone', 'createdOn', 'action'];
-
-  constructor(private CommonService: CommonService,
-             private router: Router,
-             private snackBar: SnackBarService
-  ) { }
+  constructor(private commonService: CommonService,
+              private router: Router,
+              private snackBar: SnackBarService) { }
 
   ngOnInit(): void {
     this.loaddata();
   }
+
   loaddata() {
     const value = {
-      Table_name:'borrower'
-    }
-    this.CommonService.getData_common(value).subscribe((data: any) => {
+      Table_name: 'borrower'
+    };
+    this.commonService.getData_common(value).subscribe((data: any) => {
       this.userdata = data.data;
-
-      console.log("this product",this.userdata);
+      console.log("this product", this.userdata);
       this.hasData = this.userdata.length > 0;
-      // this.productdata = this.productdata.data;
-      this.dataSource = new MatTableDataSource(this.userdata);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      this.dataSource.data = this.userdata;
     });
-  } 
+  }
 
   masterToggle() {
     this.isAllSelected() ?
@@ -56,17 +51,17 @@ export class UserManagementComponent {
     return numSelected === numRows;
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     return {
       table_name: 'borrower',
       row_ids: id,
       action: 'delete',
     };
   }
-  delete(id: number) {
+
+  delete(id: string) {
     const payload = this.deleteUser(id);
-    // console.log(payload);
-    this.CommonService.delete_data_operation(payload).subscribe(
+    this.commonService.delete_data_operation(payload).subscribe(
       (response) => {
         if (response.status === 'success') {
           let message = response.message;
@@ -82,4 +77,34 @@ export class UserManagementComponent {
     );
   }
 
+  delete1() {
+    const selectedRows = this.selection.selected.map(row => row.id); 
+    if (selectedRows.length === 0) {
+      return;
+    }
+    const payload = selectedRows.map(id => this.deleteUser(id));
+    this.commonService.delete_data_operation(payload).subscribe(
+      (response) => {
+        if (response.status === 'success') {
+          let message = response.message;
+          this.snackBar.openSnackBarSuccess([message]);
+          this.loaddata(); 
+          this.selection.clear(); 
+        } else {
+          this.snackBar.openSnackBarError([response.message]);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

@@ -25,52 +25,25 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-md-8 col-12">
+                <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label class="mb-2">Advanced Filter</label>
-                        <input type="text" class="form-control" placeholder="Type and Tab">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Advanced Filter</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Type to search."
+                                (input)="applyFilter($event)">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-12">
+                <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label class="mb-2">Filter by role</label>
-                        <select class="form-control">
-                            <option value="" selected>--Select--</option>
-                            <option value="in_active">Show non-activated users</option>
-                            <option value="super admin">Super Admin</option>
-                            <option value="student">Student</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="librarian">Librarian</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Left div with buttons -->
-                <div class="col-12 col-md-5 d-flex align-items-center mb-3">
-                    <div class="btn-group flex-grow-1 mr-3">
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="far fa-trash-alt mr-1"></i><span class="text-sm">Delete User</span>
-                        </button>
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="fas fa-sort mr-1"></i><span class="text-sm">Toggle User</span>
-                        </button>
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="far fa-id-card mr-1"></i><span class="text-sm">Print Id Cards</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Middle blank space -->
-                <div class="col-12 col-md-3 mb-3"></div>
-
-                <!-- Right div with file input and buttons -->
-                <div class="col-12 col-md-4 d-flex align-items-center mb-3">
-                    <form class="w-100">
-                        <div class="d-flex flex-column flex-md-row">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Import</span>
+                            </div>
                             <div class="flex-grow-1 mb-2 mb-md-0 position-relative">
-                                <input type="file" name="file" class="form-control text-sm height rounded-right-0">
+                                <input type="file" name="file" class="form-control text-sm ">
                             </div>
                             <div class="flex-shrink-0">
                                 <button type="submit" class="btn btn-dark btn-sm mr-1 iconbutton height">
@@ -82,7 +55,24 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Left div with buttons -->
+                <div class="col-12 col-md-5 d-flex align-items-center mb-3">
+                    <div class="btn-group flex-grow-1 mr-3">
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton" (click)="delete1()">
+                            <i class="far fa-trash-alt mr-1"></i><span class="text-sm">Delete User</span>
+                        </button>
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
+                            <i class="fas fa-sort mr-1"></i><span class="text-sm">Inactive Users</span>
+                        </button>
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
+                            <i class="far fa-id-card mr-1"></i><span class="text-sm">Print Id Cards</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -114,25 +104,25 @@
                     </ng-container>
 
                     <ng-container matColumnDef="Phone">
-                        <th mat-header-cell *matHeaderCellDef> PHONE </th>
+                        <th mat-header-cell *matHeaderCellDef> Phone </th>
                         <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="createdOn">
                         <th mat-header-cell *matHeaderCellDef> Created On </th>
                         <td mat-cell *matCellDef="let element"> {{ element.createdOn | date:'yyyy-MM-dd' }} </td>
-                      </ng-container>
+                    </ng-container>
 
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let element">
-                            <button data-toggle="tooltip" data-placement="top" title=""  type="button"
-                                class="btn btn-sm   btn-success  float-left action_btn"
+                            <button type="button" class="btn btn-sm btn-success  float-left action_btn mr-1"
                                 data-original-title="Click to activate | de-activate">
                                 <i class="far fa-thumbs-up"></i>
                             </button>
-                            <button type="button" 
-                                class="btn btn-sm btn-dark float-left action_btn">
+                            <button type="button" class="btn btn-sm btn-dark float-left action_btn mr-1"
+                                [routerLink]="['/>admin/user_management/add_user/']"
+                                [queryParams]="{ id: element.id, flag: 'edit' }">
                                 <i class="far fa-edit"></i>
                             </button>
                             <button type="button" (click)="delete(element.id)"

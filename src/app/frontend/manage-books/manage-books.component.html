@@ -2,170 +2,149 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>View All Books</h1>
+                <h1>Manage Books</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">View All Books</li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item active">Manage Books</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container" style="width: 100%;">
-    <div class="card" style="width: 100%;">
+<div class="container">
+    <div class="card">
         <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
             <span class="card-title font-weight-bold">Manage Books</span>
         </div>
         <div class="card-body">
-            <div class="form-row no-gutters ">
-                <div class="col-md-12">
-                    <div class="form-row no-gutters">
-                        <div class="col-md-6">
-                            <form method="post" class="frm_export" action="https://library-management.com/books-import"
-                                enctype="multipart/form-data">
-                                <input type="hidden" name="_token" value="lxLRGbuIsVQ1TnUbzA1B8Jva6p3e4EQHQjNbcLft">
-                                <div class="input-group">
-
-                                    <input type="file" name="file" accept=".csv"
-                                        class="form-control text-xs file_upload">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-xs btn-dark mr-1" type="submit"><i
-                                                class="fa fa-upload mr-1" aria-hidden="true"></i>Import
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Advanced Filter</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Type to search."
+                                (input)="applyFilter($event)">
                         </div>
-                        <div class="col-12 col-md-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend "><span class="input-group-text ">Category</span> </div>
-                                <select wire:model="sel_parent_cat" class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="1">Computer science</option>
-                                    <option value="2">Philosophy &amp; psychology</option>
-                                    <option value="3">Religion</option>
-                                    <option value="4">Social Sciences</option>
-                                    <option value="5">Language</option>
-                                    <option value="6">Science</option>
-                                    <option value="7">Technology</option>
-                                    <option value="8">Arts &amp; recreation</option>
-                                    <option value="9">Literature</option>
-                                    <option value="10">History &amp; geography</option>
-                                    <option value="23">Business</option>
-                                    <option value="25">Architecture</option>
-                                </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Import</span>
+                            </div>
+                            <div class="flex-grow-1 mb-2 mb-md-0 position-relative">
+                                <input type="file" name="file" class="form-control text-sm ">
+                            </div>
+                            <div class="flex-shrink-0">
+                                <button type="submit" class="btn btn-dark btn-sm mr-1 iconbutton height">
+                                    <i class="fas fa-upload mr-1"></i><span class="text-sm">Import</span>
+                                </button>
+                                <a href="https://library-management.com/uploads/users_list.csv"
+                                    class="btn btn-dark btn-sm height rounded-left-0">
+                                    <i class="fas fa-download"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="mb-2 col-12 col-md-2">
-                            <button class="btn btn-dark" type="button" wire:click="bulkSaveCategory"><i
-                                    class="fas fa-plus-circle mr-1"></i>Attach Categories</button>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-row no-gutters mb-10">
-                <div class="col-12 col-md-12 mrb-2">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Advanced Filter</span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Type to search.">
+            <div class="row">
+                <!-- Left div with buttons -->
+                <div class="col-12 col-md-5 d-flex align-items-center mb-3">
+                    <div class="btn-group flex-grow-1 mr-3">
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
+                            <i class="far fa-trash-alt mr-1"></i><span class="text-sm">Delete User</span>
+                        </button>
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
+                            <i class="fas fa-sort mr-1"></i><span class="text-sm">Inactive Users</span>
+                        </button>
+                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
+                            <i class="far fa-id-card mr-1"></i><span class="text-sm">Print Id Cards</span>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-sm">
-                        <thead>
-                            <tr>
-                                <td>#</td>
-                                <td>Id</td>
-                                <td>Image</td>
-                                <td>ISBN 10</td>
-                                <td>ISBN 13</td>
-                                <td>Name</td>
-                                <td>Category</td>
-                                <td>Author</td>
-                                <td style="width: 80px;">Action
-                                    <input data-toggle="tooltip" data-placement="top" title="Show Inactive"
-                                        class="mt-1 ml-1" type="checkbox" wire:model="show_inactive">
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody>
 
+            <div class="table-responsive mt-3">
+                <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
 
-                            <tr>
-                                <td><input type="checkbox" wire:model.defer="sel_sb_id_bulk" value="57">
-                                </td>
-                                <td>57</td>
-                                <td><img style="width: 50px;" class="img-thumbnail"
-                                        src="https://library-management.com/uploads/W149zCKase.jpg">
-                                </td>
-                                <td class="text-sm">9386316579</td>
-                                <td class="text-sm">9789386316578</td>
-                                <td class="text-sm"><a target="_blank"
-                                        href="https://library-management.com/details/The-Solar-System-and-its-Dwarf-Planet">The
-                                        Solar System and its Dwarf Planet</a>
-                                    <!-- <div>
-                                        <span class="text-sm font-weight-bold">Shelf No : 26</span>
-                                    </div> -->
-                                </td>
-                                <td class="text-sm">
-                                    Science                               
-                                </td>
-                                <td class="text-sm">
-                                    <a target="_blank" href="https://library-management.com?search=Kevin Mitnik#books"
-                                        class="btn-link text-sm">Kevin Mitnik</a>
-                                </td>
-                                <td class="d-flex">
-                                    <button class="btn btn-warning cm_edit" type="button" onclick="lv_confirm_then_submit(this,'Confirm deactivate?','toggleActiveMainBook',
-                                '{\'id\':57}')"><i class="far fa-eye"></i></button>
-                                    <a class="btn btn-dark cm_edit"
-                                        href="https://library-management.com/books/57/edit"><i
-                                            class="fas fa-pencil-alt"></i></a>
-                                    <button data-toggle="tooltip" data-placement="left"
-                                        title="Danger: Delete main book Plus ALL THE BOOKS UNDER IT." type="button"
-                                        onclick="lv_confirm_then_submit(this,'Confirm Delete?','deleteMainBook','{\'id\':57}')"
-                                        class="btn btn-danger cm_del"><i class="far fa-trash-alt"></i></button>
+                    <ng-container matColumnDef="checkbox" class="custom-header">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox> -->
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div>
-                        <nav>
-                            <ul class="pagination">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Book ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
 
-                                <li class="page-item disabled" aria-disabled="true" aria-label="« Previous">
-                                    <span class="page-link" aria-hidden="true">‹</span>
-                                </li>
-                                <li class="page-item active" wire:key="paginator-page-1" aria-current="page"><span
-                                        class="page-link">1</span></li>
-                                <li class="page-item" wire:key="paginator-page-2"><button type="button"
-                                        class="page-link" wire:click="gotoPage(2)">2</button></li>
-                                <li class="page-item" wire:key="paginator-page-3"><button type="button"
-                                        class="page-link" wire:click="gotoPage(3)">3</button></li>
-                                <li class="page-item" wire:key="paginator-page-4"><button type="button"
-                                        class="page-link" wire:click="gotoPage(4)">4</button></li>
-                                <li class="page-item" wire:key="paginator-page-5"><button type="button"
-                                        class="page-link" wire:click="gotoPage(5)">5</button></li>
-                                <li class="page-item" wire:key="paginator-page-6"><button type="button"
-                                        class="page-link" wire:click="gotoPage(6)">6</button></li>
-                                <li class="page-item">
-                                    <button type="button" dusk="nextPage" class="page-link" wire:click="nextPage"
-                                        wire:loading.attr="disabled" rel="next" aria-label="Next »">›</button>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    <ng-container matColumnDef="isbn">
+                        <th mat-header-cell *matHeaderCellDef> Isbn </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Isbn}} </td>
+                    </ng-container>
 
-                </div>
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef> Book Title </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="publication">
+                        <th mat-header-cell *matHeaderCellDef> Publication </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.Publication }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef> Book Price </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Price}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="eddition">
+                        <th mat-header-cell *matHeaderCellDef> Eddition </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.Eddition }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button type="button" class="btn btn-sm btn-success  float-left action_btn mr-1"
+                                data-original-title="Click to activate | de-activate">
+                                <i class="far fa-thumbs-up"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-dark float-left action_btn mr-1"
+                                [routerLink]="['/>admin/user_management/add_user/']"
+                                [queryParams]="{ id: element.id, flag: 'edit' }">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button type="button" 
+                                class="btn btn-sm btn-danger float-left action_btn">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-no-data-row *matNoDataRow>
+                        <td class="mat-cell size" [attr.colspan]="displayedColumns.length">
+                            No record found!
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -45,7 +45,7 @@ export class AddUserComponent implements OnInit {
       let message = data.message
       if (data.status === 'success') {
         this.SnackBarService.openSnackBarSuccess([message])
-        this.router.navigate(['/admin/user-management']);
+        this.router.navigate(['/admin/user_management']);
       } else {
         this.SnackBarService.openSnackBarError([message])
       }
