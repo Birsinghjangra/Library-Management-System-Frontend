@@ -2,16 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-
-interface User {
-  id: number;
-  Bname: string;
-  Phone: string;
-  createdOn: string;
-  isHidden: boolean;
-}
 
 @Component({
   selector: 'app-user-management',
@@ -19,66 +11,62 @@ interface User {
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent implements OnInit {
-  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
-  hasData: boolean = false;
-  userdata: User[] = [];
-  selection = new SelectionModel<User>(true, []);
-  showInactiveUsers: boolean = false;
-  displayedColumns = ['id', 'Bname', 'Phone', 'createdOn', 'action'];
 
-  constructor(
-    private commonService: CommonService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private snackBar: SnackBarService
-  ) {}
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  hasData: boolean = false;
+  userdata: any = [];
+  selection = new SelectionModel<any>(true, []);
+
+  displayedColumns = ['checkbox', 'id', 'Bname', 'Phone', 'createdOn', 'action'];
+
+  constructor(private commonService: CommonService,
+              private router: Router,
+              private snackBar: SnackBarService) { }
 
   ngOnInit(): void {
-    this.loadData();
+    this.loaddata();
   }
 
-  loadData(): void {
+  loaddata() {
     const value = {
       Table_name: 'borrower'
     };
     this.commonService.getData_common(value).subscribe((data: any) => {
-      this.userdata = data.data.map((item: any) => ({
-        id: item.id,
-        Bname: item.Bname,
-        Phone: item.Phone,
-        createdOn: item.createdOn,
-        isHidden: localStorage.getItem(`isHidden_${item.id}`) === 'true' || false
-      }));
+      this.userdata = data.data;
+      console.log("this product", this.userdata);
       this.hasData = this.userdata.length > 0;
-      this.filterData();
+      this.dataSource.data = this.userdata;
     });
   }
 
-  toggleRowVisibility(index: number): void {
-    const rowData = this.dataSource.data[index];
-    rowData.isHidden = !rowData.isHidden;
-    localStorage.setItem(`isHidden_${rowData.id}`, rowData.isHidden.toString());
-    this.filterData();
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  editProduct(id: number): void {
-    this.router.navigate(['user_management/add_user'], {
-      queryParams: { id: id },
-    });
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 
-  deleteUser(id: string): void {
-    const payload = {
+  deleteUser(id: string) {
+    return {
       table_name: 'borrower',
       row_ids: id,
       action: 'delete',
     };
+  }
+
+  delete(id: string) {
+    const payload = this.deleteUser(id);
     this.commonService.delete_data_operation(payload).subscribe(
       (response) => {
         if (response.status === 'success') {
-          const message = response.message;
+          let message = response.message;
           this.snackBar.openSnackBarSuccess([message]);
-          this.loadData();
+          this.loaddata();
         } else {
           this.snackBar.openSnackBarError([response.message]);
         }
@@ -89,24 +77,34 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
-  applyFilter(event: Event): void {
+  delete1() {
+    const selectedRows = this.selection.selected.map(row => row.id); 
+    if (selectedRows.length === 0) {
+      return;
+    }
+    const payload = selectedRows.map(id => this.deleteUser(id));
+    this.commonService.delete_data_operation(payload).subscribe(
+      (response) => {
+        if (response.status === 'success') {
+          let message = response.message;
+          this.snackBar.openSnackBarSuccess([message]);
+          this.loaddata(); 
+          this.selection.clear(); 
+        } else {
+          this.snackBar.openSnackBarError([response.message]);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-    }
-  }
-
-  toggleShowInactiveUsers(): void {
-    this.showInactiveUsers = !this.showInactiveUsers;
-    this.filterData();
-  }
-
-  filterData(): void {
-    if (this.showInactiveUsers) {
-      this.dataSource.data = this.userdata.filter(user => user.isHidden);
-    } else {
-      this.dataSource.data = this.userdata;
     }
   }
 }
