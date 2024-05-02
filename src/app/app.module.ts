@@ -28,7 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
-    UserManagementComponent,
+    // UserManagementComponent,
     RolePermissionComponent,
     ManageBooksComponent,
     AddBooksComponent,
