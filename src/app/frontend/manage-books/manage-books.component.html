@@ -55,39 +55,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <!-- Left div with buttons -->
-                <div class="col-12 col-md-5 d-flex align-items-center mb-3">
-                    <div class="btn-group flex-grow-1 mr-3">
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="far fa-trash-alt mr-1"></i><span class="text-sm">Delete User</span>
-                        </button>
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="fas fa-sort mr-1"></i><span class="text-sm">Inactive Users</span>
-                        </button>
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="far fa-id-card mr-1"></i><span class="text-sm">Print Id Cards</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             <div class="table-responsive mt-3">
                 <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
-
-                    <ng-container matColumnDef="checkbox" class="custom-header">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
-                                [checked]="selection.hasValue() && isAllSelected()"
-                                [indeterminate]="selection.hasValue() && !isAllSelected()">
-                            </mat-checkbox> -->
-                        </th>
-                        <td mat-cell *matCellDef="let row">
-                            <mat-checkbox (click)="$event.stopPropagation()"
-                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-                            </mat-checkbox>
-                        </td>
-                    </ng-container>
 
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef> Book ID </th>

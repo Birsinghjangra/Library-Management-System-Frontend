@@ -6,7 +6,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
                     <li class="breadcrumb-item active">Add Books</li>
                 </ol>
             </div>
@@ -16,8 +16,8 @@
 
 <div class="container" style="width: 100%;">
     <div class="card" style="width: 100%;">
-        <div class="card-header">
-            <a href="" class="btn btn-sm btn-dark"><i class="fas fa-plus-circle mr-1"></i>Add New Book</a>
+        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
+            <span class="card-title font-weight-bold">Add Books</span>
         </div>
         <div class="card-body">
             <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">

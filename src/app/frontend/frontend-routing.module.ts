@@ -33,6 +33,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'user_management/add_user/:id',
+        loadChildren: () =>
+          import('../frontend/user-management/add-user/add-user.module').then(
+            (m) => m.AddUserModule
+          ),
+      },
+      {
         path: 'role_permission',
         loadChildren: () =>
           import('../frontend/role-permission/role-permission.module').then(
@@ -58,6 +65,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./issue-books/issue-books.module').then(
             (m) => m.IssueBooksModule
+          ),
+      },
+      {
+        path: 'issued_books',
+        loadChildren: () =>
+          import('./issued-books/issued-books.module').then(
+            (m) => m.IssuedBooksModule
           ),
       },
       
