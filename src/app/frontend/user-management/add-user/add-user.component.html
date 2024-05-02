@@ -17,7 +17,8 @@
 <div class="container">
     <div class="card card-dark">
         <div class="card-header">
-            <span class="card-header-title">{{ flag === 'create' ? 'Create User Details' : 'Update User Details' }}</span>
+            <span class="card-header-title">{{ flag === 'create' ? 'Create User Details' : 'Update User Details'
+                }}</span>
             <button class="btn btn-sm float-right" type="button">
                 <i class="text-white fas fa-times-circle" [routerLink]="['/admin/user_management']"></i>
             </button>
@@ -81,7 +82,7 @@
                     <div class="form-row">
                         <button class="btn btn-sm btn-dark ml-1" type="submit">
                             <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create User' : 'Update User' }}
-                          </button>
+                        </button>
                         <button class="btn btn-sm btn-danger ml-1" (click)="userForm.reset()">
                             <i class="far fa-trash-alt mr-1"></i>Clear Form
                         </button>
@@ -89,8 +90,5 @@
                 </form>
             </div>
         </div>
-
-
-
     </div>
 </div>

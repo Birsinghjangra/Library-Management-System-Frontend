@@ -24,7 +24,16 @@
                 <div class="row">
                     <div class="col-md-12 col-12 mb-10">
                         <div class="row">
-                            <!-- ISBN -->
+
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Book Title</span>
+                                    </div>
+                                    <input type="text" required="" class="form-control" formControlName="Title">
+                                </div>
+                            </div>
+
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -34,42 +43,48 @@
                                                 title="Its 10/13 digit nos which you can find behind a book."></i>
                                         </span>
                                     </div>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" formControlName="Isbn">
                                 </div>
                             </div>
 
-                            <!-- Publishers  -->
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Publishers</span>
                                     </div>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" formControlName="publication">
                                 </div>
                             </div>
 
-                            <!-- Book Title -->
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Title</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control">
-                                </div>
-                            </div>
-
-                            <!-- Book Price -->
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Book Price</span>
                                     </div>
-                                    <input type="number" required="" class="form-control">
+                                    <input type="number" required="" class="form-control" formControlName="price">
                                 </div>
                             </div>
 
-                            <button type="button" class="btn btn-sm btn-dark mb-1 ml-2" type="submit" [disabled]="!bookForm.valid">
-                                <i class="far fa-hdd mr-2"></i>Save
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Edition</span>
+                                    </div>
+                                    <input type="text" required="" class="form-control" formControlName="Eddition">
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Quanatity</span>
+                                    </div>
+                                    <input type="number" required="" class="form-control" >
+                                </div>
+                            </div> -->
+
+                            <button class="btn btn-sm btn-dark ml-1" type="submit">
+                                <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create User' : 'Update User' }}
                             </button>
                             <button class="btn btn-sm btn-danger mb-1 ml-1">
                                 <i class="far fa-trash-alt mr-1"></i>Clear Form

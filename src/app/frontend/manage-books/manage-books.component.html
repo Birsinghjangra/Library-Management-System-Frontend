@@ -75,11 +75,11 @@
 
                     <ng-container matColumnDef="publication">
                         <th mat-header-cell *matHeaderCellDef> Publication </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.Publication }} </td>
+                        <td mat-cell *matCellDef="let element"> {{ element.publication }} </td>
                     </ng-container>
                     <ng-container matColumnDef="price">
                         <th mat-header-cell *matHeaderCellDef> Book Price </th>
-                        <td mat-cell *matCellDef="let element"> {{element.Price}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="eddition">
@@ -90,16 +90,12 @@
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let element">
-                            <button type="button" class="btn btn-sm btn-success  float-left action_btn mr-1"
-                                data-original-title="Click to activate | de-activate">
-                                <i class="far fa-thumbs-up"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-dark float-left action_btn mr-1"
-                                [routerLink]="['/>admin/user_management/add_user/']"
-                                [queryParams]="{ id: element.id, flag: 'edit' }">
-                                <i class="far fa-edit"></i>
-                            </button>
-                            <button type="button" 
+                            <a [routerLink]="['/admin/add_books/']" [queryParams]="{ id: element.id, flag: 'edit' }">
+                                <span type="button" class="btn btn-sm btn-dark float-left action_btn mr-1">
+                                    <i class="far fa-edit"></i>
+                                </span>
+                            </a>
+                            <button type="button" (click)="delete(element.id)"
                                 class="btn btn-sm btn-danger float-left action_btn">
                                 <i class="fas fa-trash-alt"></i>
                             </button>

@@ -24,58 +24,46 @@ export class ManageBooksComponent implements OnInit {
               private snackBar: SnackBarService) { }
 
   ngOnInit(): void {
-    // this.loaddata();
+    this.loaddata();
   }
 
-  // loaddata() {
-  //   const value = {
-  //     Table_name: 'borrower'
-  //   };
-  //   this.commonService.getData_common(value).subscribe((data: any) => {
-  //     this.userdata = data.data;
-  //     console.log("this product", this.userdata);
-  //     this.hasData = this.userdata.length > 0;
-  //     this.dataSource.data = this.userdata;
-  //   });
-  // }
+  loaddata() {
+    const value = {
+      Table_name: 'book'
+    };
+    this.commonService.getData_common(value).subscribe((data: any) => {
+      this.userdata = data.data;
+      console.log("this book", this.userdata);
+      this.hasData = this.userdata.length > 0;
+      this.dataSource.data = this.userdata;
+    });
+  }
 
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => this.selection.select(row));
-  // }
+  deleteUser(id: string) {
+    return {
+      table_name: 'book',
+      row_ids: id,
+      action: 'delete',
+    };
+  }
 
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-
-  // deleteUser(id: string) {
-  //   return {
-  //     table_name: 'borrower',
-  //     row_ids: id,
-  //     action: 'delete',
-  //   };
-  // }
-
-  // delete(id: string) {
-  //   const payload = this.deleteUser(id);
-  //   this.commonService.delete_data_operation(payload).subscribe(
-  //     (response) => {
-  //       if (response.status === 'success') {
-  //         let message = response.message;
-  //         this.snackBar.openSnackBarSuccess([message]);
-  //         this.loaddata();
-  //       } else {
-  //         this.snackBar.openSnackBarError([response.message]);
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
+  delete(id: string) {
+    const payload = this.deleteUser(id);
+    this.commonService.delete_data_operation(payload).subscribe(
+      (response) => {
+        if (response.status === 'success') {
+          let message = response.message;
+          this.snackBar.openSnackBarSuccess([message]);
+          this.loaddata();
+        } else {
+          this.snackBar.openSnackBarError([response.message]);
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
