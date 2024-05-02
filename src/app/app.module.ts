@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { loginModule } from './common/login/login.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-// import { UserManagementComponent } from '../app/frontend/user-management/user-management.component';
+import { UserManagementComponent } from '../app/frontend/user-management/user-management.component';
 import { RolePermissionComponent } from '../app/frontend/role-permission/role-permission.component';
 import { ManageBooksComponent } from './frontend/manage-books/manage-books.component';
 import { AddBooksComponent } from './frontend/add-books/add-books.component';
@@ -28,7 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   declarations: [
     AppComponent,
-    // UserManagementComponent,
+    UserManagementComponent,
     RolePermissionComponent,
     ManageBooksComponent,
     AddBooksComponent,
