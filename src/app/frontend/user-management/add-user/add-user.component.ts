@@ -4,9 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink,ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
-import { environment } from 'src/environment';
-
-
 
 @Component({
   selector: 'app-add-user',

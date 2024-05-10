@@ -30,11 +30,6 @@ export const sidebarMenuConfig = [
       // },
   //   ]
   // },
-  {
-    label: 'Add Books',
-    route: 'add_books',
-    icon: 'nav-icon far fa-plus-square',
-  },
 
   {
     label: 'Manage Books',
@@ -52,7 +47,7 @@ export const sidebarMenuConfig = [
     icon: 'nav-icon far fa-plus-square',
   },
   {
-    label: 'User Management',
+    label: 'Manage User',
     route: 'user_management',
     icon: 'nav-icon far fa-plus-square',
   },

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>Add Books</h1>
+                <h1>Book Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -15,9 +15,13 @@
 </section>
 
 <div class="container" style="width: 100%;">
-    <div class="card" style="width: 100%;">
-        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
-            <span class="card-title font-weight-bold">Add Books</span>
+    <div class="card card-dark" style="width: 100%;">
+        <div class="card-header">
+            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create Book Details' : 'Update Book Details'
+                }}</span>
+            <button class="btn btn-sm float-right" type="button">
+                <i class="text-white fas fa-times-circle" [routerLink]="['/admin/manage_books']"></i>
+            </button>
         </div>
         <div class="card-body">
             <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
@@ -84,9 +88,9 @@
                             </div> -->
 
                             <button class="btn btn-sm btn-dark ml-1" type="submit">
-                                <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create User' : 'Update User' }}
+                                <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create Book' : 'Update Book' }}
                             </button>
-                            <button class="btn btn-sm btn-danger mb-1 ml-1">
+                            <button class="btn btn-sm btn-danger mb-1 ml-1" (click)="bookForm.reset()">
                                 <i class="far fa-trash-alt mr-1"></i>Clear Form
                             </button>
                         </div>

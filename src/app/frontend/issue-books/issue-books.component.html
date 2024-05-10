@@ -28,29 +28,35 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Search User</span>
                                 </div>
-                                <input id="user_autocomplete" placeholder="Type to search." type="text" class="form-control ui-autocomplete-input" autocomplete="off" />
+                                <input placeholder="Type to search." type="text" #searchbar
+                                    [(ngModel)]="searchUserInput" (keyup)="searchUserData(searchbar.value)"
+                                    class="form-control ui-autocomplete-input" autocomplete="on" />
                             </div>
+                            <ul class="menulist col-md-9">
+                                <li *ngFor="let show of searchUserResult" (click)="showUserDetails(show)"
+                                    [hidden]="toggle">
+                                    <p> ID: {{show.id}} | Name: {{show.Bname}} </p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-9">
+                        <div class="col-md-9" *ngIf="userData">
                             <ul class="list-group text-sm">
-                                <li class="list-group-item text-capitalize" >
-                                    Card ID : <span class="user_field_val" id="spn_user_id">N/A</span>
+                                <li class="list-group-item text-capitalize">
+                                    Card ID: <span class="user_field_val">{{ userData.id || 'N/A' }}</span>
                                 </li>
                                 <li class="list-group-item address_li">
-                                    Name : <span class="user_field_val" id="user_name">N/A</span>
+                                    Name: <span class="user_field_val">{{ userData.Bname || 'N/A' }}</span>
                                 </li>
                                 <li class="list-group-item">
-                                    Phone : <span class="user_field_val" id="user_phone">N/A</span>
-                                </li>
-                                <li class="list-group-item address_li">
-                                    Limit Allowed : <span class="user_field_val" id="user_limit">N/A</span>
+                                    Phone: <span class="user_field_val">{{ userData.Phone || 'N/A' }}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md col-6 mb-10">
                     <div class="form-row mb-10">
                         <div class="col-md-12 mb-2">
@@ -58,31 +64,36 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Search Book</span>
                                 </div>
-                                <input id="book_autocomplete" placeholder="Type to search." type="text" class="form-control ui-autocomplete-input" autocomplete="off" />
+                                <input id="book_autocomplete" placeholder="Type to search." type="text" #searchbar
+                                    [(ngModel)]="searchBookInput" (keyup)="searchBookData(searchbar.value)"
+                                    class="form-control ui-autocomplete-input" autocomplete="on" />
                             </div>
+                            <ul class="menulist col-md-9">
+                                <li *ngFor="let show of searchBookResult" (click)="showBookDetails(show)"
+                                    [hidden]="toggle">
+                                    <p> Book Title: {{show.Title}} </p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-9">
                             <ul class="list-group text-sm">
                                 <li class="list-group-item text-capitalize">
-                                    Book Code : <span class="book_field_val" id="book_span_code">N/A</span>
-                                </li>
-                                <li class="list-group-item text-capitalize">
-                                    Book Title : <span class="book_field_val" id="book_title">N/A</span>
+                                    Book Title : <span class="book_field_val">{{ userData.Title || 'N/A' }}</span>
                                 </li>
                                 <li class="list-group-item">
-                                    ISBN : <span class="book_field_val" id="book_isbn">N/A</span>
+                                    ISBN : <span class="book_field_val">{{ userData.Isbn || 'N/A' }}</span>
                                 </li>
                                 <li class="list-group-item text-capitalize">
-                                    Book Price : <span class="book_field_val" id="book_price">N/A</span>
+                                    Book Price : <span class="book_field_val">{{ userData.price || 'N/A' }}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="row mt-3">
                 <div class="col-md-5 mb-10">

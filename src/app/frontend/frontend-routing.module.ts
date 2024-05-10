@@ -47,9 +47,9 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'add_books',
+        path: 'manage_books/add_books',
         loadChildren: () =>
-          import('./add-books/add-books.module').then(
+          import('./manage-books/add-books/add-books.module').then(
             (m) => m.AddBooksModule
           ),
       },

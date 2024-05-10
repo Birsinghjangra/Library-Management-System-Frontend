@@ -17,7 +17,7 @@
 <div class="container">
     <div class="card card-dark">
         <div class="card-header">
-            <span class="card-header-title">{{ flag === 'create' ? 'Create User Details' : 'Update User Details'
+            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create User Details' : 'Update User Details'
                 }}</span>
             <button class="btn btn-sm float-right" type="button">
                 <i class="text-white fas fa-times-circle" [routerLink]="['/admin/user_management']"></i>
@@ -27,7 +27,6 @@
         <div class="card-body">
             <div class="row mb-2">
                 <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="col-12 p-1">
-                    <input type="hidden" value="create" />
                     <div class="form-row">
                         <div class="col-md-12 col-12">
                             <div class="form-row">
