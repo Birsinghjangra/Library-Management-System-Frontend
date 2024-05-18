@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
 
@@ -13,82 +13,78 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 export class AddUserComponent implements OnInit {
 
   userForm!: FormGroup;
-  Params_ids:any;
-  get_form_data:any
-  flag:any
+  Params_ids: any;
+  flag: any;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private http: HttpClient,
-    private CommonService: CommonService,
-    private SnackBarService: SnackBarService,
+    private commonService: CommonService,
+    private snackBarService: SnackBarService,
     private router: Router,
-    private ActivatedRoute:ActivatedRoute) { }
-  ngOnInit(): void {
-    this.ActivatedRoute.queryParams.subscribe((params)=>{
-      // console.log(params)
-      this.Params_ids = params['id']
-      this.flag =params['flag']
-      console.log(this.flag)
-    })
+    private activatedRoute: ActivatedRoute
+  ) { }
 
-    this.initializeForm()
-    this.get_data()
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.Params_ids = params['id'];
+      this.flag = params['flag'];
+    });
+
+    this.initializeForm();
+    if (this.flag === 'edit') {
+      this.getData();
+    }
   }
 
   initializeForm() {
     this.userForm = this.fb.group({
-      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]], // Only alphabets and spaces allowed
-      Phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // 10-digit number validation
-      Address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]] // Only specified characters allowed
+      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      Phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      Address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]]
     });
   }
-  get_data(){
-    if(this.flag=='edit'){
-      const value = {
-        Table_name:"borrower",
-        id:this.Params_ids
-      }
-      this.CommonService.getData_common(value).subscribe(data=>{
-  
-        this.get_form_data = data.data[0]
-        this.userForm.patchValue(this.get_form_data)
-        // console.log(this.get_form_data)
-      })
-      // if(this.ids){
-      //   this.borrowerForm.patchValue(data.data[0])
-      // }
-    }
-   
+
+  getData() {
+    const value = {
+      Table_name: "borrower",
+      id: this.Params_ids
+    };
+    this.commonService.getData_common(value).subscribe(data => {
+      this.userForm.patchValue(data.data[0]);
+    });
   }
 
   onSubmit() {
-    if (this.userForm.valid) { // Check if the form is valid
+    if (this.userForm.valid) {
       const formData = this.userForm.value;
       const value = {
-        action: "insert",
+        action: this.Params_ids ? 'update' : 'insert',
         column_data: formData,
         table_name: "borrower",
-        id: 0
+        id: this.Params_ids ? this.Params_ids : 0
       };
-      if (this.Params_ids) {
-        value['id'] = this.Params_ids;
-        value['action'] = 'update';
-      }
-      
-      this.CommonService.save_data_operation(value).subscribe((data: any) => {
-        let message = data.message;
+  
+      this.commonService.save_data_operation(value).subscribe((data: any) => {
+        const message = data.message;
         if (data.status === 'success') {
-          this.SnackBarService.openSnackBarSuccess([message]);
+          this.snackBarService.openSnackBarSuccess([message]);
           this.router.navigate(['/admin/user_management']);
         } else {
-          this.SnackBarService.openSnackBarError([message]);
+          this.snackBarService.openSnackBarError([message]);
         }
       });
     } else {
-      // Form is not valid, display error message or handle accordingly
+      this.validateAllFormFields(this.userForm);
       console.log("Form is not valid");
     }
   }
   
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control?.markAsTouched({ onlySelf: true });
+    });
+  }
   
 }

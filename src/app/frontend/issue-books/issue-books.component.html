@@ -19,117 +19,15 @@
         <div class="card-header" style="border-bottom: 2px solid #dd4b39">
             <span class="card-title font-weight-bold">Issue Books</span>
         </div>
-        <!-- <div class="card-body">
-            <div class="form-row mb-10">
-
-                <div class="col-md col-6 mb-10">
-                    <div class="form-row mb-10">
-                        <div class="col-md-12 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Search User</span>
-                                </div>
-                                <ng-select [items]="searchUserResult" bindLabel="Bname" [(ngModel)]="searchUserInput"
-                                    (search)="searchUserData($event.term)" (change)="showUserDetails($event)">
-                                </ng-select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-9">
-                            <ul class="list-group text-sm">
-                                <li class="list-group-item text-capitalize">
-                                    Card ID: <span class="user_field_val">{{ userData?.id || 'N/A' }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    Name: <span class="user_field_val">{{ userData?.Bname || 'N/A' }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    Phone: <span class="user_field_val">{{ userData?.Phone || 'N/A' }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md col-6 mb-10">
-                    <div class="form-row mb-10">
-                        <div class="col-md-12 mb-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Search Book</span>
-                                </div>
-                                <ng-select [items]="searchBookResult" bindLabel="Title" [(ngModel)]="searchBookInput"
-                                    (search)="searchBookData($event.term)" (change)="showBookDetails($event)">
-                                </ng-select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-9">
-                            <ul class="list-group text-sm">
-                                <li class="list-group-item text-capitalize">
-                                    Book Title : <span class="book_field_val">{{ bookData?.Title || 'N/A' }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    ISBN : <span class="book_field_val">{{ bookData?.Isbn || 'N/A' }}</span>
-                                </li>
-                                <li class="list-group-item">
-                                    Book Price : <span class="book_field_val">{{ bookData?.price || 'N/A' }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row mt-3">
-                <div class="col-md-5 mb-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Issue Date</span>
-                        </div>
-                        <input type="date" id="issue_date_tmp" class="form-control hasDatepicker" />
-                        <input type="hidden" id="issue_date" />
-                    </div>
-                </div>
-                <div class="col-md-5 mb-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Return Date</span>
-                        </div>
-                        <input type="date" id="return_date_tmp" class="form-control hasDatepicker" />
-                        <input type="hidden" id="return_date" />
-                    </div>
-                </div>
-                <div class="col-md-2 mb-10">
-                    <button type="button" disabled="" class="btn btn-danger">
-                        Issue Book
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-row mt-3">
-                <div class="col-md-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Remark</span>
-                        </div>
-                        <textarea class="form-control"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <div class="container">
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="searchUser">Search User</label>
-                        <ng-select [items]="searchUserResult" bindLabel="Bname" [(ngModel)]="searchUserInput"
-                            (search)="searchUserData($event.term)" (change)="showUserDetails($event)">
+                        <ng-select [items]="searchUserResult" class="form-control" bindLabel="Bname"
+                            [(ngModel)]="searchUserInput" (search)="searchUserData($event.term)"
+                            (change)="showUserDetails($event)">
                         </ng-select>
                     </div>
                     <div class="user-details mt-2">
@@ -165,7 +63,7 @@
                             <span class="input-group-text">Issue Date</span>
                         </div>
                         <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
-                            [(ngModel)]="issueDate" />
+                            [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" />
                         <input type="hidden" id="issue_date" />
                     </div>
                 </div>
@@ -175,12 +73,12 @@
                             <span class="input-group-text">Return Date</span>
                         </div>
                         <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
-                            [(ngModel)]="returnDate" />
+                            [(ngModel)]="returnDate" readonly />
                         <input type="hidden" id="return_date" />
                     </div>
                 </div>
                 <div class="col-md-2 mb-10">
-                    <button type="button" disabled="" class="btn btn-danger" (click)="issueBook()">
+                    <button type="button" class="btn btn-danger" (click)="issueBook()">
                         Issue Book
                     </button>
                 </div>
@@ -197,5 +95,5 @@
                 </div>
             </div>
         </div>
-
     </div>
+</div>

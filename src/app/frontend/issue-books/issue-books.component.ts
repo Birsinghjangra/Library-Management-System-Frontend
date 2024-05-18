@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../../services/common.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-issue-books',
@@ -23,6 +24,13 @@ export class IssueBooksComponent implements OnInit {
   ngOnInit(): void {
     this.searchUserData('');
     this.searchBookData('');
+    this.setInitialIssueDate();
+  }
+
+  setInitialIssueDate(): void {
+    const today = new Date();
+    this.issueDate = formatDate(today, 'yyyy-MM-dd', 'en');
+    this.onIssueDateChange({ target: { value: this.issueDate } });
   }
 
   searchUserData(id: string): void {
@@ -77,14 +85,30 @@ export class IssueBooksComponent implements OnInit {
     }
   }
 
+  onIssueDateChange(event: any): void {
+    const issueDate = new Date(event.target.value);
+    const returnDate = new Date(issueDate);
+    returnDate.setDate(issueDate.getDate() + 7);
+
+    this.issueDate = formatDate(issueDate, 'yyyy-MM-dd', 'en');
+    this.returnDate = formatDate(returnDate, 'yyyy-MM-dd', 'en');
+  }
+
   issueBook(): void {
+    if (!this.userData || !this.bookData) {
+      alert('Please select both a user and a book.');
+      return;
+    }
+
     const payload = {
       userId: this.userData.id,
-      bookId: this.bookData.id,
+      isbn: this.bookData.Isbn,
       issueDate: this.issueDate,
       returnDate: this.returnDate,
       remark: this.remark
     };
+
+    console.log('Issue Book Payload:', payload);
 
     // this.commonService.issue_book(payload).subscribe(
     //   (response) => {
