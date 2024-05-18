@@ -17,7 +17,8 @@
 <div class="container" style="width: 100%;">
     <div class="card card-dark" style="width: 100%;">
         <div class="card-header">
-            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create Book Details' : 'Update Book Details'
+            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create Book Details' : 'Update Book
+                Details'
                 }}</span>
             <button class="btn btn-sm float-right" type="button">
                 <i class="text-white fas fa-times-circle" [routerLink]="['/admin/manage_books']"></i>
@@ -32,15 +33,6 @@
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Title</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control" formControlName="Title">
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
                                         <span class="input-group-text">ISBN
                                             <i class="fas fa-info-circle ml-2" data-toggle="tooltip"
                                                 data-placement="top"
@@ -49,14 +41,22 @@
                                     </div>
                                     <input type="number" class="form-control" formControlName="Isbn">
                                 </div>
+                                <div *ngIf="bookForm.get('Isbn')?.invalid && bookForm.get('Isbn')?.touched"
+                                    class="text-danger">
+                                    ISBN is required.
+                                </div>
                             </div>
 
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Publishers</span>
+                                        <span class="input-group-text">Book Title</span>
                                     </div>
-                                    <input type="text" class="form-control" formControlName="publication">
+                                    <input type="text" required="" class="form-control" formControlName="Title">
+                                </div>
+                                <div *ngIf="bookForm.get('Title')?.invalid && bookForm.get('Title')?.touched"
+                                    class="text-danger">
+                                    Title is required.
                                 </div>
                             </div>
 
@@ -67,6 +67,23 @@
                                     </div>
                                     <input type="number" required="" class="form-control" formControlName="price">
                                 </div>
+                                <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched"
+                                    class="text-danger">
+                                    Price is required.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Publishers</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="publication">
+                                </div>
+                                <div *ngIf="bookForm.get('publication')?.invalid && bookForm.get('publication')?.touched"
+                                    class="text-danger">
+                                    Publication is required.
+                                </div>
                             </div>
 
                             <div class="form-group col-md-6 col-12">
@@ -76,21 +93,17 @@
                                     </div>
                                     <input type="text" required="" class="form-control" formControlName="Eddition">
                                 </div>
-                            </div>
-
-                            <!-- <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Quanatity</span>
-                                    </div>
-                                    <input type="number" required="" class="form-control" >
+                                <div *ngIf="bookForm.get('Eddition')?.invalid && bookForm.get('Eddition')?.touched"
+                                    class="text-danger">
+                                    Edition is required.
                                 </div>
-                            </div> -->
-
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <button class="btn btn-sm btn-dark ml-1" type="submit">
                                 <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create Book' : 'Update Book' }}
                             </button>
-                            <button class="btn btn-sm btn-danger mb-1 ml-1" (click)="bookForm.reset()">
+                            <button class="btn btn-sm btn-danger ml-1" type="button" (click)="bookForm.reset()">
                                 <i class="far fa-trash-alt mr-1"></i>Clear Form
                             </button>
                         </div>

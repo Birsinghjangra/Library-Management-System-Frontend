@@ -14,84 +14,75 @@ import { ActivatedRoute } from '@angular/router';
 export class AddBooksComponent implements OnInit {
 
   bookForm!: FormGroup;
-  flag:any;
-  Params_ids:any; 
-  get_form_data:any;
+  flag: any;
+  Params_ids: any;
+  get_form_data: any;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private CommonService: CommonService,
-    private SnackBarService: SnackBarService,
+    private commonService: CommonService,
+    private snackBarService: SnackBarService,
     private router: Router,
-    private ActivatedRoute:ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.ActivatedRoute.queryParams.subscribe((params)=>{
-      // console.log(params)
-      this.Params_ids = params['id']
-      this.flag =params['flag']
-    })
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.Params_ids = params['id'];
+      this.flag = params['flag'];
+    });
 
     this.initializeForm();
-    this.get_data()
-
+    this.get_data();
   }
 
   initializeForm() {
     this.bookForm = this.fb.group({
-      Isbn: ['', [Validators.required, ]],
-      Title: ['', [Validators.required, ]],
-      publication: ['', [Validators.required, ]],
-      price: ['', [Validators.required, ]],
-      Eddition: ['', [Validators.required, ]],
-      // quantity: ['', [Validators.required,]]
+      Isbn: ['', [Validators.required]],
+      Title: ['', [Validators.required]],
+      publication: ['', [Validators.required]],
+      price: ['', [Validators.required, Validators.min(0)]],
+      Eddition: ['', [Validators.required]],
     });
   }
 
-  get_data(){
-    if(this.flag=='edit'){
+  get_data() {
+    if (this.flag === 'edit') {
       const value = {
-        Table_name:"book",
-        id:this.Params_ids
-      }
-      this.CommonService.getData_common(value).subscribe(data=>{
-  
-        this.get_form_data = data.data[0]
-        this.bookForm.patchValue(this.get_form_data)
-        console.log(this.get_form_data)
-      })
-      // if(this.ids){
-      //   this.borrowerForm.patchValue(data.data[0])
-      // }
-    }
-   
-  }
-  onSubmit() {
-    if (this.bookForm.valid) {
-      const formData = this.bookForm.value;
-      formData['isCheckedOut'] = 0;
-      const value = {
-        action: 'insert',
-        column_data: formData,
-        table_name: 'book',
-        id: 0
+        Table_name: "book",
+        id: this.Params_ids
       };
-      if (this.Params_ids) {
-        value['id'] = this.Params_ids;
-        value['action'] = 'update';
-      }
-      console.log(value);
-      this.CommonService.save_data_operation(value).subscribe((data: any) => {
-        let message = data.message;
-        if (data.status === 'success') {
-          this.SnackBarService.openSnackBarSuccess([message]);
-          this.router.navigate(['/admin/manage_books']);
-        } else {
-          this.SnackBarService.openSnackBarError([message]);
-        }
+      this.commonService.getData_common(value).subscribe(data => {
+        this.get_form_data = data.data[0];
+        this.bookForm.patchValue(this.get_form_data);
       });
     }
+  }
+
+  onSubmit() {
+    if (this.bookForm.invalid) {
+      this.bookForm.markAllAsTouched(); // Mark all controls as touched to trigger validation messages
+      return;
+    }
+
+    const formData = this.bookForm.value;
+    formData['isCheckedOut'] = 0;
+    const value = {
+      action: this.Params_ids ? 'update' : 'insert',
+      column_data: formData,
+      table_name: 'book',
+      id: this.Params_ids || 0
+    };
+
+    this.commonService.save_data_operation(value).subscribe((data: any) => {
+      const message = data.message;
+      if (data.status === 'success') {
+        this.snackBarService.openSnackBarSuccess([message]);
+        this.router.navigate(['/admin/manage_books']);
+      } else {
+        this.snackBarService.openSnackBarError([message]);
+      }
+    });
   }
 }

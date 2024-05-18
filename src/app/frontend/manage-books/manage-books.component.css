@@ -1,4 +1,8 @@
-table.table.table-bordered.table-sm {
-    margin-top: 10px;
-}
-
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+    font-weight: bold;
+    font-size: medium;
+  }

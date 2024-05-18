@@ -17,7 +17,7 @@ export class ManageBooksComponent implements OnInit {
   userdata: any = [];
   selection = new SelectionModel<any>(true, []);
 
-  displayedColumns = ['id', 'isbn', 'title', 'publication', 'price', 'eddition', 'action'];
+  displayedColumns = ['isbn', 'title', 'publication', 'price', 'eddition', 'action'];
 
   constructor(private commonService: CommonService,
               private router: Router,
