@@ -1,8 +1,7 @@
-.col-md-9 {
-    margin-left: 125px;
-}
+/* 
+ */
 
-  .menulist {
+  /* .menulist {
     background: #eee;
     max-height: 200px;
     overflow-y: auto;
@@ -14,7 +13,6 @@
 }
 
 .menulist:empty::after {
-  /* content: ""; */
   border: 1px solid rgb(45, 44, 44);
 }
 
@@ -32,4 +30,37 @@
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis; 
+} */
+
+.container {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.user-details, .book-details {
+  margin-top: 10px;
+}
+
+.list-group-item {
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.ng-select {
+  width: 100%;
+}
+
+.ng-select .ng-select-container {
+  height: calc(1.5em + .75rem + 2px);
+}
+
+.ng-select .ng-select-container .ng-input {
+  padding: .375rem .75rem;
+}
+
+.ng-select .ng-dropdown-panel {
+  width: 100%;
 }

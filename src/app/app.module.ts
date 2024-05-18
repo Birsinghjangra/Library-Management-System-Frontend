@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms'; 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -55,7 +56,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTableModule,
     MatCheckboxModule,
     FormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

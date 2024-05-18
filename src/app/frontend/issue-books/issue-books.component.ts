@@ -8,13 +8,15 @@ import { CommonService } from '../../services/common.service';
   styleUrls: ['./issue-books.component.css']
 })
 export class IssueBooksComponent implements OnInit {
-
   searchUserInput: string = '';
   searchUserResult: Array<any> = [];
-  toggle: boolean = false;
-  userData: any = {};
+  userData: any = null;
+  bookData: any = null;
   searchBookInput: string = '';
   searchBookResult: Array<any> = [];
+  issueDate: string = '';
+  returnDate: string = '';
+  remark: string = '';
 
   constructor(private http: HttpClient, private commonService: CommonService) { }
 
@@ -28,26 +30,13 @@ export class IssueBooksComponent implements OnInit {
       Table_name: 'borrower',
       id: id
     };
-    //   this.commonService.search_user(id).subscribe(
-    //     (response) => {
-    //       console.log("Response from search_user:", response);
-    //       if (response && response.data) {
-    //         this.searchResult = response.data;
-    //       } else {
-    //         console.error("Response data is missing or invalid:", response);
-    //       }
-    //     },
-    //     (error) => {
-    //       console.error('Error occurred while fetching user data:', error);
-    //     }
-    //   );
-    // }
-
-
-    this.http.post<any>('http://127.0.0.1:5000/searchUser', payload).subscribe(
+    this.commonService.search_user(payload).subscribe(
       (response) => {
-        console.log(response);
-        this.searchUserResult = response.data;
+        if (response && response.data) {
+          this.searchUserResult = response.data;
+        } else {
+          console.error("Response data is missing or invalid:", response);
+        }
       },
       (error) => {
         console.error('Error occurred while fetching user data:', error);
@@ -55,10 +44,11 @@ export class IssueBooksComponent implements OnInit {
     );
   }
 
-  showUserDetails(users: any): void {
-    this.userData = users;
-    this.toggle = true;
-    this.searchUserInput = users.Bname;
+  showUserDetails(user: any): void {
+    this.userData = user;
+    if (user) {
+      this.searchUserInput = user.Bname;
+    }
   }
 
   searchBookData(title: string): void {
@@ -66,35 +56,47 @@ export class IssueBooksComponent implements OnInit {
       Table_name: 'book',
       title: title
     };
-    //   this.commonService.search_book(id).subscribe(
-    //     (response) => {
-    //       console.log("Response from search_book:", response);
-    //       if (response && response.data) {
-    //         this.searchBookResult = response.data;
-    //       } else {
-    //         console.error("Response data is missing or invalid:", response);
-    //       }
-    //     },
-    //     (error) => {
-    //       console.error('Error occurred while fetching user data:', error);
-    //     }
-    //   );
-    // }
-
-    this.http.post<any>('http://127.0.0.1:5000/searchBook', payload).subscribe(
+    this.commonService.search_book(payload).subscribe(
       (response) => {
-        console.log(response);
-        this.searchBookResult = response.data; 
+        if (response && response.data) {
+          this.searchBookResult = response.data;
+        } else {
+          console.error("Response data is missing or invalid:", response);
+        }
       },
       (error) => {
-        console.error('Error occurred while fetching user data:', error);
+        console.error('Error occurred while fetching book data:', error);
       }
     );
   }
 
-  showBookDetails(users: any): void {
-    this.userData = users;
-    this.toggle = true;
-    this.searchBookInput = users.title;
+  showBookDetails(book: any): void {
+    this.bookData = book;
+    if (book) {
+      this.searchBookInput = book.Title;
+    }
+  }
+
+  issueBook(): void {
+    const payload = {
+      userId: this.userData.id,
+      bookId: this.bookData.id,
+      issueDate: this.issueDate,
+      returnDate: this.returnDate,
+      remark: this.remark
+    };
+
+    // this.commonService.issue_book(payload).subscribe(
+    //   (response) => {
+    //     if (response && response.success) {
+    //       alert('Book issued successfully');
+    //     } else {
+    //       alert('Failed to issue book');
+    //     }
+    //   },
+    //   (error) => {
+    //     console.error('Error occurred while issuing book:', error);
+    //   }
+    // );
   }
 }

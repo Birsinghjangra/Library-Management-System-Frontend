@@ -1,4 +1,4 @@
-p {
+/* p {
   font-family: Lato;
 }
 *{
@@ -61,4 +61,34 @@ ul li p{
   text-align: center;
   font-weight: bold;
   padding-top: 7px;
+} */
+
+
+.custom-ng-select .ng-select-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-ng-select .ng-select-container .ng-value-container {
+  display: flex;
+  align-items: center;
+}
+
+.custom-ng-select .ng-select-container .ng-input {
+  flex-grow: 1;
+}
+
+.custom-ng-select .ng-dropdown-panel .ng-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-ng-select .ng-dropdown-panel .ng-option span {
+  margin-right: 10px;
+}
+
+/* Adjust the width to match the form control */
+.custom-ng-select .ng-select {
+  width: 100%;
 }

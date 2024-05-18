@@ -310,66 +310,52 @@
 </table> -->
 
 
+<!-- <label>Your first ng-select</label>
+<ng-select [items]="cities" bindLabel="name" placeholder="Select city" [(ngModel)]="selectedCity" [searchable]="true">
+</ng-select>
+<p>
+    Selected city: {{selectedCity | json}}
+</p>
+<hr /> -->
 
-<!-- role-permission.component.html -->
-<div class="searchbar">
-    <div class="bar">
-        <input type="text" #searchbar [(ngModel)]="searchInput" (keyup)="fetchUser(searchbar.value)"
-            placeholder="Search Here" />
-    </div>
-    <ul>
-        <li *ngFor="let show of searchResult" (click)="showDetails(show)" [hidden]="toggle">
-            <p> Name :{{show.Bname }} ID:{{ show.id }}</p>
-        </li>
-    </ul>
-    <div class="col-md-9 details" *ngIf="toggle">
-        <ul class="list-group text-sm">
-            <li class="list-group-item text-capitalize">
-                Card ID : <span class="user_field_val">{{ userData.id }}</span>
-            </li>
-            <li class="list-group-item address_li">
-                Name : <span class="user_field_val">{{ userData.Bname }}</span>
-            </li>
-            <li class="list-group-item">
-                Phone : <span class="user_field_val">{{ userData.Phone }}</span>
-            </li>
-        </ul>
-    </div>
-</div>
-
-
-<div class="col-md col-6 mb-10">
-    <div class="form-row mb-10">
-        <div class="col-md-12 mb-2">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Search User</span>
-                </div>
-                <input 
+<!-- <input 
                     placeholder="Type to search." type="text" #searchbar [(ngModel)]="searchInput" 
                     (keyup)="fetchUser(searchbar.value)" class="form-control ui-autocomplete-input"
-                    autocomplete="on" />
-            </div>
-            <ul>
-                <li *ngFor="let show of searchResult" (click)="showDetails(show)" [hidden]="toggle">
-                    <p> Name: {{show.Bname}} ID: {{show.id}}</p>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-md-9" *ngIf="userData">
-            <ul class="list-group text-sm">
-                <li class="list-group-item text-capitalize">
-                    Card ID: <span class="user_field_val">{{ userData.id }}</span>
-                </li>
-                <li class="list-group-item address_li">
-                    Name: <span class="user_field_val">{{ userData.Bname }}</span>
-                </li>
-                <li class="list-group-item">
-                    Phone: <span class="user_field_val">{{ userData.Phone }}</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+                    autocomplete="on" /> -->
+
+
+                    <div class="col-md col-6 mb-10">
+                        <div class="form-row mb-10">
+                            <div class="col-md-12 mb-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Search User</span>
+                                    </div>
+                                    <ng-select class="custom-ng-select" [items]="searchResult" bindLabel="Bname" bindValue="id" placeholder="Type to search."
+                                        [(ngModel)]="searchInput" (ngModelChange)="fetchUser($event)" [searchable]="true" 
+                                        (change)="showDetails($event)" class="form-control ui-autocomplete-input"
+                                        autocomplete="on">
+                                        <ng-template ng-option-tmp let-item="item">
+                                            <span>ID: {{ item.id }} || Name: {{ item.Bname }}</span>
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-9">
+                                <ul class="list-group text-sm">
+                                    <li class="list-group-item text-capitalize">
+                                        Card ID: <span class="user_field_val">{{ userData?.id || 'N/A' }}</span>
+                                    </li>
+                                    <li class="list-group-item address_li">
+                                        Name: <span class="user_field_val">{{ userData?.Bname || 'N/A' }}</span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        Phone: <span class="user_field_val">{{ userData?.Phone || 'N/A' }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
