@@ -49,11 +49,11 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Phone</span>
                                         </div>
-                                        <input type="number" class="form-control" formControlName="Phone" required />
+                                        <input type="number" class="form-control" formControlName="Phone" (input)="onPhoneInput($event)" required />
                                     </div>
                                     <div class="error-message">
                                         <div *ngIf="userForm.get('Phone')?.invalid && userForm.get('Phone')?.touched" class="text-danger">
-                                            Phone Number is required
+                                            Phone number is required and must be 10 digits
                                         </div>
                                     </div>
                                 </div>

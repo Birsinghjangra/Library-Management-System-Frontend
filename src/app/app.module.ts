@@ -26,8 +26,6 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

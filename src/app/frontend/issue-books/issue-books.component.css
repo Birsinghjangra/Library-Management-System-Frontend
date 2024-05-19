@@ -1,32 +1,15 @@
-.container {
-  padding: 20px;
+.custom-ng-select{
+  width: 80%;
 }
-
-.form-group {
-  margin-bottom: 15px;
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: .25rem;
+  width: 79%;
+  margin-left: 20%;
 }
-
-.user-details, .book-details {
-  margin-top: 10px;
-}
-
-.list-group-item {
-  padding: 10px 15px;
-  font-size: 14px;
-}
-
-.ng-select {
-  width: 100%;
-}
-
-.ng-select .ng-select-container {
-  height: calc(1.5em + .75rem + 2px);
-}
-
-.ng-select .ng-select-container .ng-input {
-  padding: .375rem .75rem;
-}
-
-.ng-select .ng-dropdown-panel {
-  width: 100%;
+.placeholder-text {
+  color: #ababab;
 }

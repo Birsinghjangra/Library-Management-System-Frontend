@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../../services/common.service';
 import { formatDate } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-issue-books',
@@ -9,6 +12,8 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./issue-books.component.css']
 })
 export class IssueBooksComponent implements OnInit {
+
+  issueForm!: FormGroup;
   searchUserInput: string = '';
   searchUserResult: Array<any> = [];
   userData: any = null;
@@ -19,12 +24,30 @@ export class IssueBooksComponent implements OnInit {
   returnDate: string = '';
   remark: string = '';
 
-  constructor(private http: HttpClient, private commonService: CommonService) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private commonService: CommonService,
+    private snackBarService: SnackBarService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.searchUserData('');
     this.searchBookData('');
     this.setInitialIssueDate();
+    this.initializeForm();
+
+  }
+
+  initializeForm() {
+    this.issueForm = this.fb.group({
+      issueDate: ['', [Validators.required]],
+      returnDate: ['', [Validators.required]],
+      // publication: ['', [Validators.required]],
+      // price: ['', [Validators.required, Validators.min(0)]],
+      // Eddition: ['', [Validators.required]],
+    });
   }
 
   setInitialIssueDate(): void {

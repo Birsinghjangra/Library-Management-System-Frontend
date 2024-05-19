@@ -38,8 +38,8 @@
                                                 data-placement="top"
                                                 title="Its 10/13 digit nos which you can find behind a book."></i>
                                         </span>
-                                    </div>
-                                    <input type="number" class="form-control" formControlName="Isbn">
+                                    </div> 
+                                    <input type="number" class="form-control" formControlName="Isbn" (input)="onIsbnInput($event)" required />
                                 </div>
                                 <div *ngIf="bookForm.get('Isbn')?.invalid && bookForm.get('Isbn')?.touched"
                                     class="text-danger">

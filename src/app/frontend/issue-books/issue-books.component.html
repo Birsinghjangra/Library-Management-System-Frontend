@@ -6,75 +6,111 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-                    <li class="breadcrumb-item active">Issue Book</li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item active">Issue Books</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-<div class="container" style="width: 100%">
-    <div class="card" style="width: 100%">
-        <div class="card-header" style="border-bottom: 2px solid #dd4b39">
+<div class="container">
+    <div class="card">
+        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
             <span class="card-title font-weight-bold">Issue Books</span>
         </div>
-
-        <div class="container">
-            <div class="row mb-4">
-                <div class="col-md-6">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="searchUser">Search User</label>
-                        <ng-select [items]="searchUserResult" class="form-control" bindLabel="Bname"
-                            [(ngModel)]="searchUserInput" (search)="searchUserData($event.term)"
-                            (change)="showUserDetails($event)">
-                        </ng-select>
-                    </div>
-                    <div class="user-details mt-2">
-                        <ul class="list-group">
-                            <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
-                            <li class="list-group-item">Name: <span>{{ userData?.Bname || 'N/A' }}</span></li>
-                            <li class="list-group-item">Phone: <span>{{ userData?.Phone || 'N/A' }}</span></li>
-                        </ul>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Search User</span>
+                            </div>
+                            <div class="custom-ng-select">
+                                <ng-select [items]="searchUserResult" bindLabel="Bname" [(ngModel)]="searchUserInput"
+                                    (search)="searchUserData($event.term)" (change)="showUserDetails($event)">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <div> Name:{{ item.Bname }} | Card ID:{{ item.id }} </div>
+                                    </ng-template>
+
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <div *ngIf="item; else placeholder">
+                                            {{ item.Bname }}
+                                        </div>
+                                        <ng-template #placeholder>
+                                            <span class="placeholder-text">Type to search.</span>
+                                        </ng-template>
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="user-details mt-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
+                                <li class="list-group-item">Name: <span>{{ userData?.Bname || 'N/A' }}</span></li>
+                                <li class="list-group-item">Phone: <span>{{ userData?.Phone || 'N/A' }}</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="searchBook">Search Book</label>
-                        <ng-select [items]="searchBookResult" bindLabel="Title" [(ngModel)]="searchBookInput"
-                            (search)="searchBookData($event.term)" (change)="showBookDetails($event)">
-                        </ng-select>
-                    </div>
-                    <div class="book-details mt-2">
-                        <ul class="list-group">
-                            <li class="list-group-item">Book Title: <span>{{ bookData?.Title || 'N/A' }}</span></li>
-                            <li class="list-group-item">ISBN: <span>{{ bookData?.Isbn || 'N/A' }}</span></li>
-                            <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Search Book</span>
+                            </div>
+                            <div class="custom-ng-select">
+                                <ng-select [items]="searchBookResult" bindLabel="Title" [(ngModel)]="searchBookInput"
+                                    (search)="searchBookData($event.term)" (change)="showBookDetails($event)">
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <div>Title:{{ item.Title }}</div>
+                                    </ng-template>
 
-            <div class="row mt-3">
-                <div class="col-md-5 mb-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Issue Date</span>
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <div *ngIf="item; else placeholder">
+                                            {{ item.Title }}
+                                        </div>
+                                        <ng-template #placeholder>
+                                            <span class="placeholder-text">Type to search.</span>
+                                        </ng-template>
+                                    </ng-template>
+                                </ng-select>
+                            </div>
                         </div>
-                        <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
-                            [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" />
-                        <input type="hidden" id="issue_date" />
+                        <div class="book-details mt-3">
+                            <ul class="list-group">
+                                <li class="list-group-item">Book Title: <span>{{ bookData?.Title || 'N/A' }}</span></li>
+                                <li class="list-group-item">ISBN: <span>{{ bookData?.Isbn || 'N/A' }}</span></li>
+                                <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5 mb-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Return Date</span>
+
+                <div class="col-md-5 col-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Issue Date</span>
+                            </div>
+                            <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
+                                [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" />
+                            <input type="hidden" id="issue_date" />
                         </div>
-                        <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
-                            [(ngModel)]="returnDate" readonly />
-                        <input type="hidden" id="return_date" />
+                    </div>
+                </div>
+                <div class="col-md-5 col-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Return Date</span>
+                            </div>
+                            <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
+                                [(ngModel)]="returnDate" />
+                            <input type="hidden" id="return_date" />
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2 mb-10">
@@ -82,15 +118,15 @@
                         Issue Book
                     </button>
                 </div>
-            </div>
 
-            <div class="form-row mt-3">
-                <div class="col-md-10">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Remark</span>
+                <div class="col-md-10 col-12">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Remark</span>
+                            </div>
+                            <textarea class="form-control" [(ngModel)]="remark"></textarea>
                         </div>
-                        <textarea class="form-control" [(ngModel)]="remark"></textarea>
                     </div>
                 </div>
             </div>

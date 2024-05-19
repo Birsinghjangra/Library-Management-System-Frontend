@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+import { capitalizeWordsValidator } from 'src/app/validators/capitalize.validator';
 
 @Component({
   selector: 'app-add-user',
@@ -39,7 +40,7 @@ export class AddUserComponent implements OnInit {
 
   initializeForm() {
     this.userForm = this.fb.group({
-      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.minLength(3), capitalizeWordsValidator()]],
       Phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       Address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]]
     });
@@ -55,6 +56,17 @@ export class AddUserComponent implements OnInit {
     });
   }
 
+  onPhoneInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+    
+    if (value.length > 10) {
+      value = value.slice(0, 10);
+      input.value = value;
+    }
+    
+    this.userForm.get('Phone')?.setValue(value, { emitEvent: false });
+  }
   onSubmit() {
     if (this.userForm.valid) {
       const formData = this.userForm.value;

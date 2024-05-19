@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
 import { ActivatedRoute } from '@angular/router';
+import { capitalizeWordsValidator } from 'src/app/validators/capitalize.validator';
+import { capitalizeFirstLetterValidator } from 'src/app/validators/capitalize-first-letter.validator';
 
 @Component({
   selector: 'app-add-books',
@@ -40,12 +42,30 @@ export class AddBooksComponent implements OnInit {
   initializeForm() {
     this.bookForm = this.fb.group({
       Isbn: ['', [Validators.required]],
-      Title: ['', [Validators.required]],
-      publication: ['', [Validators.required]],
+      Title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
+      publication: ['', [Validators.required, capitalizeWordsValidator()]],
       price: ['', [Validators.required, Validators.min(0)]],
       Eddition: ['', [Validators.required]],
     });
   }
+
+  onIsbnInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+    if (value.length > 13) {
+        value = value.slice(0, 13); // Limit to 13 digits
+    }
+
+    if (value.length !== 10 && value.length !== 13) {
+        this.bookForm.get('Isbn')?.setErrors({ invalidIsbn: true });
+    } else {
+        this.bookForm.get('Isbn')?.setErrors(null);
+    }
+
+    input.value = value;
+    this.bookForm.get('Isbn')?.setValue(value, { emitEvent: false });
+}
 
   get_data() {
     if (this.flag === 'edit') {
