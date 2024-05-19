@@ -44,9 +44,6 @@ export class IssueBooksComponent implements OnInit {
     this.issueForm = this.fb.group({
       issueDate: ['', [Validators.required]],
       returnDate: ['', [Validators.required]],
-      // publication: ['', [Validators.required]],
-      // price: ['', [Validators.required, Validators.min(0)]],
-      // Eddition: ['', [Validators.required]],
     });
   }
 
@@ -124,8 +121,10 @@ export class IssueBooksComponent implements OnInit {
     }
 
     const payload = {
-      userId: this.userData.id,
+      cardId: this.userData.id,
+      name: this.userData.Bname,
       isbn: this.bookData.Isbn,
+      title: this.bookData.Title,
       issueDate: this.issueDate,
       returnDate: this.returnDate,
       remark: this.remark
