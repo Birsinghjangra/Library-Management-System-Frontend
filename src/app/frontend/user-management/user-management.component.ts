@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
 import { Router } from '@angular/router';
+import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface User {
   id: number;
@@ -28,7 +30,9 @@ export class UserManagementComponent implements OnInit {
 
   constructor(private commonService: CommonService,
               private router: Router,
-              private snackBar: SnackBarService) { }
+              private snackBar: SnackBarService,
+              public dialog: MatDialog
+            ) { }
 
   ngOnInit(): void {
     this.loaddata();
@@ -98,5 +102,16 @@ export class UserManagementComponent implements OnInit {
     } else {
       this.dataSource.data = this.userdata;
     }
+  }
+  openDialog(book: any): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '350px',
+      height: '200px',
+      data: book
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // });
   }
 }

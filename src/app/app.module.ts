@@ -25,6 +25,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms'; 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { IssuedBooksComponent } from './frontend/issued-books/issued-books.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteDialogComponent } from './dialog/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ManageBooksComponent,
     AddBooksComponent,
     IssueBooksComponent,
+    IssuedBooksComponent,
     AddUserComponent,
+    DeleteDialogComponent,
     // HeaderComponent,
     // SidebarComponent,
     // FooterComponent,
@@ -55,7 +60,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatCheckboxModule,
     FormsModule,
     MatAutocompleteModule,
-    NgSelectModule
+    NgSelectModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],

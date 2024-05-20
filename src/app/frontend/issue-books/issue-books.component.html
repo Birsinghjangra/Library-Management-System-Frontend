@@ -20,116 +20,122 @@
             <span class="card-title font-weight-bold">Issue Books</span>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Search User</span>
-                            </div>
-                            <div class="custom-ng-select">
-                                <ng-select [items]="searchUserResult" bindLabel="Bname" [(ngModel)]="searchUserInput"
-                                    (search)="searchUserData($event.term)" (change)="showUserDetails($event)">
-                                    <ng-template ng-option-tmp let-item="item">
-                                        <div> Name:{{ item.Bname }} | Card ID:{{ item.id }} </div>
-                                    </ng-template>
-
-                                    <ng-template ng-label-tmp let-item="item">
-                                        <div *ngIf="item; else placeholder">
-                                            {{ item.Bname }}
-                                        </div>
-                                        <ng-template #placeholder>
-                                            <span class="placeholder-text">Type to search.</span>
+            <form [formGroup]="issueForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text custom">Search User</span>
+                                </div>
+                                <div class="custom-ng-select">
+                                    <ng-select [items]="searchUserResult" bindLabel="Bname"
+                                        [(ngModel)]="searchUserInput" (search)="searchUserData($event.term)"
+                                        (change)="showUserDetails($event)" formControlName="user_details">
+                                        <ng-template ng-option-tmp let-item="item">
+                                            <div> Name:{{ item.Bname }} | Card ID:{{ item.id }} </div>
                                         </ng-template>
-                                    </ng-template>
-                                </ng-select>
-                            </div>
-                        </div>
-                        <div class="user-details mt-3">
-                            <ul class="list-group">
-                                <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
-                                <li class="list-group-item">Name: <span>{{ userData?.Bname || 'N/A' }}</span></li>
-                                <li class="list-group-item">Phone: <span>{{ userData?.Phone || 'N/A' }}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-6 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Search Book</span>
-                            </div>
-                            <div class="custom-ng-select">
-                                <ng-select [items]="searchBookResult" bindLabel="Title" [(ngModel)]="searchBookInput"
-                                    (search)="searchBookData($event.term)" (change)="showBookDetails($event)">
-                                    <ng-template ng-option-tmp let-item="item">
-                                        <div>Title:{{ item.Title }}</div>
-                                    </ng-template>
-
-                                    <ng-template ng-label-tmp let-item="item">
-                                        <div *ngIf="item; else placeholder">
-                                            {{ item.Title }}
-                                        </div>
-                                        <ng-template #placeholder>
-                                            <span class="placeholder-text">Type to search.</span>
+                                        <ng-template ng-label-tmp let-item="item">
+                                            <div *ngIf="item; else placeholder">
+                                                {{ item.Bname }}
+                                            </div>
+                                            <ng-template #placeholder>
+                                                <span class="placeholder-text">Type to search.</span>
+                                            </ng-template>
                                         </ng-template>
-                                    </ng-template>
-                                </ng-select>
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="user-details mt-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Name: <span>{{ userData?.Bname || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Phone: <span>{{ userData?.Phone || 'N/A' }}</span></li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="book-details mt-3">
-                            <ul class="list-group">
-                                <li class="list-group-item">Book Title: <span>{{ bookData?.Title || 'N/A' }}</span></li>
-                                <li class="list-group-item">ISBN: <span>{{ bookData?.Isbn || 'N/A' }}</span></li>
-                                <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span></li>
-                            </ul>
-                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-5 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Issue Date</span>
-                            </div>
-                            <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
-                                [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" />
-                            <input type="hidden" id="issue_date" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-5 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Return Date</span>
-                            </div>
-                            <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
-                                [(ngModel)]="returnDate" />
-                            <input type="hidden" id="return_date" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-10">
-                    <button type="button" class="btn btn-danger" (click)="issueBook()">
-                        Issue Book
-                    </button>
-                </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text custom">Search Book</span>
+                                </div>
+                                <div class="custom-ng-select">
+                                    <ng-select [items]="searchBookResult" bindLabel="Title"
+                                        [(ngModel)]="searchBookInput" (search)="searchBookData($event.term)"
+                                        (change)="showBookDetails($event)" formControlName="book_details">
+                                        <ng-template ng-option-tmp let-item="item">
+                                            <div>Title:{{ item.Title }}</div>
+                                        </ng-template>
 
-                <div class="col-md-10 col-12">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Remark</span>
+                                        <ng-template ng-label-tmp let-item="item">
+                                            <div *ngIf="item; else placeholder">
+                                                {{ item.Title }}
+                                            </div>
+                                            <ng-template #placeholder>
+                                                <span class="placeholder-text">Type to search.</span>
+                                            </ng-template>
+                                        </ng-template>
+                                    </ng-select>
+                                </div>
                             </div>
-                            <textarea class="form-control" [(ngModel)]="remark"></textarea>
+                            <div class="book-details mt-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Book Title: <span>{{ bookData?.Title || 'N/A' }}</span>
+                                    </li>
+                                    <li class="list-group-item">ISBN: <span>{{ bookData?.Isbn || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Issue Date</span>
+                                </div>
+                                <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
+                                    [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" formControlName="issue_date" />
+                                <input type="hidden" id="issue_date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Return Date</span>
+                                </div>
+                                <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
+                                    [(ngModel)]="returnDate" formControlName="return_date"/>
+                                <input type="hidden" id="return_date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-10">
+                        <button type="submit" class="btn btn-danger">
+                            Issue Book
+                        </button>
+                    </div>
+
+                    <div class="col-md-10 col-12">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Remark</span>
+                                </div>
+                                <textarea class="form-control" [(ngModel)]="remark" formControlName="remark"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

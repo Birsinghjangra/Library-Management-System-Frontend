@@ -5,11 +5,10 @@ import { CommonModule } from "@angular/common";
 import { HeaderComponent } from "../common/header/header.component";
 import { FooterComponent } from "../common/footer/footer.component";
 import { SidebarComponent } from "../common/sidebar/sidebar.component";
-import { IssuedBooksComponent } from './issued-books/issued-books.component';
 
 @NgModule({
     imports: [FrontendRoutingModule, CommonModule],
     exports: [],
-    declarations: [FrontendComponent, HeaderComponent, FooterComponent, SidebarComponent, IssuedBooksComponent],
+    declarations: [FrontendComponent, HeaderComponent, FooterComponent, SidebarComponent],
 })
 export class FrontendModule {}

@@ -37,13 +37,15 @@ export class IssueBooksComponent implements OnInit {
     this.searchBookData('');
     this.setInitialIssueDate();
     this.initializeForm();
-
   }
 
   initializeForm() {
     this.issueForm = this.fb.group({
-      issueDate: ['', [Validators.required]],
-      returnDate: ['', [Validators.required]],
+      user_details: ['', [Validators.required]],
+      book_details: ['', [Validators.required]],
+      issue_date: ['', [Validators.required]],
+      return_date: ['', [Validators.required]],
+      remark: ['']
     });
   }
 
@@ -114,35 +116,34 @@ export class IssueBooksComponent implements OnInit {
     this.returnDate = formatDate(returnDate, 'yyyy-MM-dd', 'en');
   }
 
-  issueBook(): void {
+  onSubmit(): void {
     if (!this.userData || !this.bookData) {
       alert('Please select both a user and a book.');
       return;
     }
 
     const payload = {
-      cardId: this.userData.id,
-      name: this.userData.Bname,
-      isbn: this.bookData.Isbn,
-      title: this.bookData.Title,
-      issueDate: this.issueDate,
-      returnDate: this.returnDate,
+      Isbn: this.bookData.Isbn,
+      Title: this.bookData.Title,
+      id: this.userData.id,
+      Bname: this.userData.Bname,
+      issued_at: this.issueDate,
+      end_date: this.returnDate,
       remark: this.remark
     };
 
-    console.log('Issue Book Payload:', payload);
+    this.issueForm.markAllAsTouched();
 
-    // this.commonService.issue_book(payload).subscribe(
-    //   (response) => {
-    //     if (response && response.success) {
-    //       alert('Book issued successfully');
-    //     } else {
-    //       alert('Failed to issue book');
-    //     }
-    //   },
-    //   (error) => {
-    //     console.error('Error occurred while issuing book:', error);
-    //   }
-    // );
+    if (this.issueForm.valid) {
+      this.commonService.issue_book(payload).subscribe(res => {
+        const message = res.message;
+        if (res.status === 'success') {
+          this.snackBarService.openSnackBarSuccess([message]);
+          this.router.navigate(['/admin/issued_books']);
+        } else {
+          this.snackBarService.openSnackBarError([message]);
+        }
+      });
+    }
   }
 }

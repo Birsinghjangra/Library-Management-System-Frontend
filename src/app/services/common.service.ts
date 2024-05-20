@@ -28,4 +28,16 @@ export class CommonService {
     search_book(payload: any): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}/searchBook`, payload);
     }
+    issue_book(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/issue_book`, payload);
+    }
+    calculate_fine(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/calculate_fine`, payload);
+    }
+    submit_fine(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/submit_fine`, payload);
+    }
+    submit_book(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/submit_book`, payload);
+    }
 }

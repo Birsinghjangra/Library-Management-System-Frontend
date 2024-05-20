@@ -111,13 +111,13 @@
                                     <i class="far fa-edit"></i>
                                 </span>
                             </a>
-                            <button type="button" (click)="delete(element.id)"
+                            <button type="button" (click)="openDialog(element)"
                                 class="btn btn-sm btn-danger float-left action_btn">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
                     </ng-container>
-
+                    <!-- (click)="delete(element.id)" -->
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [hidden]="row.isHidden"></tr>
                     <tr mat-no-data-row *matNoDataRow>

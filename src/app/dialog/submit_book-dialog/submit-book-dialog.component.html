@@ -1,0 +1,75 @@
+<!--
+<div class="container" style="width: 100%;">
+    <div class="card" style="width: 100%;">
+        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
+            <span class="card-title font-weight-bold">Submit Book</span>
+        </div>
+        <div class="card-body">
+
+                <div class="row" *ngIf="this.details">
+                        <div class="col-md-12" >
+                            <ul class="list-group text-sm">
+                                <li class="list-group-item text-capitalize">
+                                    Card ID <span class="user_field_val" style="float: right;">{{   this.details['id_card']}}</span>
+                                </li>
+                                <li class="list-group-item text-capitalize">
+                                    Book Name <span class="user_field_val" style="float: right;">{{  this.details['book']}}</span>
+                                </li>
+                                <li class="list-group-item text-capitalize">
+                                    Book ISBN <span class="user_field_val" style="float: right;">{{this.details['Isbn']}}</span>
+                                </li>
+                                <li class="list-group-item text-capitalize">
+                                    Calculated Fine <span class="user_field_val" style="float: right;">{{this.details['calculate_fine']}}</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <button *ngIf="this.submitFine && !this.submitBook" type="button" class="btn btn-sm btn-dark float-right action_btn mr-1" (click)="submit_book()"
+                    >
+                        Submit Book
+                    </button>
+                    <button *ngIf="this.submitBook" type="button" class="btn btn-sm btn-dark float-right action_btn mr-1" (click)="submit_fine()"
+                   >
+                    Submit Fine
+                </button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+    <div class="card-header mt-2" style="border-bottom: 2px solid #DD4B39; position: relative;">
+        <span class="card-title font-weight-bold">Submit Book</span>
+        <span class="close-icon mt-2" style="position: absolute; right: 20px; top: 10px; cursor: pointer;" (click)="onCancel()">
+            <i class="fas fa-times"></i>
+        </span>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="list-group text-sm">
+                    <li class="list-group-item text-capitalize">
+                        Card ID <span class="user_field_val" style="float: right;">{{ userdata.id }}</span>
+                    </li>
+                    <li class="list-group-item text-capitalize">
+                        Name <span class="user_field_val" style="float: right;">{{ userdata.Bname }}</span>
+                    </li>
+                    <li class="list-group-item text-capitalize">
+                        Book Title <span class="user_field_val" style="float: right;">{{ userdata.Title }}</span>
+                    </li>
+                    <li class="list-group-item text-capitalize">
+                        Book ISBN <span class="user_field_val" style="float: right;">{{ userdata.Isbn }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end p-2 mt-3">
+            <button type="button" class="btn btn-dark mr-2" (click)="submit_book()">Submit</button>
+            <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+        </div>
+    </div>
+</div>

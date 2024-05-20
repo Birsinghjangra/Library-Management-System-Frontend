@@ -96,3 +96,12 @@ input.form-control, select.form-control {
 tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
   height: 0px;
 }
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1;
+  font-weight: bold;
+  font-size: medium;
+}

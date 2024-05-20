@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,46 +7,38 @@ import { Component,OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  productdata: any;
-  totalCostPrice: number = 0;
-  totalSellingPrice: number = 0;
-  totalCategories: number = 0;
-  Total_productName:number=0;
-  // totalCategories:any=[];
-  totalProfit: number = 0;
-  Total_sale:any;
-  AddProductService: any;
-  constructor(){}
+  total_books: any;
+  issueBook_detail: any;
+  userdetail: any;
+ 
+  constructor(private commonservice : CommonService){}
   ngOnInit(): void {
-
-    this.AddProductService.getProductData().subscribe((data: any) => {
-      this.productdata = data.data;
-      // this.productdata = this.productdata.data;
-      console.log("product data dashboard",this.productdata)
-      this.productdata.forEach((product: any) => {
-        this.Total_sale= product.Total_sales
-        this.totalCostPrice += product.costPrice;
-        this.totalSellingPrice += product.sellingPrice;
-        let uniqueCategories:any =[];
-        let uniqueProducts:any=[];
-        this.productdata.forEach((product: any) => {
-          uniqueCategories.push(product.category);
-          uniqueProducts.push(product.productName)
-          let profit = product.unit_sellingPrice - product.CostPerPiece;
-          this.totalProfit +=profit
-      });
-      this.totalCategories = uniqueCategories.length;
-      this.Total_productName=uniqueProducts.length
-      this.totalProfit=this.totalProfit
-      // console.log("Total Unique Categories:", totalUniqueCategories);
-
-        this.totalProfit += (product.sellingPrice - product.costPrice);
-        
-      });
-
-      // Difference between cost and profit
-      const costProfitDiff = this.totalSellingPrice - this.totalCostPrice;
-      console.log("Difference between Cost and Profit:", costProfitDiff);
-    });
+    this.bookCount();
+    this.issueBook();
+    this.userCount();
+  }
+  bookCount(){
+    const payload = {
+      Table_name :'book'
+    }
+    this.commonservice.getData_common(payload).subscribe(data=>{
+      this.total_books =data.data.length;
+    })
+  }
+  issueBook(){
+    const payload = {
+      Table_name :'borrower_book_detail'
+    }
+    this.commonservice.getData_common(payload).subscribe(data=>{
+      this.issueBook_detail =data.data.length;
+    })
+  }
+  userCount(){
+    const payload = {
+      Table_name :'borrower'
+    }
+    this.commonservice.getData_common(payload).subscribe(data=>{
+      this.userdetail =data.data.length;
+    })
   }
 }
