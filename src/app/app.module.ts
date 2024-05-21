@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './common/header/header.component';
-import { SidebarComponent } from './common/sidebar/sidebar.component';
-import { FooterComponent } from './common/footer/footer.component';
+import { HeaderComponent } from './backend/common/header/header.component';
+import { SidebarComponent } from './backend/common/sidebar/sidebar.component';
+import { FooterComponent } from './backend/common/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -12,7 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { loginModule } from './common/login/login.module';
+import { LoginModule } from './backend/common/login/login.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserManagementComponent } from '../app/backend/user-management/user-management.component';
 import { RolePermissionComponent } from '../app/backend/role-permission/role-permission.component';
@@ -28,6 +28,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { IssuedBooksComponent } from './backend/issued-books/issued-books.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './dialog/delete-dialog/delete-dialog.component';
+import { FrontendComponent } from './frontend/frontend.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +43,7 @@ import { DeleteDialogComponent } from './dialog/delete-dialog/delete-dialog.comp
     IssuedBooksComponent,
     AddUserComponent,
     DeleteDialogComponent,
+    FrontendComponent,
     // HeaderComponent,
     // SidebarComponent,
     // FooterComponent,
@@ -54,14 +58,15 @@ import { DeleteDialogComponent } from './dialog/delete-dialog/delete-dialog.comp
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    loginModule,
+    LoginModule,
     MatSnackBarModule,
     MatTableModule,
     MatCheckboxModule,
     FormsModule,
     MatAutocompleteModule,
     NgSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],

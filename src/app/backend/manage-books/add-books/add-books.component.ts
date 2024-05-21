@@ -42,11 +42,11 @@ export class AddBooksComponent implements OnInit {
   initializeForm() {
     this.bookForm = this.fb.group({
       id: ['', [Validators.required]],
-      Isbn: ['', [Validators.required]],
-      Title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
+      isbn: ['', [Validators.required]],
+      title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
       publication: ['', [Validators.required, capitalizeWordsValidator()]],
       price: ['', [Validators.required, Validators.min(0)]],
-      Eddition: ['', [Validators.required]],
+      edition: ['', [Validators.required]],
     });
   }
 
@@ -59,13 +59,13 @@ export class AddBooksComponent implements OnInit {
     }
 
     if (value.length !== 10 && value.length !== 13) {
-        this.bookForm.get('Isbn')?.setErrors({ invalidIsbn: true });
+        this.bookForm.get('isbn')?.setErrors({ invalidIsbn: true });
     } else {
-        this.bookForm.get('Isbn')?.setErrors(null);
+        this.bookForm.get('isbn')?.setErrors(null);
     }
 
     input.value = value;
-    this.bookForm.get('Isbn')?.setValue(value, { emitEvent: false });
+    this.bookForm.get('isbn')?.setValue(value, { emitEvent: false });
 }
 
   get_data() {

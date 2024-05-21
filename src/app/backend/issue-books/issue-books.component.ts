@@ -77,7 +77,7 @@ export class IssueBooksComponent implements OnInit {
   showUserDetails(user: any): void {
     this.userData = user;
     if (user) {
-      this.searchUserInput = user.Bname;
+      this.searchUserInput = user.borrower_name;
     }
   }
 
@@ -103,7 +103,7 @@ export class IssueBooksComponent implements OnInit {
   showBookDetails(book: any): void {
     this.bookData = book;
     if (book) {
-      this.searchBookInput = book.Title;
+      this.searchBookInput = book.title;
     }
   }
 
@@ -123,10 +123,10 @@ export class IssueBooksComponent implements OnInit {
     }
 
     const payload = {
-      Isbn: this.bookData.Isbn,
-      Title: this.bookData.Title,
+      isbn: this.bookData.isbn,
+      title: this.bookData.title,
       id: this.userData.id,
-      Bname: this.userData.Bname,
+      borrower_name: this.userData.borrower_name,
       issued_at: this.issueDate,
       end_date: this.returnDate,
       remark: this.remark

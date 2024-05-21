@@ -20,7 +20,7 @@ export class ManageBooksComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   @Output() closeDialog = new EventEmitter<void>();
 
-  displayedColumns = ['id', 'isbn', 'title', 'publication', 'price', 'eddition', 'action'];
+  displayedColumns = ['id', 'isbn', 'title', 'publication', 'price', 'edition', 'action'];
 
   constructor(private commonService: CommonService,
               private router: Router,

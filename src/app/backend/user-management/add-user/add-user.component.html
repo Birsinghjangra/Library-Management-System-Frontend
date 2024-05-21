@@ -35,10 +35,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Full Name</span>
                                         </div>
-                                        <input type="text" class="form-control" formControlName="Bname" required />
+                                        <input type="text" class="form-control" formControlName="borrower_name" required />
                                     </div>
                                     <div class="error-message">
-                                        <div *ngIf="userForm.get('Bname')?.invalid && userForm.get('Bname')?.touched" class="text-danger">
+                                        <div *ngIf="userForm.get('borrower_name')?.invalid && userForm.get('borrower_name')?.touched" class="text-danger">
                                             Full Name is required
                                         </div>
                                     </div>
@@ -49,10 +49,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Phone</span>
                                         </div>
-                                        <input type="number" class="form-control" formControlName="Phone" (input)="onPhoneInput($event)" required />
+                                        <input type="number" class="form-control" formControlName="phone" (input)="onPhoneInput($event)" required />
                                     </div>
                                     <div class="error-message">
-                                        <div *ngIf="userForm.get('Phone')?.invalid && userForm.get('Phone')?.touched" class="text-danger">
+                                        <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-danger">
                                             Phone number is required and must be 10 digits
                                         </div>
                                     </div>
@@ -65,10 +65,10 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Address</span>
                                         </div>
-                                        <textarea class="form-control" formControlName="Address"></textarea>
+                                        <textarea class="form-control" formControlName="address"></textarea>
                                     </div>
                                     <div class="error-message">
-                                        <div *ngIf="userForm.get('Address')?.invalid && userForm.get('Address')?.touched" class="text-danger">
+                                        <div *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched" class="text-danger">
                                             Address is required
                                         </div>
                                     </div>

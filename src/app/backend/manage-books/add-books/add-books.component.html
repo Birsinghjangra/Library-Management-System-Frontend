@@ -52,9 +52,9 @@
                                                 title="Its 10/13 digit nos which you can find behind a book."></i>
                                         </span>
                                     </div> 
-                                    <input type="number" class="form-control" formControlName="Isbn" (input)="onIsbnInput($event)" required />
+                                    <input type="number" class="form-control" formControlName="isbn" (input)="onIsbnInput($event)" required />
                                 </div>
-                                <div *ngIf="bookForm.get('Isbn')?.invalid && bookForm.get('Isbn')?.touched"
+                                <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched"
                                     class="text-danger">
                                     ISBN is required.
                                 </div>
@@ -65,9 +65,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Book Title</span>
                                     </div>
-                                    <input type="text" required="" class="form-control" formControlName="Title">
+                                    <input type="text" required="" class="form-control" formControlName="title">
                                 </div>
-                                <div *ngIf="bookForm.get('Title')?.invalid && bookForm.get('Title')?.touched"
+                                <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched"
                                     class="text-danger">
                                     Title is required.
                                 </div>
@@ -104,9 +104,9 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Edition</span>
                                     </div>
-                                    <input type="text" required="" class="form-control" formControlName="Eddition">
+                                    <input type="text" required="" class="form-control" formControlName="edition">
                                 </div>
-                                <div *ngIf="bookForm.get('Eddition')?.invalid && bookForm.get('Eddition')?.touched"
+                                <div *ngIf="bookForm.get('edition')?.invalid && bookForm.get('edition')?.touched"
                                     class="text-danger">
                                     Edition is required.
                                 </div>

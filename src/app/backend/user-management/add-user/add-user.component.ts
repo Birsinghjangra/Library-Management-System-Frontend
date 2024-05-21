@@ -40,9 +40,9 @@ export class AddUserComponent implements OnInit {
 
   initializeForm() {
     this.userForm = this.fb.group({
-      Bname: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.minLength(3), capitalizeWordsValidator()]],
-      Phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      Address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]]
+      borrower_name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$'), Validators.minLength(3), capitalizeWordsValidator()]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      address: ['', [Validators.required, Validators.pattern('^[-.,a-zA-Z0-9 ]+$')]]
     });
   }
 
@@ -65,7 +65,7 @@ export class AddUserComponent implements OnInit {
       input.value = value;
     }
     
-    this.userForm.get('Phone')?.setValue(value, { emitEvent: false });
+    this.userForm.get('phone')?.setValue(value, { emitEvent: false });
   }
   onSubmit() {
     if (this.userForm.valid) {

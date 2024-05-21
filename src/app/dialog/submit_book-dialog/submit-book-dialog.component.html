@@ -1,30 +1,6 @@
 <!--
-<div class="container" style="width: 100%;">
-    <div class="card" style="width: 100%;">
-        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
-            <span class="card-title font-weight-bold">Submit Book</span>
-        </div>
+
         <div class="card-body">
-
-                <div class="row" *ngIf="this.details">
-                        <div class="col-md-12" >
-                            <ul class="list-group text-sm">
-                                <li class="list-group-item text-capitalize">
-                                    Card ID <span class="user_field_val" style="float: right;">{{   this.details['id_card']}}</span>
-                                </li>
-                                <li class="list-group-item text-capitalize">
-                                    Book Name <span class="user_field_val" style="float: right;">{{  this.details['book']}}</span>
-                                </li>
-                                <li class="list-group-item text-capitalize">
-                                    Book ISBN <span class="user_field_val" style="float: right;">{{this.details['Isbn']}}</span>
-                                </li>
-                                <li class="list-group-item text-capitalize">
-                                    Calculated Fine <span class="user_field_val" style="float: right;">{{this.details['calculate_fine']}}</span>
-                                </li>
-
-                            </ul>
-                        </div>
-                </div>
                 <div class="row mt-2">
                     <div class="col-md-12">
                         <button *ngIf="this.submitFine && !this.submitBook" type="button" class="btn btn-sm btn-dark float-right action_btn mr-1" (click)="submit_book()"
@@ -56,13 +32,13 @@
                         Card ID <span class="user_field_val" style="float: right;">{{ userdata.id }}</span>
                     </li>
                     <li class="list-group-item text-capitalize">
-                        Name <span class="user_field_val" style="float: right;">{{ userdata.Bname }}</span>
+                        Name <span class="user_field_val" style="float: right;">{{ userdata.borrower_name }}</span>
                     </li>
                     <li class="list-group-item text-capitalize">
-                        Book Title <span class="user_field_val" style="float: right;">{{ userdata.Title }}</span>
+                        Book Title <span class="user_field_val" style="float: right;">{{ userdata.title }}</span>
                     </li>
                     <li class="list-group-item text-capitalize">
-                        Book ISBN <span class="user_field_val" style="float: right;">{{ userdata.Isbn }}</span>
+                        Book ISBN <span class="user_field_val" style="float: right;">{{ userdata.isbn }}</span>
                     </li>
                 </ul>
             </div>

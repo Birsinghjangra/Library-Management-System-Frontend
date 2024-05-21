@@ -5,11 +5,12 @@ import { SnackBarService } from '../../services/snackbar.service';
 import { Router } from '@angular/router';
 import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PaginationService } from 'src/app/services/pagination.service';
 
 interface User {
   id: number;
-  Bname: string;
-  Phone: string;
+  borrower_name: string;
+  phone: string;
   createdOn: string;
   isHidden: boolean;
 }
@@ -26,17 +27,24 @@ export class UserManagementComponent implements OnInit {
   userdata: User[] = [];
   showInactiveUsers: boolean = false;
   @Output() closeDialog = new EventEmitter<void>();
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalItems: number = 0;
+  totalPages: number = 0;
 
-  displayedColumns = ['id', 'Bname', 'Phone', 'createdOn', 'action'];
+  displayedColumns = ['id', 'borrower_name', 'phone', 'createdOn', 'action'];
 
   constructor(private commonService: CommonService,
     private router: Router,
     private snackBar: SnackBarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private paginationService: PaginationService
   ) { }
 
   ngOnInit(): void {
     this.loaddata();
+    this.paginateData();
+
   }
 
   loaddata() {
@@ -113,6 +121,17 @@ export class UserManagementComponent implements OnInit {
     } else {
       this.dataSource.data = this.userdata;
     }
+  }
+
+  paginateData(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.dataSource.data = this.userdata.slice(startIndex, endIndex);
+  }
+
+  onPageChange(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.paginateData();
   }
 }
 

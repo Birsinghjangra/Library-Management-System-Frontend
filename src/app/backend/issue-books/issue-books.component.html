@@ -29,16 +29,16 @@
                                     <span class="input-group-text custom">Search User</span>
                                 </div>
                                 <div class="custom-ng-select">
-                                    <ng-select [items]="searchUserResult" bindLabel="Bname"
+                                    <ng-select [items]="searchUserResult" bindLabel="borrower_name"
                                         [(ngModel)]="searchUserInput" (search)="searchUserData($event.term)"
                                         (change)="showUserDetails($event)" formControlName="user_details">
                                         <ng-template ng-option-tmp let-item="item">
-                                            <div> Name:{{ item.Bname }} | Card ID:{{ item.id }} </div>
+                                            <div> Name:{{ item.borrower_name }} | Card ID:{{ item.id }} </div>
                                         </ng-template>
 
                                         <ng-template ng-label-tmp let-item="item">
                                             <div *ngIf="item; else placeholder">
-                                                {{ item.Bname }}
+                                                {{ item.borrower_name }}
                                             </div>
                                             <ng-template #placeholder>
                                                 <span class="placeholder-text">Type to search.</span>
@@ -50,8 +50,8 @@
                             <div class="user-details mt-3">
                                 <ul class="list-group">
                                     <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Name: <span>{{ userData?.Bname || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Phone: <span>{{ userData?.Phone || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Name: <span>{{ userData?.borrower_name || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Phone: <span>{{ userData?.phone || 'N/A' }}</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -64,16 +64,16 @@
                                     <span class="input-group-text custom">Search Book</span>
                                 </div>
                                 <div class="custom-ng-select">
-                                    <ng-select [items]="searchBookResult" bindLabel="Title"
+                                    <ng-select [items]="searchBookResult" bindLabel="title"
                                         [(ngModel)]="searchBookInput" (search)="searchBookData($event.term)"
                                         (change)="showBookDetails($event)" formControlName="book_details">
                                         <ng-template ng-option-tmp let-item="item">
-                                            <div>Title:{{ item.Title }}</div>
+                                            <div>Title:{{ item.title }}</div>
                                         </ng-template>
 
                                         <ng-template ng-label-tmp let-item="item">
                                             <div *ngIf="item; else placeholder">
-                                                {{ item.Title }}
+                                                {{ item.title }}
                                             </div>
                                             <ng-template #placeholder>
                                                 <span class="placeholder-text">Type to search.</span>
@@ -84,11 +84,9 @@
                             </div>
                             <div class="book-details mt-3">
                                 <ul class="list-group">
-                                    <li class="list-group-item">Book Title: <span>{{ bookData?.Title || 'N/A' }}</span>
-                                    </li>
-                                    <li class="list-group-item">ISBN: <span>{{ bookData?.Isbn || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span>
-                                    </li>
+                                    <li class="list-group-item">Book Title: <span>{{ bookData?.title || 'N/A' }}</span></li>
+                                    <li class="list-group-item">ISBN: <span>{{ bookData?.isbn || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span></li>
                                 </ul>
                             </div>
                         </div>

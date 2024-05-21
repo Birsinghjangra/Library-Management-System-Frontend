@@ -1,15 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-// import { SnackBarService } from 'src/app/services/snackbar.service';
-// import { CommonService } from 'src/app/services/common.service';
-// import { Router } from '@angular/router';
-
-
-// @Component({
-//   selector: 'app-role-permission',
-//   templateUrl: './submit-book.component.html',
-//   styleUrls: ['./submit-book.component.css']
-// })
 // export class SubmitBookComponent implements OnInit {
 //     Params_ids: any;
 //     Isbn: any;
@@ -68,20 +56,6 @@
 
 //           })
 //     }
-//     submit_book(){
-//         const payload ={
-//             id:this.Params_ids,
-//             Isbn:this.Isbn
-//           }
-//           this.CommonService.submit_book(payload).subscribe(data=>{
-//             let message = data.message
-//             if(data.status==='success'){
-//                 this.SnackBarService.openSnackBarSuccess([message]);
-//                 this.router.navigate(['/admin/issued_books']);
-//             }
-//           })
-
-// }
 // }
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -95,7 +69,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 })
 export class SubmitBookDialogComponent implements OnInit {
   userdata: any;
-  Isbn: any;
+  isbn: any;
 
   constructor(
     private CommonService: CommonService,
@@ -106,12 +80,12 @@ export class SubmitBookDialogComponent implements OnInit {
   ) { this.userdata = data; }
 
   ngOnInit(): void {
-    this.Isbn = this.userdata['Isbn'];
+    this.isbn = this.userdata['isbn'];
   }
 
   submit_book() {
     const payload = {
-      Isbn: this.Isbn
+      isbn: this.isbn
     }
     this.CommonService.submit_book(payload).subscribe(data => {
       let message = data.message

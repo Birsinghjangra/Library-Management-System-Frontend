@@ -105,3 +105,6 @@ tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
   font-weight: bold;
   font-size: medium;
 }
+.mat-tooltip {
+  font-size: 14px;
+}

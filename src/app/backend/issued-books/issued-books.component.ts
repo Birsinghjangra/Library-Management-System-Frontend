@@ -19,7 +19,7 @@ export class IssuedBooksComponent implements OnInit {
   userdata: any = [];
   // isSubmitted: boolean = false;
 
-  displayedColumns = ['id', 'Bname', 'Isbn', 'Title', 'issued_at', 'end_date', 'action'];
+  displayedColumns = ['id', 'borrower_name', 'isbn', 'title', 'remark', 'fine', 'issued_at', 'end_date', 'action'];
   constructor(private commonService: CommonService,
     private router: Router,
     private snackBar: SnackBarService,
