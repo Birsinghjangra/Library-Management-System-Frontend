@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
@@ -25,14 +25,15 @@ export class UserManagementComponent implements OnInit {
   hasData: boolean = false;
   userdata: User[] = [];
   showInactiveUsers: boolean = false;
+  @Output() closeDialog = new EventEmitter<void>();
 
   displayedColumns = ['id', 'Bname', 'Phone', 'createdOn', 'action'];
 
   constructor(private commonService: CommonService,
-              private router: Router,
-              private snackBar: SnackBarService,
-              public dialog: MatDialog
-            ) { }
+    private router: Router,
+    private snackBar: SnackBarService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.loaddata();
@@ -57,23 +58,33 @@ export class UserManagementComponent implements OnInit {
       action: 'delete',
     };
   }
-
   delete(id: string) {
-    const payload = this.deleteUser(id);
-    this.commonService.delete_data_operation(payload).subscribe(
-      (response) => {
-        if (response.status === 'success') {
-          let message = response.message;
-          this.snackBar.openSnackBarSuccess([message]);
-          this.loaddata();
-        } else {
-          this.snackBar.openSnackBarError([response.message]);
-        }
-      },
-      (error) => {
-        console.error(error);
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '350px',
+      height: '200px',
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const payload = this.deleteUser(id);
+        this.commonService.delete_data_operation(payload).subscribe(
+          (response) => {
+            if (response.status === 'success') {
+              let message = response.message;
+              this.snackBar.openSnackBarSuccess([message]);
+              this.loaddata();
+              this.closeDialog.emit();
+            } else {
+              this.snackBar.openSnackBarError([response.message]);
+            }
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
       }
-    );
+    });
   }
 
   applyFilter(event: Event) {
@@ -103,15 +114,5 @@ export class UserManagementComponent implements OnInit {
       this.dataSource.data = this.userdata;
     }
   }
-  openDialog(book: any): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '350px',
-      height: '200px',
-      data: book
-    });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    // });
-  }
 }
+

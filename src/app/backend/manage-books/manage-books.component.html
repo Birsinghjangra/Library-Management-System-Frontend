@@ -2,12 +2,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h1>User Management</h1>
+                <h1>Book Management</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
-                    <li class="breadcrumb-item active">User Management</li>
+                    <li class="breadcrumb-item active">Manage Books</li>
                 </ol>
             </div>
         </div>
@@ -17,10 +17,10 @@
 <div class="container">
     <div class="card">
         <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
-            <span class="card-title font-weight-bold">Manage Users</span>
-            <a [routerLink]="['/admin/user_management/add_user']" [queryParams]="{ flag: 'create' }">
+            <span class="card-title font-weight-bold">Manage Books</span>
+            <a [routerLink]="['/admin/manage_books/add_books']" [queryParams]="{ flag: 'create' }">
                 <span type="button" class="btn btn-sm btn-dark float-right">
-                    <i class="fas fa-plus-circle mr-1"></i>Add User
+                    <i class="fas fa-plus-circle mr-1"></i>Add Book
                 </span>
             </a>
         </div>
@@ -60,66 +60,54 @@
                 </div>
             </div>
 
-            <div class="row">
-                <!-- Left div with buttons -->
-                <div class="col-12 col-md-2 d-flex align-items-center mb-3">
-                    <div class="btn-group flex-grow-1 mr-3">
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton"
-                            (click)="toggleShowInactiveUsers()">
-                            <i class="fas fa-sort mr-1"></i><span class="text-sm">{{ showInactiveUsers ? 'Active Users'
-                                : 'Inactive Users' }}</span>
-                        </button>
-                        <!-- <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton">
-                            <i class="far fa-id-card mr-1"></i><span class="text-sm">Print Id Cards</span>
-                        </button> -->
-                    </div>
-                </div>
-            </div>
             <div class="table-responsive mt-3 my-custom-scrollbar">
                 <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
-
                     <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Card ID </th>
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Book ID </th>
                         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                     </ng-container>
-
-                    <ng-container matColumnDef="Bname">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.Bname}} </td>
+            
+                    <ng-container matColumnDef="isbn">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Isbn </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Isbn}} </td>
                     </ng-container>
-
-                    <ng-container matColumnDef="Phone">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Phone </th>
-                        <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
+            
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Book Title </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Title}} </td>
                     </ng-container>
-
-                    <ng-container matColumnDef="createdOn">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Created On </th>
-                        <td mat-cell *matCellDef="let element"> {{ element.date_added | date:'yyyy-MM-dd' }} </td>
+            
+                    <ng-container matColumnDef="publication">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Publication </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.publication }} </td>
                     </ng-container>
-
+            
+                    <ng-container matColumnDef="price">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Book Price </th>
+                        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    </ng-container>
+            
+                    <ng-container matColumnDef="eddition">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Edition </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.Eddition }} </td>
+                    </ng-container>
+            
                     <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef class="sticky-header"> Action </th>
-                        <td mat-cell *matCellDef="let element; let i = index">
-                            <button type="button" class="btn btn-sm btn-success float-left action_btn mr-1"
-                                data-original-title="Click to activate | de-activate" (click)="toggleRowVisibility(i)">
-                                <i class="far fa-thumbs-up"></i>
-                            </button>
-                            <a [routerLink]="['/admin/user_management/add_user/']"
-                                [queryParams]="{ id: element.id, flag: 'edit' }">
+                        <td mat-cell *matCellDef="let element">
+                            <a [routerLink]="['/admin/manage_books/add_books']" [queryParams]="{ id: element.id, flag: 'edit' }">
                                 <span type="button" class="btn btn-sm btn-dark float-left action_btn mr-1">
                                     <i class="far fa-edit"></i>
                                 </span>
                             </a>
-                            <button type="button" (click)="openDialog(element)"
-                                class="btn btn-sm btn-danger float-left action_btn">
+                            <button type="button" (click)="delete(element.id)" class="btn btn-sm btn-danger float-left action_btn">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
                     </ng-container>
-                    <!-- (click)="delete(element.id)" -->
+            
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [hidden]="row.isHidden"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr mat-no-data-row *matNoDataRow>
                         <td class="mat-cell size text-center" [attr.colspan]="displayedColumns.length">
                             No record found!
@@ -127,6 +115,7 @@
                     </tr>
                 </table>
             </div>
+            
         </div>
     </div>
 </div>

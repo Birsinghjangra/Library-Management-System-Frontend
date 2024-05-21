@@ -33,6 +33,19 @@
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
+                                        <span class="input-group-text">Book ID</span>
+                                    </div>
+                                    <input type="text" required="" class="form-control" formControlName="id">
+                                </div>
+                                <div *ngIf="bookForm.get('id')?.invalid && bookForm.get('id')?.touched"
+                                    class="text-danger">
+                                    Title is required.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
                                         <span class="input-group-text">ISBN
                                             <i class="fas fa-info-circle ml-2" data-toggle="tooltip"
                                                 data-placement="top"
@@ -63,19 +76,6 @@
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Price</span>
-                                    </div>
-                                    <input type="number" required="" class="form-control" formControlName="price">
-                                </div>
-                                <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched"
-                                    class="text-danger">
-                                    Price is required.
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
                                         <span class="input-group-text">Publishers</span>
                                     </div>
                                     <input type="text" class="form-control" formControlName="publication">
@@ -83,6 +83,19 @@
                                 <div *ngIf="bookForm.get('publication')?.invalid && bookForm.get('publication')?.touched"
                                     class="text-danger">
                                     Publication is required.
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Book Price</span>
+                                    </div>
+                                    <input type="number" required="" class="form-control" formControlName="price">
+                                </div>
+                                <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched"
+                                    class="text-danger">
+                                    Price is required.
                                 </div>
                             </div>
 

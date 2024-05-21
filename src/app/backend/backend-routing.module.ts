@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { FrontendComponent } from "./frontend.component";
+import { BackendComponent } from "./backend.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {
     path: '',
-    component: FrontendComponent,
+    component: BackendComponent,
     children: [
       {
         path: '',
@@ -21,28 +21,28 @@ const routes: Routes = [
       {
         path: 'user_management',
         loadChildren: () =>
-          import('../frontend/user-management/user-management.module').then(
+          import('./user-management/user-management.module').then(
             (m) => m.UserManagementModule
           ),
       },
       {
         path: 'user_management/add_user',
         loadChildren: () =>
-          import('../frontend/user-management/add-user/add-user.module').then(
+          import('./user-management/add-user/add-user.module').then(
             (m) => m.AddUserModule
           ),
       },
       {
         path: 'user_management/add_user/:id',
         loadChildren: () =>
-          import('../frontend/user-management/add-user/add-user.module').then(
+          import('./user-management/add-user/add-user.module').then(
             (m) => m.AddUserModule
           ),
       },
       {
         path: 'role_permission',
         loadChildren: () =>
-          import('../frontend/role-permission/role-permission.module').then(
+          import('./role-permission/role-permission.module').then(
             (m) => m.RolePermissionModule
           ),
       },
@@ -83,4 +83,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class FrontendRoutingModule { }
+export class BackendRoutingModule { }

@@ -41,6 +41,7 @@ export class AddBooksComponent implements OnInit {
 
   initializeForm() {
     this.bookForm = this.fb.group({
+      id: ['', [Validators.required]],
       Isbn: ['', [Validators.required]],
       Title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
       publication: ['', [Validators.required, capitalizeWordsValidator()]],
