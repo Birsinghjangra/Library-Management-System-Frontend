@@ -30,6 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './dialog/delete-dialog/delete-dialog.component';
 import { FrontendComponent } from './frontend/frontend.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BarcodeDialogComponent } from '../app/backend/common/barcode-dialog/barcode-dialog.component';
+
 
 
 @NgModule({
@@ -44,6 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AddUserComponent,
     DeleteDialogComponent,
     FrontendComponent,
+    BarcodeDialogComponent
     // HeaderComponent,
     // SidebarComponent,
     // FooterComponent,
@@ -70,5 +73,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [
+    BarcodeDialogComponent // If you need to use it in other modules
+  ]
 })
 export class AppModule {}

@@ -40,4 +40,13 @@ export class CommonService {
     submit_book(payload: any): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}/submit_book`, payload);
     }
+    generateBarCode(payload: any): Observable<any> {
+        return this.http.post<any>(`${this.apiUrl}/generateBarCode`, payload);
+    }
+    download_Barcode(payload: any): Observable<Blob> {
+        return this.http.post(`${this.apiUrl}/download_Barcode`, payload, {
+            responseType: 'blob'
+        });
+    }       
+    
 }
