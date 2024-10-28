@@ -44,20 +44,22 @@
                                 <span class="input-group-text">Import</span>
                             </div>
                             <div class="flex-grow-1 mb-2 mb-md-0 position-relative">
-                                <input type="file" name="file" class="form-control text-sm ">
+                                <input type="file" class="form-control text-sm">
                             </div>
                             <div class="flex-shrink-0">
-                                <button type="submit" class="btn btn-dark btn-sm mr-1 iconbutton height">
+                                <button type="button" class="btn btn-dark btn-sm mr-1 iconbutton height">
                                     <i class="fas fa-upload mr-1"></i><span class="text-sm">Import</span>
                                 </button>
-                                <a href="https://library-management.com/uploads/users_list.csv"
-                                    class="btn btn-dark btn-sm height rounded-left-0">
-                                    <i class="fas fa-download"></i>
+                                <a href="/download_csv">
+                                    <button class="btn btn-dark btn-sm height rounded-left-0">
+                                        <i class="fas fa-download"></i>
+                                    </button>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="row">
@@ -75,8 +77,12 @@
                     </div>
                 </div>
             </div>
+
+            <div>
+                <button mat-raised-button color="primary" (click)="exportToExcel()">Export as Excel</button>
+            </div>
             <div class="table-responsive mt-3 my-custom-scrollbar">
-                <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
+                <table #table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
 
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef class="sticky-header"> Card ID </th>

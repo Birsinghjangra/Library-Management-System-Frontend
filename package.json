@@ -22,9 +22,11 @@
     "@angular/router": "^16.1.0",
     "@ng-select/ng-select": "^11.2.0",
     "admin-lte": "^3.2.0",
+    "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
