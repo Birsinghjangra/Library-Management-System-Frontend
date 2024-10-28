@@ -87,5 +87,68 @@ export class ManageBooksComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  onGenerateBarcode(isbn:any){
+    const value = {
+      isbn:isbn
+    }
+    this.commonService.generateBarCode(value).subscribe((response) => {
+      if (response.status === 'success') {
+        let message = response.message;
+        this.snackBar.openSnackBarSuccess([message]);
+        // this.loaddata();
+        // this.closeDialog.emit();
+      } else {
+        this.snackBar.openSnackBarError([response.message]);
+      }
+    },
+    (error) => {
+      console.error(error);
+    })
+  }
+
+  // onDownloadBarcode(isbn:any){
+  //   const value = {
+  //     isbn:isbn
+  //   }
+  //   this.commonService.download_barcode(value).subscribe((response) => {
+  //     if (response.status === 'success') {
+  //       let message = response.message;
+  //       this.snackBar.openSnackBarSuccess([message]);
+  //       // this.loaddata();
+  //       // this.closeDialog.emit();
+  //     } else {
+  //       this.snackBar.openSnackBarError([response.message]);
+  //     }
+  //   },
+  //   (error) => {
+  //     console.error(error);
+  //   })
+  // }
+  onDownloadBarcode(isbn: any) {
+    const payload = { isbn: isbn }; // Create payload for the request
+
+    this.commonService.download_barcode(payload).subscribe((response: Blob) => {
+        // Create a new Blob object from the response
+        const blob = new Blob([response], { type: 'image/png' });
+        const downloadUrl = window.URL.createObjectURL(blob);
+        
+        // Create an anchor element for downloading
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = `${isbn}.png`; // Set the desired file name
+        document.body.appendChild(a); // Append anchor to body
+        a.click(); // Simulate click to trigger download
+        document.body.removeChild(a); // Remove anchor from body
+
+        // Optionally, you can show a success message
+        this.snackBar.openSnackBarSuccess(['Download started!']);
+    },
+    (error) => {
+        console.error(error);
+        this.snackBar.openSnackBarError(['Failed to download barcode.']);
+    });
+}
+
+  
 
 }

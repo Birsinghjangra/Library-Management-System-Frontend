@@ -6,7 +6,8 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']"><a>Home</a></li>
+                <li class="breadcrumb-item" [routerLink]="['/admin/manage_books']"><a >List</a></li>
                     <li class="breadcrumb-item active">Add Books</li>
                 </ol>
             </div>
@@ -30,7 +31,7 @@
                     <div class="col-md-12 col-12 mb-10">
                         <div class="row">
 
-                            <div class="form-group col-md-6 col-12">
+                            <!-- <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Book ID</span>
@@ -41,7 +42,7 @@
                                     class="text-danger">
                                     Title is required.
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group col-md-6 col-12">
                                 <div class="input-group">
@@ -109,6 +110,18 @@
                                 <div *ngIf="bookForm.get('edition')?.invalid && bookForm.get('edition')?.touched"
                                     class="text-danger">
                                     Edition is required.
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 col-12">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Book Qty</span>
+                                    </div>
+                                    <input type="text" required="" class="form-control" formControlName="quantity">
+                                </div>
+                                <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched"
+                                    class="text-danger">
+                                    quantity is required.
                                 </div>
                             </div>
                         </div>

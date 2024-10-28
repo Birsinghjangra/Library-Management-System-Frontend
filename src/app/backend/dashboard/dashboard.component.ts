@@ -8,7 +8,7 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class DashboardComponent implements OnInit {
   total_books: any;
-  issueBook_detail: any;
+  issueBook_detail: any=0;
   userdetail: any;
  
   constructor(private commonservice : CommonService){}

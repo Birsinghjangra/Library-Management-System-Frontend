@@ -41,12 +41,13 @@ export class AddBooksComponent implements OnInit {
 
   initializeForm() {
     this.bookForm = this.fb.group({
-      id: ['', [Validators.required]],
+      // id: ['', [Validators.required]],
       isbn: ['', [Validators.required]],
       title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
       publication: ['', [Validators.required, capitalizeWordsValidator()]],
       price: ['', [Validators.required, Validators.min(0)]],
       edition: ['', [Validators.required]],
+      quantity:['',Validators.required]
     });
   }
 
@@ -102,6 +103,9 @@ export class AddBooksComponent implements OnInit {
         this.snackBarService.openSnackBarSuccess([message]);
         this.router.navigate(['/admin/manage_books']);
       } else {
+        console.log("error",data.message)
+        let message = "Something went wrong"
+        this.snackBarService.openSnackBarSuccess([message]);
         this.snackBarService.openSnackBarError([message]);
       }
     });
