@@ -140,7 +140,6 @@ export class ManageBooksComponent implements OnInit {
         a.click(); // Simulate click to trigger download
         document.body.removeChild(a); // Remove anchor from body
 
-        // Optionally, you can show a success message
         this.snackBar.openSnackBarSuccess(['Download started!']);
     },
     (error) => {
