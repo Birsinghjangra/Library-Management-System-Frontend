@@ -7,6 +7,7 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 import { ActivatedRoute } from '@angular/router';
 import { capitalizeWordsValidator } from 'src/app/validators/capitalize.validator';
 import { capitalizeFirstLetterValidator } from 'src/app/validators/capitalize-first-letter.validator';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-add-books',
@@ -41,46 +42,52 @@ export class AddBooksComponent implements OnInit {
 
   initializeForm() {
     this.bookForm = this.fb.group({
-      // id: ['', [Validators.required]],
-      isbn: ['', [Validators.required]],
-      title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
+      // book_id: ['', [Validators.required]], 
+      isbn: ['', [Validators.required, this.isbnLengthValidator()]],
+      title: ['', [Validators.required, capitalizeFirstLetterValidator()]], 
       publication: ['', [Validators.required, capitalizeWordsValidator()]],
+      author_name: ['', [Validators.required, capitalizeWordsValidator()]],
       price: ['', [Validators.required, Validators.min(0)]],
       edition: ['', [Validators.required]],
-      quantity:['',Validators.required]
+      quantity: ['', [Validators.required]]
     });
   }
 
+  isbnLengthValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const value = control.value?.replace(/\D/g, '') || ''; // Remove non-numeric characters
+        return (value.length >= 10 && value.length <= 13) ? null : { invalidIsbn: true };
+    };
+}
   onIsbnInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
 
+    // Limit input length to a maximum of 13 characters
     if (value.length > 13) {
-        value = value.slice(0, 13); // Limit to 13 digits
-    }
-
-    if (value.length !== 10 && value.length !== 13) {
-        this.bookForm.get('isbn')?.setErrors({ invalidIsbn: true });
-    } else {
-        this.bookForm.get('isbn')?.setErrors(null);
+        value = value.slice(0, 13);
     }
 
     input.value = value;
     this.bookForm.get('isbn')?.setValue(value, { emitEvent: false });
 }
 
-  get_data() {
-    if (this.flag === 'edit') {
-      const value = {
-        Table_name: "book",
-        id: this.Params_ids
-      };
-      this.commonService.getData_common(value).subscribe(data => {
-        this.get_form_data = data.data[0];
-        this.bookForm.patchValue(this.get_form_data);
-      });
-    }
+get_data() {
+  if (this.flag === 'edit') {
+    const value = {
+      Table_name: "book",
+      id: this.Params_ids
+    };
+    this.commonService.getData_common(value).subscribe(data => {
+      this.get_form_data = data.data[0];
+      
+      // Ensure the 'quantity' field is enabled
+      this.bookForm.get('quantity')?.enable();
+
+      this.bookForm.patchValue(this.get_form_data);
+    });
   }
+}
 
   onSubmit() {
     if (this.bookForm.invalid) {
@@ -89,7 +96,7 @@ export class AddBooksComponent implements OnInit {
     }
 
     const formData = this.bookForm.value;
-    formData['isCheckedOut'] = 0;
+    formData['isCheckedOut'] = 0; // Default value for isCheckedOut
     const value = {
       action: this.Params_ids ? 'update' : 'insert',
       column_data: formData,
@@ -103,10 +110,10 @@ export class AddBooksComponent implements OnInit {
         this.snackBarService.openSnackBarSuccess([message]);
         this.router.navigate(['/admin/manage_books']);
       } else {
-        console.log("error",data.message)
-        let message = "Something went wrong"
-        this.snackBarService.openSnackBarSuccess([message]);
-        this.snackBarService.openSnackBarError([message]);
+        console.log("error", data.message);
+        let errorMessage = "Something went wrong";
+        this.snackBarService.openSnackBarSuccess([errorMessage]);
+        this.snackBarService.openSnackBarError([errorMessage]);
       }
     });
   }

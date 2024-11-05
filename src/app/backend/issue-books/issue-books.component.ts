@@ -5,6 +5,7 @@ import { formatDate } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-issue-books',
@@ -23,6 +24,8 @@ export class IssueBooksComponent implements OnInit {
   issueDate: string = '';
   returnDate: string = '';
   remark: string = '';
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+
 
   constructor(
     private fb: FormBuilder,
@@ -55,10 +58,10 @@ export class IssueBooksComponent implements OnInit {
     this.onIssueDateChange({ target: { value: this.issueDate } });
   }
 
-  searchUserData(id: string): void {
+  searchUserData(srn: string): void {
     const payload = {
-      Table_name: 'borrower',
-      id: id
+      Table_name: 'student',
+      srn: srn
     };
     this.commonService.search_user(payload).subscribe(
       (response) => {
@@ -75,9 +78,10 @@ export class IssueBooksComponent implements OnInit {
   }
 
   showUserDetails(user: any): void {
-    this.userData = user;
     if (user) {
-      this.searchUserInput = user.borrower_name;
+      this.userData = user;
+    } else {
+      this.userData = null;
     }
   }
 
@@ -110,7 +114,7 @@ export class IssueBooksComponent implements OnInit {
   onIssueDateChange(event: any): void {
     const issueDate = new Date(event.target.value);
     const returnDate = new Date(issueDate);
-    returnDate.setDate(issueDate.getDate() + 7);
+    returnDate.setDate(issueDate.getDate() + 30);
 
     this.issueDate = formatDate(issueDate, 'yyyy-MM-dd', 'en');
     this.returnDate = formatDate(returnDate, 'yyyy-MM-dd', 'en');
@@ -123,10 +127,14 @@ export class IssueBooksComponent implements OnInit {
     }
 
     const payload = {
+      book_id: this.bookData.book_id,
       isbn: this.bookData.isbn,
       title: this.bookData.title,
-      id: this.userData.id,
-      borrower_name: this.userData.borrower_name,
+      author_name: this.bookData.author_name,
+      srn: this.userData.srn,
+      student_name: this.userData.student_name,
+      class: this.userData.class,
+      section: this.userData.section,
       issued_at: this.issueDate,
       end_date: this.returnDate,
       remark: this.remark

@@ -74,6 +74,13 @@ const routes: Routes = [
             (m) => m.IssuedBooksModule
           ),
       },
+      {
+        path: 'report',
+        loadChildren: () =>
+          import('./report/report.module').then(
+            (m) => m.ReportModule
+          ),
+      },
       
     ],
   },

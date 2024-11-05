@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   }
   userCount(){
     const payload = {
-      Table_name :'borrower'
+      Table_name :'student'
     }
     this.commonservice.getData_common(payload).subscribe(data=>{
       this.userdetail =data.data.length;

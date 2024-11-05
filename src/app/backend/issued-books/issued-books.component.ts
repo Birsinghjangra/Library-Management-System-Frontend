@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
-import { SubmitBookDialogComponent } from '../../dialog/submit_book-dialog/submit-book-dialog.component';
+import { SubmitBookDialogComponent } from '../common/dialog-box/submit_book-dialog/submit-book-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -19,7 +19,7 @@ export class IssuedBooksComponent implements OnInit {
   userdata: any = [];
   // isSubmitted: boolean = false;
 
-  displayedColumns = ['id', 'borrower_name', 'isbn', 'title', 'remark', 'fine', 'issued_at', 'end_date', 'action'];
+  displayedColumns = ['srn', 'student_name', 'isbn', 'title', 'remark', 'fine', 'issued_at', 'end_date', 'action'];
   constructor(private commonService: CommonService,
     private router: Router,
     private snackBar: SnackBarService,

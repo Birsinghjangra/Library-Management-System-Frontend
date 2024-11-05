@@ -3,18 +3,22 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
 import { Router } from '@angular/router';
-import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../common/dialog-box/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginationService } from 'src/app/services/pagination.service';
 import { HttpClient } from '@angular/common/http';
-import * as XLSX from 'xlsx';
 
+// Update User interface to match the student schema
 interface User {
-  id: number;
-  borrower_name: string;
+  srn: string;
+  student_name: string;
+  class: string;
+  section: string;
+  roll_no: string;
   phone: string;
-  createdOn: string;
-  isHidden: boolean;
+  address: string;
+  date_added: string; // or Date depending on how you handle dates
+  isHidden: boolean; // Use this property if you are implementing row visibility toggling
 }
 
 @Component({
@@ -24,7 +28,7 @@ interface User {
 })
 export class UserManagementComponent implements OnInit, AfterViewInit {
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   hasData: boolean = false;
   userdata: User[] = [];
   showInactiveUsers: boolean = false;
@@ -35,28 +39,44 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
   totalPages: number = 0;
   selectedFile: File | null = null;
   @ViewChild('table', { static: false }) table!: ElementRef;
+  classList: string[] = ['All', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  selectedClass: string = ''; // Add selectedClass property for the filter
 
-  displayedColumns = ['id', 'borrower_name', 'phone', 'createdOn', 'action'];
+  displayedColumns = ['srn', 'student_name', 'class', 'section', 'roll_no', 'createdOn', 'action'];
 
   constructor(private commonService: CommonService,
-              private router: Router,
-              private snackBar: SnackBarService,
-              public dialog: MatDialog,
-              private paginationService: PaginationService,
-              private http: HttpClient) { }
+    private router: Router,
+    private snackBar: SnackBarService,
+    public dialog: MatDialog,
+    private paginationService: PaginationService,
+    private http: HttpClient) { }
 
-  ngOnInit(): void {
-    this.loaddata();
-    this.paginateData();
+    ngOnInit(): void {
+      this.loaddata();
+      this.paginateData();
+    
+      // Adjust filter predicate to support combined filter (class and search text)
+      this.dataSource.filterPredicate = (data: User, filter: string) => {
+        const combinedFilter = JSON.parse(filter);
+        const matchesClass = combinedFilter.class === 'All' || data.class === combinedFilter.class;
+        const matchesText = data.student_name.toLowerCase().includes(combinedFilter.text) || 
+                            data.roll_no.toLowerCase().includes(combinedFilter.text) ||
+                            data.phone.toLowerCase().includes(combinedFilter.text) ||
+                            data.address.toLowerCase().includes(combinedFilter.text) ||
+                            data.srn.toLowerCase().includes(combinedFilter.text); // Include srn in the filter
+        return matchesClass && matchesText;
+      };
+    }
+    
 
-  }
   ngAfterViewInit(): void {
-    const tableElement = document.getElementById('tableId'); // Replace 'tableId' with the actual ID of your table
+    const tableElement = this.table.nativeElement; // Correctly reference the table element
     console.log('Table Element:', tableElement);
   }
+
   loaddata() {
     const value = {
-      Table_name: 'borrower'
+      Table_name: 'student'
     };
     this.commonService.getData_common(value).subscribe((data: any) => {
       this.userdata = data.data;
@@ -69,24 +89,24 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteUser(id: string) {
+  deleteUser(srn: string) {
     return {
-      table_name: 'borrower',
-      row_ids: id,
+      table_name: 'student',
+      row_ids: srn,
       action: 'delete',
     };
   }
 
-  delete(id: string) {
+  delete(srn: string) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '350px',
       height: '200px',
-      data: { id: id }
+      data: { id: srn }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const payload = this.deleteUser(id);
+        const payload = this.deleteUser(srn);
         this.commonService.delete_data_operation(payload).subscribe(
           (response) => {
             if (response.status === 'success') {
@@ -106,18 +126,35 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.setCombinedFilter(filterValue);
+  }
+
+  filterByClass(selectedClass: string): void {
+    this.selectedClass = selectedClass; // Set the selected class
+    const currentTextFilter = this.dataSource.filter; // Get current text filter
+    this.setCombinedFilter(currentTextFilter); // Combine the filters
+  }
+
+  setCombinedFilter(textFilter: string): void {
+    // Combine both class and text filters in a JSON string
+    const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
+    this.dataSource.filter = filter;
+  
+    // Refresh the paginator
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  
+    // Ensure the dataSource is updated correctly
+    this.paginateData(); // This may need to be updated based on your filtering logic
   }
 
   toggleRowVisibility(index: number): void {
     const rowData = this.dataSource.data[index];
     rowData.isHidden = !rowData.isHidden;
-    localStorage.setItem(`isHidden_${rowData.id}`, rowData.isHidden.toString());
+    localStorage.setItem(`isHidden_${rowData.srn}`, rowData.isHidden.toString());
     this.filterData();
   }
 
@@ -145,34 +182,35 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     this.paginateData();
   }
 
-  exportToExcel() {
-    // Delay execution until the next tick to ensure the table is rendered
-    setTimeout(() => {
-      if (!this.table || !this.table.nativeElement) {
-        console.error('Table element not found!');
-        return;
-      }
-      
-      const tableClone = this.table.nativeElement.cloneNode(true);
-      
-      const actionIndex = this.displayedColumns.indexOf('action');
-      if (actionIndex > -1) {
-        const rows = tableClone.getElementsByTagName('tr');
-        for (let row of rows) {
-          row.deleteCell(actionIndex);
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      this.selectedFile = fileInput.files[0];
+    }
+  }
+
+  importFile(): void {
+    if (!this.selectedFile) {
+      this.snackBar.openSnackBarError(['No file selected!']);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+
+    this.http.post('/api/import_excel', formData).subscribe({
+      next: (response: any) => {
+        if (response.status === 'success') {
+          this.snackBar.openSnackBarSuccess([response.message]);
+          this.loaddata();
+        } else {
+          this.snackBar.openSnackBarError([response.message]);
         }
+      },
+      error: (err) => {
+        console.error('Import error:', err);
+        this.snackBar.openSnackBarError(['Failed to import file.']);
       }
-      
-      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tableClone);
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-      
-      /* save to file */
-      XLSX.writeFile(wb, 'SheetJS.xlsx');
     });
   }
-  
-
-  
-  
 }

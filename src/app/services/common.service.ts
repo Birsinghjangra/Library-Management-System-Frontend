@@ -37,9 +37,9 @@ export class CommonService {
     submit_fine(payload: any): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}/submit_fine`, payload);
     }
-    submit_book(payload: any): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/submit_book`, payload);
-    }
+    // submit_book(payload: any): Observable<any> {
+    //     return this.http.post<any>(`${this.apiUrl}/submit_book`, payload);
+    // }
     generateBarCode(payload: any): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}/generateBarCode`, payload);
     }

@@ -3,10 +3,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../common/dialog-box/delete-dialog/delete-dialog.component';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
-import { BarcodeDialogComponent } from '../common/barcode-dialog/barcode-dialog.component';
+import { BarcodeDialogComponent } from '../common/dialog-box/barcode-dialog/barcode-dialog.component';
 
 @Component({
   selector: 'app-manage-books',
@@ -21,12 +21,14 @@ export class ManageBooksComponent implements OnInit {
   @Output() closeDialog = new EventEmitter<void>();
 
   displayedColumns = [
-    'id',
+    'book_id',
     'isbn',
     'title',
     'publication',
+    'author_name',
     'price',
     'edition',
+    'quantity',
     'action',
   ];
 
