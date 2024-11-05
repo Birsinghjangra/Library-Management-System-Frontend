@@ -47,7 +47,7 @@
                                 <input type="file" class="form-control text-sm" (change)="onFileSelected($event)">
                             </div>
                             <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-dark btn-sm mr-1 iconbutton"
+                                <button type="button" class="btn btn-dark btn-sm mr-1 iconbutton height"
                                     (click)="importFile()">
                                     <i class="fas fa-upload mr-1"></i><span class="text-sm">Import</span>
                                 </button>
@@ -67,7 +67,8 @@
                     <div class="btn-group flex-grow-1 mr-3">
                         <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton"
                             (click)="toggleShowInactiveUsers()">
-                            <i class="fas fa-sort mr-1"></i><span class="text-sm">{{ showInactiveUsers ? 'Active Users' : 'Inactive Users' }}</span>
+                            <i class="fas fa-sort mr-1"></i><span class="text-sm">{{ showInactiveUsers ? 'Active Users'
+                                : 'Inactive Users' }}</span>
                         </button>
                     </div>
                 </div>
@@ -140,6 +141,33 @@
                     </tr>
                 </table>
             </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info" id="example2_info" role="status" aria-live="polite">
+                        Showing {{ getDisplayedRange().start }} to {{ getDisplayedRange().end }} of {{ totalItems }} entries
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7 d-flex justify-content-end">
+                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                        <ul class="pagination mb-0">
+                            <li class="paginate_button page-item previous" [class.disabled]="currentPage === 1">
+                                <a href="#" (click)="onPageChange(currentPage - 1); $event.preventDefault();" class="page-link">Previous</a>
+                            </li>
+                            <li *ngFor="let page of getPageNumbers()" class="paginate_button page-item" [class.active]="currentPage === page">
+                                <a href="#" (click)="onPageChange(page); $event.preventDefault();" class="page-link">{{ page }}</a>
+                            </li>
+                            <li class="paginate_button page-item next" [class.disabled]="currentPage === totalPages">
+                                <a href="#" (click)="onPageChange(currentPage + 1); $event.preventDefault();" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
 
         </div>
     </div>

@@ -52,7 +52,7 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
       this.loaddata();
-      this.paginateData();
+  
   
       // Set up filter predicate to consider both text and class filters
       this.dataSource.filterPredicate = (data: User, filter: string) => {
@@ -75,14 +75,12 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     const value = {
       Table_name: 'student'
     };
+
     this.commonService.getData_common(value).subscribe((data: any) => {
-      this.userdata = data.data;
-      console.log("this product", this.userdata);
-      this.hasData = this.userdata.length > 0;
-      this.dataSource.data = this.userdata;
-      this.totalItems = this.userdata.length;
-      this.totalPages = Math.ceil(this.totalItems / this.pageSize);
-      this.paginateData();
+      this.userdata = data.data; // Load all user data
+      this.totalItems = this.userdata.length; // Set total items based on full data length
+      this.totalPages = Math.ceil(this.totalItems / this.pageSize); // Calculate total pages
+      this.paginateData(); // Load the initial page of data
     });
   }
 
@@ -123,7 +121,7 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  applyFilter(event: Event): void {
+applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
     this.setCombinedFilter(filterValue); // Call with text filter input
 }
@@ -136,10 +134,9 @@ setCombinedFilter(textFilter: string): void {
   const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
   this.dataSource.filter = filter;
 
-  // If paginator is being used, reset it to the first page
-  if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-  }
+  // Reset to the first page after each filter change
+  this.currentPage = 1;
+  this.paginateData();
 }
 
 
@@ -166,13 +163,27 @@ setCombinedFilter(textFilter: string): void {
   paginateData(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.dataSource.data = this.userdata.slice(startIndex, endIndex);
+    this.dataSource.data = this.userdata.slice(startIndex, endIndex); // Slice the data for the current page
+  }
+
+  getPageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1); // Get array of page numbers
   }
 
   onPageChange(pageNumber: number): void {
+    console.log('Current Page before change:', this.currentPage);
+    console.log('Requested Page Number:', pageNumber);
+    if (pageNumber < 1 || pageNumber > this.totalPages) return; // Prevent out-of-bounds
     this.currentPage = pageNumber;
-    this.paginateData();
-  }
+    this.paginateData(); // This should handle updating the displayed data
+    console.log('Current Page after change:', this.currentPage);
+}
+
+getDisplayedRange(): { start: number; end: number } {
+  const start = (this.currentPage - 1) * this.pageSize + 1;
+  const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
+  return { start, end };
+}
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
