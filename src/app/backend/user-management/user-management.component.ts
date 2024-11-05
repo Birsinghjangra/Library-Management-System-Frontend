@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaginationService } from 'src/app/services/pagination.service';
 import { HttpClient } from '@angular/common/http';
 
-// Update User interface to match the student schema
 interface User {
   srn: string;
   student_name: string;
@@ -54,21 +53,19 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {
       this.loaddata();
       this.paginateData();
-    
-      // Adjust filter predicate to support combined filter (class and search text)
+  
+      // Set up filter predicate to consider both text and class filters
       this.dataSource.filterPredicate = (data: User, filter: string) => {
-        const combinedFilter = JSON.parse(filter);
-        const matchesClass = combinedFilter.class === 'All' || data.class === combinedFilter.class;
-        const matchesText = data.student_name.toLowerCase().includes(combinedFilter.text) || 
-                            data.roll_no.toLowerCase().includes(combinedFilter.text) ||
-                            data.phone.toLowerCase().includes(combinedFilter.text) ||
-                            data.address.toLowerCase().includes(combinedFilter.text) ||
-                            data.srn.toLowerCase().includes(combinedFilter.text); // Include srn in the filter
-        return matchesClass && matchesText;
+          const combinedFilter = JSON.parse(filter);
+          const matchesClass = combinedFilter.class === 'All' || data.class === combinedFilter.class;
+          const matchesText = data.student_name.toLowerCase().includes(combinedFilter.text) || 
+                              data.roll_no.toLowerCase().includes(combinedFilter.text) ||
+                              data.phone.toLowerCase().includes(combinedFilter.text) ||
+                              data.address.toLowerCase().includes(combinedFilter.text) ||
+                              data.srn.toLowerCase().includes(combinedFilter.text);
+          return matchesClass && matchesText;
       };
-    }
-    
-
+  }
   ngAfterViewInit(): void {
     const tableElement = this.table.nativeElement; // Correctly reference the table element
     console.log('Table Element:', tableElement);
@@ -128,28 +125,23 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.setCombinedFilter(filterValue);
-  }
+    this.setCombinedFilter(filterValue); // Call with text filter input
+}
 
-  filterByClass(selectedClass: string): void {
-    this.selectedClass = selectedClass; // Set the selected class
-    const currentTextFilter = this.dataSource.filter; // Get current text filter
-    this.setCombinedFilter(currentTextFilter); // Combine the filters
-  }
+filterByClass(selectedClass: string): void {
+    this.selectedClass = selectedClass;
+    this.setCombinedFilter(''); // Call with empty text filter if no text is provided
+}
+setCombinedFilter(textFilter: string): void {
+  const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
+  this.dataSource.filter = filter;
 
-  setCombinedFilter(textFilter: string): void {
-    // Combine both class and text filters in a JSON string
-    const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
-    this.dataSource.filter = filter;
-  
-    // Refresh the paginator
-    if (this.dataSource.paginator) {
+  // If paginator is being used, reset it to the first page
+  if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-    }
-  
-    // Ensure the dataSource is updated correctly
-    this.paginateData(); // This may need to be updated based on your filtering logic
   }
+}
+
 
   toggleRowVisibility(index: number): void {
     const rowData = this.dataSource.data[index];
