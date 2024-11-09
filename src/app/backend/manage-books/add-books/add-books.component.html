@@ -1,4 +1,4 @@
-<section class="content-header">
+<!-- <section class="content-header">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -7,7 +7,24 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']"><a>Home</a></li>
-                <li class="breadcrumb-item" [routerLink]="['/admin/manage_books']"><a >List</a></li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/manage_books']"><a>List</a></li>
+                    <li class="breadcrumb-item active">Add Books</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Book Management</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item" [routerLink]="['/admin/manage_books']"><a>List</a></li>
                     <li class="breadcrumb-item active">Add Books</li>
                 </ol>
             </div>
@@ -15,124 +32,145 @@
     </div>
 </section>
 
-<div class="container" style="width: 100%;">
-    <div class="card card-dark" style="width: 100%;">
+<div class="container">
+    <div class="card card-dark">
         <div class="card-header">
-            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create Book Details' : 'Update Book
-                Details'
-                }}</span>
-            <button class="btn btn-sm float-right" type="button">
-                <i class="text-white fas fa-times-circle" [routerLink]="['/admin/manage_books']"></i>
+            <span class="card-header-title font-weight-bold">
+                {{ flag === 'create' ? 'Create Book Details' : 'Update Book Details' }}
+            </span>
+            <button class="btn btn-sm float-right" type="button" [routerLink]="['/admin/manage_books']">
+                <i class="text-white fas fa-times-circle"></i>
             </button>
         </div>
         <div class="card-body">
-            <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="p-1">
                 <div class="row">
-                    <div class="col-md-12 col-12 mb-10">
-                        <div class="row">
 
-                            <!-- <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Book ID</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control" formControlName="id">
-                                </div>
-                                <div *ngIf="bookForm.get('id')?.invalid && bookForm.get('id')?.touched"
-                                    class="text-danger">
-                                    Title is required.
-                                </div>
-                            </div> -->
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">ISBN
-                                            <i class="fas fa-info-circle ml-2" data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Its 10/13 digit nos which you can find behind a book."></i>
-                                        </span>
-                                    </div> 
-                                    <input type="number" class="form-control" formControlName="isbn" (input)="onIsbnInput($event)" required />
-                                </div>
-                                <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched"
-                                    class="text-danger">
-                                    ISBN is required.
-                                </div>
+                    <!-- Book ID -->
+                    <!-- <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book ID</span>
                             </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Title</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control" formControlName="title">
-                                </div>
-                                <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched"
-                                    class="text-danger">
-                                    Title is required.
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Publishers</span>
-                                    </div>
-                                    <input type="text" class="form-control" formControlName="publication">
-                                </div>
-                                <div *ngIf="bookForm.get('publication')?.invalid && bookForm.get('publication')?.touched"
-                                    class="text-danger">
-                                    Publication is required.
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Price</span>
-                                    </div>
-                                    <input type="number" required="" class="form-control" formControlName="price">
-                                </div>
-                                <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched"
-                                    class="text-danger">
-                                    Price is required.
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Edition</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control" formControlName="edition">
-                                </div>
-                                <div *ngIf="bookForm.get('edition')?.invalid && bookForm.get('edition')?.touched"
-                                    class="text-danger">
-                                    Edition is required.
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6 col-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Book Qty</span>
-                                    </div>
-                                    <input type="text" required="" class="form-control" formControlName="quantity">
-                                </div>
-                                <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched"
-                                    class="text-danger">
-                                    quantity is required.
-                                </div>
-                            </div>
+                            <input type="number" class="form-control" formControlName="book_id" [readonly]="true" />
                         </div>
-                        <div class="form-row">
-                            <button class="btn btn-sm btn-dark ml-1" type="submit">
-                                <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create Book' : 'Update Book' }}
-                            </button>
-                            <button class="btn btn-sm btn-danger ml-1" type="button" (click)="bookForm.reset()">
-                                <i class="far fa-trash-alt mr-1"></i>Clear Form
-                            </button>
+                        <div *ngIf="bookForm.get('book_id')?.invalid && bookForm.get('book_id')?.touched" class="text-danger">
+                            Book ID is required.
                         </div>
+                    </div> -->
+                    
+                    <!-- Book ISBN -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book ISBN</span>
+                                <!-- <i class="fas fa-info-circle ml-2" data-toggle="tooltip" data-placement="top"
+                                   title="Its 10/13 digit nos which you can find behind a book."></i> -->
+                            </div>
+                            <input type="text" class="form-control" formControlName="isbn" (input)="onIsbnInput($event)" required />
+                        </div>
+                        <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched"
+                             class="text-danger">
+                             Book ISBN must be 10 or 13 digits.
+                        </div>
+                    </div>
+                    
+
+
+                    <!-- Book Title -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book Title</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="title" required />
+                        </div>
+                        <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched"
+                            class="text-danger">
+                            Book Title is required.
+                        </div>
+                    </div>
+
+                    <!-- Publication -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Publication</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="publication" required />
+                        </div>
+                        <div *ngIf="bookForm.get('publication')?.invalid && bookForm.get('publication')?.touched"
+                            class="text-danger">
+                            Publication is required.
+                        </div>
+                    </div>
+
+                    <!-- Author Name -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Author Name</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="author_name" required />
+                        </div>
+                        <div *ngIf="bookForm.get('author_name')?.invalid && bookForm.get('author_name')?.touched"
+                            class="text-danger">
+                            Author Name is required.
+                        </div>
+                    </div>
+
+                    <!-- Book Price -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book Price</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="price" required />
+                        </div>
+                        <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched"
+                            class="text-danger">
+                            Book Price is required.
+                        </div>
+                    </div>
+
+                    <!-- Book Edition -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book Edition</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="edition" required />
+                        </div>
+                        <div *ngIf="bookForm.get('edition')?.invalid && bookForm.get('edition')?.touched"
+                            class="text-danger">
+                            Book Edition is required.
+                        </div>
+                    </div>
+
+                    <!-- Book Quantity -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book Quantity</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="quantity" required />
+                        </div>
+                        <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched"
+                            class="text-danger">
+                            Book Quantity is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons Row -->
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-sm btn-dark ml-1" type="submit">
+                            <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create Book' : 'Update Book' }}
+                        </button>
+                        <button class="btn btn-sm btn-danger ml-1" type="button" (click)="bookForm.reset()">
+                            <i class="far fa-trash-alt mr-1"></i>Clear Form
+                        </button>
                     </div>
                 </div>
             </form>

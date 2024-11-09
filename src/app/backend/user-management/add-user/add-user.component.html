@@ -7,7 +7,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
-                    <li class="breadcrumb-item active">User Management</li>
+                    <li class="breadcrumb-item active" [routerLink]="['/admin/user_management']">List</li>
+                    <li class="breadcrumb-item active">Add User</li>
                 </ol>
             </div>
         </div>
@@ -17,67 +18,118 @@
 <div class="container">
     <div class="card card-dark">
         <div class="card-header">
-            <span class="card-header-title font-weight-bold">{{ flag === 'create' ? 'Create User Details' : 'Update User Details'
-                }}</span>
-            <button class="btn btn-sm float-right" type="button">
-                <i class="text-white fas fa-times-circle" [routerLink]="['/admin/user_management']"></i>
+            <span class="card-header-title font-weight-bold">
+                {{ flag === 'create' ? 'Create User Details' : 'Update User Details' }}
+            </span>
+            <button class="btn btn-sm float-right" type="button" [routerLink]="['/admin/user_management']">
+                <i class="text-white fas fa-times-circle"></i>
             </button>
         </div>
 
         <div class="card-body">
-            <div class="row mb-2">
-                <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="col-12 p-1">
-                    <div class="form-row">
-                        <div class="col-md-12 col-12 mb-2">
-                            <div class="form-row mb-3">
-                                <div class="col-md-6">
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Full Name</span>
-                                        </div>
-                                        <input type="text" class="form-control" formControlName="borrower_name" required />
-                                    </div>
-                                    <div class="error-message">
-                                        <div *ngIf="userForm.get('borrower_name')?.invalid && userForm.get('borrower_name')?.touched" class="text-danger">
-                                            Full Name is required
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="col-md-6">
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Phone</span>
-                                        </div>
-                                        <input type="number" class="form-control" formControlName="phone" (input)="onPhoneInput($event)" required />
-                                    </div>
-                                    <div class="error-message">
-                                        <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-danger">
-                                            Phone number is required and must be 10 digits
-                                        </div>
-                                    </div>
-                                </div>
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="p-1">
+                <div class="row">
+                    <!-- Admission No -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">SRN</span>
                             </div>
-        
-                            <div class="form-row">
-                                <div class="col-md-9 col-12">
-                                    <div class="input-group form-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Address</span>
-                                        </div>
-                                        <textarea class="form-control" formControlName="address"></textarea>
-                                    </div>
-                                    <div class="error-message">
-                                        <div *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched" class="text-danger">
-                                            Address is required
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <input type="text" class="form-control" formControlName="srn" required />
+                        </div>
+                        <div *ngIf="userForm.get('srn')?.invalid && userForm.get('srn')?.touched" class="text-danger">
+                            SRN is required.
                         </div>
                     </div>
-        
-                    <div class="form-row">
+
+                    <!-- Full Name -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Full Name</span>
+                            </div>
+                            <input type="text" class="form-control" formControlName="student_name" required />
+                        </div>
+                        <div *ngIf="userForm.get('student_name')?.invalid && userForm.get('student_name')?.touched" class="text-danger">
+                            Full Name is required.
+                        </div>
+                    </div>
+
+                    <!-- Class Dropdown -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Class</span>
+                            </div>
+                            <select class="form-control" formControlName="class" required>
+                                <option value="" disabled>Select Class</option>
+                                <option *ngFor="let cls of classList" [value]="cls">{{ cls }}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="userForm.get('class')?.invalid && userForm.get('class')?.touched" class="text-danger">
+                            Class is required.
+                        </div>
+                    </div>
+
+                    <!-- Section Dropdown -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Section</span>
+                            </div>
+                            <select class="form-control" formControlName="section" required>
+                                <option value="" disabled>Select Section</option>
+                                <option *ngFor="let sec of sectionList" [value]="sec">{{ sec }}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="userForm.get('section')?.invalid && userForm.get('section')?.touched" class="text-danger">
+                            Section is required.
+                        </div>
+                    </div>
+
+                    <!-- Roll No -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Roll No.</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="roll_no" required />
+                        </div>
+                        <div *ngIf="userForm.get('roll_no')?.invalid && userForm.get('roll_no')?.touched" class="text-danger">
+                            Roll No. is required.
+                        </div>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="col-md-6 col-sm-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Phone</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="phone" (input)="onPhoneInput($event)" required />
+                        </div>
+                        <div *ngIf="userForm.get('phone')?.invalid && userForm.get('phone')?.touched" class="text-danger">
+                            Phone number is required and must be 10 digits.
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-md-12 form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Address</span>
+                            </div>
+                            <textarea class="form-control" formControlName="address" required></textarea>
+                        </div>
+                        <div *ngIf="userForm.get('address')?.invalid && userForm.get('address')?.touched" class="text-danger">
+                            Address is required.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons Row -->
+                <div class="row">
+                    <div class="col">
                         <button class="btn btn-sm btn-dark ml-1" type="submit">
                             <i class="fas fa-save mr-1"></i>{{ flag === 'create' ? 'Create User' : 'Update User' }}
                         </button>
@@ -85,9 +137,8 @@
                             <i class="far fa-trash-alt mr-1"></i>Clear Form
                         </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-        
     </div>
 </div>

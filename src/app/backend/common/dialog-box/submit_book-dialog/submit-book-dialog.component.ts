@@ -87,7 +87,7 @@ export class SubmitBookDialogComponent implements OnInit {
     const payload = {
       isbn: this.isbn
     }
-    this.CommonService.submit_book(payload).subscribe(data => {
+    this.CommonService.issue_book(payload).subscribe(data => {
       let message = data.message
       if (data.status === 'success') {
         this.SnackBarService.openSnackBarSuccess([message]);

@@ -1,0 +1,60 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Report</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item active">Report</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header" style="border-bottom: 2px solid #DD4B39;">
+            <span class="card-title font-weight-bold">Manage Report</span>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4 col-12">
+                    <div class="input-group">
+                        <select required class="form-control">
+                            <option value="">Select</option>
+                            <option *ngFor="let option of reportOptions" [value]="option.value">{{ option.label }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <div class="input-group">
+                        <select class="form-control">
+                            <option value="">Select</option>
+                            <option *ngFor="let fastOption of fastTagOptions" [value]="fastOption.value">{{ fastOption.label }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <div class="input-group">
+                        <input type="date" class="form-control start_date hasDatepicker" placeholder="Start Date">
+                        <input type="date" class="form-control end_date hasDatepicker" placeholder="End Date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-12 mb-3">
+                <button type="submit" class="btn btn-dark btn-sm">
+                    <i class="far fa-newspaper mr-2"></i>Show Report
+                </button>
+                <button type="button" class="btn btn-primary btn-sm ml-2">
+                    <i class="fas fa-print mr-2"></i>Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

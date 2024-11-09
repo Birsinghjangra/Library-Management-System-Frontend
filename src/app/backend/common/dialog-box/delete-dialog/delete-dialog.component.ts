@@ -2,9 +2,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 interface User {
-  id: number;
-  Bname: string;
-  Phone: string;
+  admission_no: number;
+  student_name: string;
+  class: string;
+  section: string;
+  roll_no: string;
+  phone: string;
   createdOn: string;
   isHidden: boolean;
 }

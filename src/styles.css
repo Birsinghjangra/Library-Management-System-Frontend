@@ -108,3 +108,7 @@ tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
 .mat-tooltip {
   font-size: 14px;
 }
+
+.breadcrumb-item {
+  cursor: pointer;
+}

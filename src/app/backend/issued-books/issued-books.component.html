@@ -42,14 +42,14 @@
             <div class="table-responsive mt-3 my-custom-scrollbar">
                 <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
             
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> ID CARD </th>
-                        <td mat-cell *matCellDef="let element" matTooltip="{{element.id}}"> {{element.id}} </td>
+                    <ng-container matColumnDef="srn">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> SRN </th>
+                        <td mat-cell *matCellDef="let element" matTooltip="{{element.srn}}"> {{element.srn}} </td>
                     </ng-container>
             
-                    <ng-container matColumnDef="borrower_name">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Name </th>
-                        <td mat-cell *matCellDef="let element" matTooltip="{{element.borrower_name}}"> {{element.borrower_name}} </td>
+                    <ng-container matColumnDef="student_name">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header">Student Name </th>
+                        <td mat-cell *matCellDef="let element" matTooltip="{{element.student_name}}"> {{element.student_name}} </td>
                     </ng-container>
             
                     <ng-container matColumnDef="isbn">
@@ -58,7 +58,7 @@
                     </ng-container>
             
                     <ng-container matColumnDef="title">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Title </th>
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header">Book Title </th>
                         <td mat-cell *matCellDef="let element" matTooltip="{{element.title}}"> {{element.title}} </td>
                     </ng-container>
             

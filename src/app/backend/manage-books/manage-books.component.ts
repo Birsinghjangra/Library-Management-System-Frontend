@@ -3,9 +3,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
+// import { DeleteDialogComponent } from 'src/app/dialog/delete-dialog/delete-dialog.component';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
+import { DeleteDialogComponent } from '../common/dialog-box/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-manage-books',
@@ -127,7 +128,7 @@ export class ManageBooksComponent implements OnInit {
   onDownloadBarcode(isbn: any) {
     const payload = { isbn: isbn }; // Create payload for the request
 
-    this.commonService.download_barcode(payload).subscribe((response: Blob) => {
+    this.commonService.download_Barcode(payload).subscribe((response: Blob) => {
         // Create a new Blob object from the response
         const blob = new Blob([response], { type: 'image/png' });
         const downloadUrl = window.URL.createObjectURL(blob);

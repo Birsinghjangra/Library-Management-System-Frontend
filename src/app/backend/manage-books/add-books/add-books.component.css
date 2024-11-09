@@ -1,3 +1,29 @@
-/* .text-danger {
-    margin-left: 100px;
-} */
+.error-message {
+    /* margin-top: 5px;
+    margin-bottom: 10px; */
+    /* margin-left: 100px; */
+}
+.text-danger {
+    margin-top: -15px;
+    color: #dc3545 !important;
+}
+   /* Styles to improve validation message alignment */
+   .form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+}
+
+.text-danger {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 14px;
+    padding-left: 9px;}
+
+.input-group-text {
+    min-width: 120px; /* Ensures consistency across labels */
+}

@@ -31,30 +31,36 @@ export const sidebarMenuConfig = [
   //   ]
   // },
 
-  {
-    label: 'Manage Books',
-    route: 'manage_books',
-    icon: 'nav-icon far fa-plus-square',
-  },
-  {
-    label: 'Issue Books',
-    route: 'issue_books',
-    icon: 'nav-icon far fa-plus-square',
-  },
-  {
-    label: 'Issued Books',
-    route: 'issued_books',
-    icon: 'nav-icon far fa-plus-square',
-  },
-  {
-    label: 'Manage User',
-    route: 'user_management',
-    icon: 'nav-icon far fa-plus-square',
-  },
-  {
-    label: 'Role Permission',
-    route: 'role_permission',
-    icon: 'nav-icon far fa-plus-square',
-  },
-
+  
+    {
+      label: 'Manage Books',
+      route: 'manage_books',
+      icon: 'nav-icon fas fa-book', 
+    },
+    {
+      label: 'Issue Books',
+      route: 'issue_books',
+      icon: 'nav-icon fas fa-book-reader', 
+    },
+    {
+      label: 'Issued Books',
+      route: 'issued_books',
+      icon: 'nav-icon fas fa-check-circle', 
+    },
+    {
+      label: 'Manage User',
+      route: 'user_management',
+      icon: 'nav-icon fas fa-users-cog', 
+    },
+    {
+      label: 'Report',
+      route: 'report',
+      icon: 'nav-icon fas fa-chart-line', 
+    },
+    {
+      label: 'Role Permission',
+      route: 'role_permission',
+      icon: 'nav-icon fas fa-user-shield', 
+    },
 ];
+  

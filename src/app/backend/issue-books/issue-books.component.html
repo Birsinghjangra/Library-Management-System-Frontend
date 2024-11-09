@@ -29,16 +29,16 @@
                                     <span class="input-group-text custom">Search User</span>
                                 </div>
                                 <div class="custom-ng-select">
-                                    <ng-select [items]="searchUserResult" bindLabel="borrower_name"
-                                        [(ngModel)]="searchUserInput" (search)="searchUserData($event.term)"
-                                        (change)="showUserDetails($event)" formControlName="user_details">
+                                    <ng-select [items]="searchUserResult" bindLabel="student_name"
+                                        formControlName="user_details" (search)="searchUserData($event.term)"
+                                        (change)="showUserDetails($event)">
                                         <ng-template ng-option-tmp let-item="item">
-                                            <div> Name:{{ item.borrower_name }} | Card ID:{{ item.id }} </div>
+                                            <div> Name: {{ item.student_name }} | SRN: {{ item.srn }} </div>
                                         </ng-template>
 
                                         <ng-template ng-label-tmp let-item="item">
                                             <div *ngIf="item; else placeholder">
-                                                {{ item.borrower_name }}
+                                                {{ item.student_name }}
                                             </div>
                                             <ng-template #placeholder>
                                                 <span class="placeholder-text">Type to search.</span>
@@ -49,13 +49,16 @@
                             </div>
                             <div class="user-details mt-3">
                                 <ul class="list-group">
-                                    <li class="list-group-item">Card ID: <span>{{ userData?.id || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Name: <span>{{ userData?.borrower_name || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Phone: <span>{{ userData?.phone || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Name: <span>{{ userData?.student_name || 'N/A' }}</span>
+                                    </li>
+                                    <li class="list-group-item">Class: <span>{{ userData?.class || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Roll No: <span>{{ userData?.roll_no || 'N/A' }}</span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
@@ -84,9 +87,11 @@
                             </div>
                             <div class="book-details mt-3">
                                 <ul class="list-group">
-                                    <li class="list-group-item">Book Title: <span>{{ bookData?.title || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Book Title: <span>{{ bookData?.title || 'N/A' }}</span>
+                                    </li>
                                     <li class="list-group-item">ISBN: <span>{{ bookData?.isbn || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span></li>
+                                    <li class="list-group-item">Book Price: <span>{{ bookData?.price || 'N/A' }}</span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -99,7 +104,8 @@
                                     <span class="input-group-text">Issue Date</span>
                                 </div>
                                 <input type="date" id="issue_date_tmp" class="form-control hasDatepicker"
-                                    [(ngModel)]="issueDate" (change)="onIssueDateChange($event)" formControlName="issue_date" />
+                                    [(ngModel)]="issueDate" (change)="onIssueDateChange($event)"
+                                    formControlName="issue_date" />
                                 <input type="hidden" id="issue_date" />
                             </div>
                         </div>
@@ -111,7 +117,7 @@
                                     <span class="input-group-text">Return Date</span>
                                 </div>
                                 <input type="date" id="return_date_tmp" class="form-control hasDatepicker"
-                                    [(ngModel)]="returnDate" formControlName="return_date"/>
+                                    [(ngModel)]="returnDate" formControlName="return_date" />
                                 <input type="hidden" id="return_date" />
                             </div>
                         </div>
