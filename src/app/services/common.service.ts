@@ -8,14 +8,14 @@ import { environment } from "src/environment";
 })
 export class CommonService {
     apiUrl = environment.apiUrl;
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    save_data_operation(value:any):Observable<any>{
-        return this.http.post<any[]>(`${this.apiUrl}/db_operation`,value);
+    save_data_operation(value: any): Observable<any> {
+        return this.http.post<any[]>(`${this.apiUrl}/db_operation`, value);
     }
-    
-    getData_common(value:any):Observable<any>{
-        return this.http.post<any[]>(`${this.apiUrl}/getData_common`,value);
+
+    getData_common(value: any): Observable<any> {
+        return this.http.post<any[]>(`${this.apiUrl}/getData_common`, value);
     }
 
     delete_data_operation(payload: any): Observable<any> {
@@ -47,6 +47,14 @@ export class CommonService {
         return this.http.post(`${this.apiUrl}/download_Barcode`, payload, {
             responseType: 'blob'
         });
-    }       
-    
+    }
+    // csv_import(payload: any): Observable<any> {
+    //     return this.http.post<any>(`${this.apiUrl}/csv_import`, payload);
+    // }
+    // csv_import(payload: any): Observable<Blob> {
+    //     return this.http.post(`${this.apiUrl}/csv_import`, payload, {
+    //         responseType: 'blob'
+    //     });
+    // }
+
 }

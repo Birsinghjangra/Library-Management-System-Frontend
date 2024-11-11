@@ -1,0 +1,6 @@
+select.form-control {
+    border-radius: 4px !important;
+}
+.start_date{
+    border-radius: 4px 0 0 4px !important;
+}

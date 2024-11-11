@@ -25,7 +25,23 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
+      rememberMe: [false], // Initialize rememberMe form control
     });
+
+    // Retrieve credentials from localStorage (if they exist)
+    const storedEmail = localStorage.getItem('email');
+    const storedPassword = localStorage.getItem('password');
+    
+    if (storedEmail && storedPassword) {
+      this.loginForm.patchValue({
+        email: storedEmail,
+        password: storedPassword,
+        rememberMe: true,  // Auto-check "Remember Me" if credentials are found
+      });
+      console.log('Auto-filled credentials from localStorage');
+    } else {
+      console.log('No stored credentials found');
+    }
   }
 
   get f() {
@@ -49,6 +65,18 @@ export class LoginComponent implements OnInit {
           let message = res.message;
           this.snackBar.openSnackBarSuccess([message]);
           this.router.navigate(['/admin']);
+
+          // If "Remember Me" is checked, save the credentials in localStorage
+          if (this.loginForm.value.rememberMe) {
+            localStorage.setItem('email', this.loginForm.value.email);
+            localStorage.setItem('password', this.loginForm.value.password);
+            console.log('Credentials saved in localStorage');
+          } else {
+            // Clear stored credentials if "Remember Me" is unchecked
+            localStorage.removeItem('email');
+            localStorage.removeItem('password');
+            console.log('Credentials cleared from localStorage');
+          }
         } else {
           this.snackBar.openSnackBarError([res.message]);
         }

@@ -1,28 +1,54 @@
-<div class="container">
-  <div class="centered-div mat-elevation-z8">
-    <div class="login-container">
-      <h2>Login</h2>
+<div class="login-box container">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <a href="../../index2.html" class="h1">LMS</a>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" formControlName="email" class="form-control" required>
-          <div *ngIf="submitted && f['email'].errors">
-            <div *ngIf="f['email'].errors['required']">Email is required.</div>
-            <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
+        <div class="input-group mb-3">
+          <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" name="password" formControlName="password" class="form-control" required>
-          <!-- <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required.</div>
-          </div> -->
+      
+        <div class="input-group mb-3">
+          <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-        <div *ngIf="submitted && !loginForm.valid" class="alert alert-danger">
-          Incorrect email or password. Please try again.
+      
+        <div class="row mt-2 d-flex align-items-center">
+          <div class="col-8 d-flex align-items-center">
+            <div class="icheck-primary ml-2 mt-2">
+              <input type="checkbox" id="remember" formControlName="rememberMe">
+              <label for="remember" class="ml-2">
+                Remember Me
+              </label>
+            </div>
+          </div>
+          <div class="col-4 d-flex align-items-center justify-content-end">
+            <button type="submit" class="btn btn-primary btn-block">
+              Sign In
+            </button>
+          </div>
         </div>
+        
       </form>
+
+      <p class="mb-2 mt-2">
+        <a href="forgot-password.html">I forgot my password</a>
+      </p>
+      <p class=" mb-2">
+        <a href="register.html" class="text-center">Register a new membership</a>
+      </p>
     </div>
   </div>
 </div>

@@ -1,7 +1,16 @@
-@import "~@ng-select/ng-select/themes/default.theme.css";
+/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+@import "default.theme.css";
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  height: 525px !important;
+  padding: 1.25rem;
+}
 
 body.sidebar-mini.layout-fixed.mat-typography {
   font-size: 14px;
@@ -44,8 +53,23 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light {
   margin-top: 10px; /* Adjust margin as needed */
 }
 
-.card-header {
+/* .card-header {
   padding: 17px;
+} */
+span.card-title.font-weight-bold {
+  font-size: 14px;
+}
+span.btn.btn-sm.btn-dark.float-right {
+  margin: -5px;
+}
+span.card-header-title.font-weight-bold {
+  font-size: 14px;
+  font-weight: 500 !important;
+  margin: 7px;
+  padding: 0px;
+}
+button.btn.btn-sm.float-right {
+  margin: -5px;
 }
 
 .iconbutton {
@@ -57,6 +81,7 @@ input.form-control, select.form-control {
   width: 100%;
   height: 40px;
   font-size: 16px;
+  border-radius: 0px 4px 4px 0px;
 }
 .height{
   height: 40px;
@@ -64,7 +89,7 @@ input.form-control, select.form-control {
 
 .my-custom-scrollbar {
   position: relative;
-  height: 300px;
+  height: 320px;
 }
 
 .custom-scrollbar {
@@ -72,7 +97,7 @@ input.form-control, select.form-control {
 }
 ::-webkit-scrollbar {
   width: 8px;
-  height: 8px;
+  height: 10px;
 }
 
 /* Track */
@@ -92,11 +117,6 @@ input.form-control, select.form-control {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(133, 132, 132);
 }
-
-tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
-  height: 0px;
-}
-
 .sticky-header {
   position: sticky;
   top: 0;
@@ -104,6 +124,7 @@ tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
   z-index: 1;
   font-weight: bold;
   font-size: medium;
+  border-top: 2px solid #000;
 }
 .mat-tooltip {
   font-size: 14px;
@@ -111,4 +132,32 @@ tr.mat-mdc-header-row.mdc-data-table__header-row.cdk-header-row {
 
 .breadcrumb-item {
   cursor: pointer;
+}
+
+.pagination{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px 0px 0px;
+  padding: 0;
+}
+.dataTables_info{
+  margin-top: 20px;
+}
+
+.table td {
+  padding: 10px 0px 10px 13px !important;
+  border-top: 1px solid #dee2e6;
+  align-content: center !important;
+}
+table tbody tr {
+  border-bottom: 1px solid #dee2e6; 
+}
+.table-responsive {
+  border-top: 1px solid #dee2e6;
+}
+
+.ng-select-container {
+  height: 36px !important;
 }

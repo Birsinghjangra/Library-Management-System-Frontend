@@ -58,15 +58,19 @@ export class IssueBooksComponent implements OnInit {
     this.onIssueDateChange({ target: { value: this.issueDate } });
   }
 
-  searchUserData(srn: string): void {
+  searchUserData(term: string): void {
     const payload = {
       Table_name: 'student',
-      srn: srn
+      srn: '' 
     };
+  
     this.commonService.search_user(payload).subscribe(
       (response) => {
         if (response && response.data) {
-          this.searchUserResult = response.data;
+          this.searchUserResult = response.data.map((item: any) => ({
+            ...item,
+            searchUser: `${item.srn} ${item.student_name}` // Combine srn and student_name
+          }));
         } else {
           console.error("Response data is missing or invalid:", response);
         }
@@ -76,6 +80,7 @@ export class IssueBooksComponent implements OnInit {
       }
     );
   }
+  
 
   showUserDetails(user: any): void {
     if (user) {
@@ -85,15 +90,19 @@ export class IssueBooksComponent implements OnInit {
     }
   }
 
-  searchBookData(title: string): void {
+  searchBookData(term: string): void {
     const payload = {
       Table_name: 'book',
-      title: title
+      title: ''
     };
+  
     this.commonService.search_book(payload).subscribe(
       (response) => {
         if (response && response.data) {
-          this.searchBookResult = response.data;
+          this.searchBookResult = response.data.map((item: any) => ({
+            ...item,
+            searchBook: `${item.isbn} ${item.title}` // Combine book_id and title
+          }));
         } else {
           console.error("Response data is missing or invalid:", response);
         }
@@ -103,6 +112,7 @@ export class IssueBooksComponent implements OnInit {
       }
     );
   }
+  
 
   showBookDetails(book: any): void {
     this.bookData = book;

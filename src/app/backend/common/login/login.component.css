@@ -1,28 +1,28 @@
-.container {
-  display: grid;
-  place-items: center; 
-  height: 100vh; 
+.login-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.centered-div {
+/* Card body styling */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align children at the top */
+  align-items: stretch; /* Make children stretch across the width */
   padding: 20px;
-  border: 1px solid #ccc;
+  width: 100%;
+  height: 300px !important;
 }
 
-.error:focus,
-.error {
-  border-color: #E91E63;
-  color: #E91E63;
+.card {
+  max-width: 400px;
+  width: 100%;
 }
-
-.invalid-feedback {
-  color: #E91E63;
-  margin-top: 10px;
+.icheck-primary input[type="checkbox"] {
+  transform: scale(1.5); 
 }
-
-input.login-btn.my_class1 {
-  opacity: 0.2;
-}
-.invalid-feedback {
-  display: block;
+.form-control{
+  border-radius: 4px 0px 0px 4px !important;
 }

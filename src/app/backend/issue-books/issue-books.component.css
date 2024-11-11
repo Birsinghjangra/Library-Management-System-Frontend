@@ -55,3 +55,14 @@
 .input-group-text {
   min-width: 120px; /* Ensures consistency across labels */
 }
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  box-sizing: content-box;
+  background: none transparent;
+  border: 0 none;
+  box-shadow: none;
+  outline: none;
+  padding: 0;
+  cursor: default;
+  width: 100%;
+  height: 36px !important;
+}

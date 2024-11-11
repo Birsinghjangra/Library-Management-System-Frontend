@@ -6,9 +6,11 @@ import { HeaderComponent } from "../backend/common/header/header.component";
 import { FooterComponent } from "../backend/common/footer/footer.component";
 import { SidebarComponent } from "../backend/common/sidebar/sidebar.component";
 import { ReportComponent } from './report/report.component';
+import { MaterialModule } from "../material-module";
+
 
 @NgModule({
-    imports: [BackendRoutingModule, CommonModule],
+    imports: [BackendRoutingModule, CommonModule,MaterialModule],
     exports: [],
     declarations: [BackendComponent, HeaderComponent, FooterComponent, SidebarComponent, ReportComponent],
 })

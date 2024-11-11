@@ -3,8 +3,6 @@ import { NgModule } from "@angular/core";
 import { IssuedBooksRoutingModule } from "../issued-books/issued-books-routing.module";
 import { MatTableModule } from '@angular/material/table';
 
-
-
 @NgModule({
         declarations: [
         ],
@@ -12,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
             CommonModule,
             IssuedBooksRoutingModule,
             MatTableModule,
-        
         ]
 })
 export class IssuedBooksModule { }

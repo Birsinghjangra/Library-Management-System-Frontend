@@ -74,7 +74,7 @@ import { BarcodeDialogComponent } from './backend/common/dialog-box/barcode-dial
   providers: [],
   bootstrap: [AppComponent],
   exports: [
-    BarcodeDialogComponent // If you need to use it in other modules
+    BarcodeDialogComponent
   ]
 })
 export class AppModule {}

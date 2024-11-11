@@ -29,7 +29,7 @@
                                     <span class="input-group-text custom">Search User</span>
                                 </div>
                                 <div class="custom-ng-select">
-                                    <ng-select [items]="searchUserResult" bindLabel="student_name"
+                                    <ng-select [items]="searchUserResult" bindLabel="searchUser"
                                         formControlName="user_details" (search)="searchUserData($event.term)"
                                         (change)="showUserDetails($event)">
                                         <ng-template ng-option-tmp let-item="item">
@@ -49,16 +49,13 @@
                             </div>
                             <div class="user-details mt-3">
                                 <ul class="list-group">
-                                    <li class="list-group-item">Name: <span>{{ userData?.student_name || 'N/A' }}</span>
-                                    </li>
+                                    <li class="list-group-item">Name: <span>{{ userData?.student_name || 'N/A' }}</span></li>
                                     <li class="list-group-item">Class: <span>{{ userData?.class || 'N/A' }}</span></li>
-                                    <li class="list-group-item">Roll No: <span>{{ userData?.roll_no || 'N/A' }}</span>
-                                    </li>
+                                    <li class="list-group-item">Roll No: <span>{{ userData?.roll_no || 'N/A' }}</span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
 
                     <div class="col-md-6 col-12">
                         <div class="form-group">
@@ -67,7 +64,7 @@
                                     <span class="input-group-text custom">Search Book</span>
                                 </div>
                                 <div class="custom-ng-select">
-                                    <ng-select [items]="searchBookResult" bindLabel="title"
+                                    <ng-select [items]="searchBookResult" bindLabel="searchBook"
                                         [(ngModel)]="searchBookInput" (search)="searchBookData($event.term)"
                                         (change)="showBookDetails($event)" formControlName="book_details">
                                         <ng-template ng-option-tmp let-item="item">
