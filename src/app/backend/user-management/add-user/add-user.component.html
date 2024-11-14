@@ -21,7 +21,8 @@
             <span class="card-header-title font-weight-bold">
                 {{ flag === 'create' ? 'Create User Details' : 'Update User Details' }}
             </span>
-            <button class="btn btn-sm float-right" type="button" [routerLink]="['/admin/user_management']">
+            <button class="btn btn-sm float-right" type="button" >
+                <a [routerLink]="['/admin/user_management']"></a>
                 <i class="text-white fas fa-times-circle"></i>
             </button>
         </div>

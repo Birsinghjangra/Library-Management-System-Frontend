@@ -5,7 +5,7 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" formControlName="email" class="form-control" required>
+          <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Enter your email" required>
           <div *ngIf="submitted && f['email'].errors">
             <div *ngIf="f['email'].errors['required']">Email is required.</div>
             <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
@@ -13,10 +13,14 @@
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" name="password" formControlName="password" class="form-control" required>
-          <!-- <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required.</div>
-          </div> -->
+          <div class="input-group mb-3">
+            <input type="password" id="passwordInput" name="password" formControlName="password" class="form-control"
+              [attr.aria-describedby]="'password-toggle-btn'" placeholder="Enter your password" required>
+            <button class="btn btn-outline-secondary toggle-button" type="button" id="toggleButton" aria-label="Toggle password visibility"
+              (click)="togglePasswordVisibility()">
+              <i id="eyeIcon" class="fa fa-eye-slash"></i>
+            </button>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
         <div *ngIf="submitted && !loginForm.valid" class="alert alert-danger">

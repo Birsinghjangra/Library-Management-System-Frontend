@@ -47,6 +47,9 @@ export class CommonService {
         return this.http.post(`${this.apiUrl}/download_Barcode`, payload, {
             responseType: 'blob'
         });
-    }       
+    }  
+    sidebarConfig(id:any){
+        return this.http.post<any>(`${this.apiUrl}/sidebarMenuConfig`,id);
+      }     
     
 }
