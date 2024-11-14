@@ -19,7 +19,6 @@ export class AuthService {
   loginAuth(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       map((response: any) => {
-        console.log("token",response)
         // Extract token and permissions from the response
         const { token, permissions } = response;
         if (token) {

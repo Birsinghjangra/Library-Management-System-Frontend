@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { BackendComponent } from "./backend.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { AuthGuard } from "../auth.guard";
 
 const routes: Routes = [
   {
@@ -11,12 +12,12 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
       {
         path: 'dashboard',
         component: DashboardComponent,
-        // canActivate: [AuthGuard]
+        canActivate: [AuthGuard]
       },
       {
         path: 'user_management',
@@ -24,6 +25,7 @@ const routes: Routes = [
           import('./user-management/user-management.module').then(
             (m) => m.UserManagementModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'user_management/add_user',
@@ -31,6 +33,7 @@ const routes: Routes = [
           import('./user-management/add-user/add-user.module').then(
             (m) => m.AddUserModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'user_management/add_user/:id',
@@ -38,6 +41,7 @@ const routes: Routes = [
           import('./user-management/add-user/add-user.module').then(
             (m) => m.AddUserModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'role_permission',
@@ -45,6 +49,7 @@ const routes: Routes = [
           import('./role-permission/role-permission.module').then(
             (m) => m.RolePermissionModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'manage_books/add_books',
@@ -52,6 +57,7 @@ const routes: Routes = [
           import('./manage-books/add-books/add-books.module').then(
             (m) => m.AddBooksModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'manage_books',
@@ -59,6 +65,7 @@ const routes: Routes = [
           import('./manage-books/manage-books.module').then(
             (m) => m.ManageBooksModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'issue_books',
@@ -66,6 +73,7 @@ const routes: Routes = [
           import('./issue-books/issue-books.module').then(
             (m) => m.IssueBooksModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'issued_books',
@@ -73,6 +81,7 @@ const routes: Routes = [
           import('./issued-books/issued-books.module').then(
             (m) => m.IssuedBooksModule
           ),
+          canActivate: [AuthGuard],
       },
       {
         path: 'report',
@@ -80,6 +89,7 @@ const routes: Routes = [
           import('./report/report.module').then(
             (m) => m.ReportModule
           ),
+          canActivate: [AuthGuard],
       },
       
     ],
