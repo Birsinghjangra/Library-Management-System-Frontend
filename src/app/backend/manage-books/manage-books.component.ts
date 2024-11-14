@@ -148,7 +148,4 @@ export class ManageBooksComponent implements OnInit {
         this.snackBar.openSnackBarError(['Failed to download barcode.']);
     });
 }
-
-  
-
 }
