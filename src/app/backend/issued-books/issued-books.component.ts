@@ -19,7 +19,7 @@ export class IssuedBooksComponent implements OnInit {
   userdata: any = [];
   // isSubmitted: boolean = false;
 
-  displayedColumns = ['srn', 'student_name', 'isbn', 'title', 'remark', 'fine', 'issued_at', 'end_date', 'action'];
+  displayedColumns = ['Sno','srn', 'student_name', 'isbn', 'title', 'remark', 'fine', 'issued_at', 'end_date', 'action'];
   constructor(private commonService: CommonService,
     private router: Router,
     private snackBar: SnackBarService,
@@ -33,7 +33,7 @@ export class IssuedBooksComponent implements OnInit {
       Table_name: 'borrower_book_detail'
     };
     this.commonService.getData_common(value).subscribe((data: any) => {
-      this.userdata = data.data;
+      this.userdata = data.data.filter((item:any)=> item.isbn != null);
       this.hasData = this.userdata.length > 0;
       this.dataSource.data = this.userdata;
     });
