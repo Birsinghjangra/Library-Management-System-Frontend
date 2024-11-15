@@ -33,7 +33,7 @@ export class IssuedBooksComponent implements OnInit {
       Table_name: 'borrower_book_detail'
     };
     this.commonService.getData_common(value).subscribe((data: any) => {
-      this.userdata = data.data.filter((item:any)=> item.isbn != null);
+      this.userdata = data.data.filter((item:any)=> item.isSubmit == 0);
       this.hasData = this.userdata.length > 0;
       this.dataSource.data = this.userdata;
     });
