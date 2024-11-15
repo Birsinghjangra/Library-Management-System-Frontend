@@ -57,4 +57,9 @@ export class CommonService {
     //     });
     // }
 
+    
+    sidebarConfig(id:any){
+        return this.http.post<any>(`${this.apiUrl}/sidebarMenuConfig`,id);
+    }     
+    
 }

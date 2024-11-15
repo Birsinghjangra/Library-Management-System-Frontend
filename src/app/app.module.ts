@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './backend/common/header/header.component';
 import { SidebarComponent } from './backend/common/sidebar/sidebar.component';
 import { FooterComponent } from './backend/common/footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -31,22 +31,26 @@ import { DeleteDialogComponent } from './backend/common/dialog-box/delete-dialog
 import { FrontendComponent } from './frontend/frontend.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BarcodeDialogComponent } from './backend/common/dialog-box/barcode-dialog/barcode-dialog.component';
+import { LoaderComponent } from './backend/common/loader/loader.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { LoaderService } from './services/loader.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoaderComponent,
     // UserManagementComponent,
-    RolePermissionComponent,
-    ManageBooksComponent,
-    AddBooksComponent,
-    IssueBooksComponent,
-    IssuedBooksComponent,
-    AddUserComponent,
-    DeleteDialogComponent,
-    FrontendComponent,
-    BarcodeDialogComponent
+    // RolePermissionComponent,
+    // ManageBooksComponent,
+    // AddBooksComponent,
+    // IssueBooksComponent,
+    // IssuedBooksComponent,
+    // AddUserComponent,
+    // DeleteDialogComponent,
+    // FrontendComponent,
+    BarcodeDialogComponent,
     // HeaderComponent,
     // SidebarComponent,
     // FooterComponent,
@@ -69,9 +73,10 @@ import { BarcodeDialogComponent } from './backend/common/dialog-box/barcode-dial
     MatAutocompleteModule,
     NgSelectModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },LoaderService],
+
   bootstrap: [AppComponent],
   exports: [
     BarcodeDialogComponent

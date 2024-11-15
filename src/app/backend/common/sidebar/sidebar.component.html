@@ -20,66 +20,59 @@
       </div>
   
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <!-- <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
           <li class="nav-item" *ngFor="let menuItem of sidebaritems">
             <a [routerLink]="menuItem.route" routerLinkActive="active" class="nav-link">
               <i class="nav-icon {{ menuItem.icon }}"></i>
               <p>
                 {{ menuItem.label }}
-                <!-- <span *ngIf="menuItem.badge" class="right badge badge-danger">{{ menuItem.badge.text }}</span> -->
-              </p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Starter Pages
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="/dashboard" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Dashboard
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="/addproduct" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Add Product
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
         </ul>
       </nav> -->
+      
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+          <ng-container *ngFor="let menuItem of sidebaritems">
+            <li class="nav-item" *ngIf="menuItem.view === 1"
+              [ngClass]="{ 'menu-is-opening': isSubmenuOpen(menuItem), 'menu-open': isSubmenuOpen(menuItem) }">
+  
+              <ng-container *ngIf="!menuItem.childmenu || menuItem.childmenu.length === 0">
+                <a [routerLink]="menuItem.route" [queryParams]="{ menuid: menuItem.id }"
+                  [ngClass]="{ 'nav-link': true, 'active': activeMenuId === menuItem.id }" routerLinkActive="active"
+                  class="nav-link">
+                  <i class="nav-icon {{ menuItem.icon }}"></i>
+                  <p>{{ menuItem.label }}</p>
+                </a>
+              </ng-container>
+  
+              <ng-container *ngIf="menuItem.childmenu && menuItem.childmenu.length > 0">
+                <a class="nav-link" (click)="setActiveSubMenu(menuItem)">
+                  <i class="nav-icon {{ menuItem.icon }}"></i>
+                  <p>
+                    {{ menuItem.label }}
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview" [ngStyle]="{ display: isSubmenuOpen(menuItem) ? 'block' : 'none' }">
+                  <ng-container *ngFor="let subMenuItem of menuItem.childmenu">
+                    <li class="nav-item" *ngIf="subMenuItem.view === 1">
+                      <a [routerLink]="subMenuItem.route" [queryParams]="{ menuid: subMenuItem.id }"
+                        routerLinkActive="active" class="nav-link">
+                        <i class="{{ subMenuItem.icon }}"></i>
+                        <p>{{ subMenuItem.label }}</p>
+                      </a>
+                    </li>
+                  </ng-container>
+                </ul>
+              </ng-container>
+  
+            </li>
+          </ng-container>
+        </ul>
+      </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

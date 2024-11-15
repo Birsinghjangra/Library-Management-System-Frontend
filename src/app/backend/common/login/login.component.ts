@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SnackBarService } from 'src/app/services/snackbar.service';
-import { AuthService } from '../../../services/auth.service';
+// import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,8 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted: boolean = false;
   errorMessage: string = '';
+  passwordHidden = true;
+  passwordVisible: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -47,6 +50,16 @@ export class LoginComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    const inputField = document.getElementById('passwordInput') as HTMLInputElement;
+    inputField.type = this.passwordVisible ? 'text' : 'password';
+    
+    const eyeIcon = document.getElementById('eyeIcon');
+    if (eyeIcon) {
+      eyeIcon.className = this.passwordVisible ? 'fa fa-eye' : 'fa fa-eye-slash';
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -61,9 +74,14 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginAuth(val).subscribe(
       (res) => {
+        console.log(res);
+        // return
+
         if (res.status === 'success') {
+          localStorage.setItem('user', res.data[0].role_name);
+          localStorage.setItem('token', res.token);
           let message = res.message;
-          this.snackBar.openSnackBarSuccess([message]);
+          // this.snackBar.openSnackBarSuccess([message]);
           this.router.navigate(['/admin']);
 
           // If "Remember Me" is checked, save the credentials in localStorage
