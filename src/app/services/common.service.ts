@@ -57,9 +57,13 @@ export class CommonService {
     //     });
     // }
 
-    
-    sidebarConfig(id:any){
-        return this.http.post<any>(`${this.apiUrl}/sidebarMenuConfig`,id);
-    }     
-    
+
+    sidebarConfig(id: any) {
+        return this.http.post<any>(`${this.apiUrl}/sidebarMenuConfig`, id);
+    }
+
+    submitbook(value:any){
+        return this.http.post<any>(`${this.apiUrl}/submitbook`,value);
+    }
+
 }

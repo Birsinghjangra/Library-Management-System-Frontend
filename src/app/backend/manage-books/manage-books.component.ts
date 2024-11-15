@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
 import { DeleteDialogComponent } from '../common/dialog-box/delete-dialog/delete-dialog.component';
+import { BarcodeDialogComponent } from '../common/dialog-box/barcode-dialog/barcode-dialog.component';
 
 @Component({
   selector: 'app-manage-books',
@@ -96,8 +97,11 @@ export class ManageBooksComponent implements OnInit {
       if (response.status === 'success') {
         let message = response.message;
         this.snackBar.openSnackBarSuccess([message]);
-        // this.loaddata();
-        // this.closeDialog.emit();
+        
+        this.dialog.open(BarcodeDialogComponent, {
+          width: 'auto',
+          data: { isbn, barcodeImage: response.barcodeImage }
+        });
       } else {
         this.snackBar.openSnackBarError([response.message]);
       }

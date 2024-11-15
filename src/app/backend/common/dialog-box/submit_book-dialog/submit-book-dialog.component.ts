@@ -80,14 +80,13 @@ export class SubmitBookDialogComponent implements OnInit {
   ) { this.userdata = data; }
 
   ngOnInit(): void {
+    console.log("user data",this.userdata)
     this.isbn = this.userdata['isbn'];
   }
 
   submit_book() {
-    const payload = {
-      isbn: this.isbn
-    }
-    this.CommonService.issue_book(payload).subscribe(data => {
+    const payload = this.userdata
+    this.CommonService.submitbook(payload).subscribe(data => {
       let message = data.message
       if (data.status === 'success') {
         this.SnackBarService.openSnackBarSuccess([message]);
