@@ -11,7 +11,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   height: 525px !important;
   padding: 1.25rem;
 }
-
+.wrapper, body, html {
+  min-height: 0% !important;
+}
+.main-footer {
+  padding: .5rem 1rem !important;
+}
 body.sidebar-mini.layout-fixed.mat-typography {
   font-size: 14px;
 }

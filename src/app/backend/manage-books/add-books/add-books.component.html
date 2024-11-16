@@ -1,20 +1,3 @@
-<!-- <section class="content-header">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <h1>Book Management</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']"><a>Home</a></li>
-                    <li class="breadcrumb-item" [routerLink]="['/admin/manage_books']"><a>List</a></li>
-                    <li class="breadcrumb-item active">Add Books</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section> -->
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
@@ -58,23 +41,23 @@
                             Book ID is required.
                         </div>
                     </div> -->
-                    
+
                     <!-- Book ISBN -->
                     <div class="col-md-6 col-sm-12 form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Book ISBN</span>
                                 <!-- <i class="fas fa-info-circle ml-2" data-toggle="tooltip" data-placement="top"
-                                   title="Its 10/13 digit nos which you can find behind a book."></i> -->
+                                title="Its 10/13 digit nos which you can find behind a book."></i> -->
                             </div>
-                            <input type="text" class="form-control" formControlName="isbn" (input)="onIsbnInput($event)" required />
+                            <input type="text" class="form-control" formControlName="isbn" (input)="onIsbnInput($event)"
+                                required />
                         </div>
-                        <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched"
-                             class="text-danger">
-                             Book ISBN must be 10 or 13 digits.
+                        <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched" class="text-danger">
+                            Book ISBN must be 10 or 13 digits.
                         </div>
                     </div>
-                    
+
 
 
                     <!-- Book Title -->
@@ -148,18 +131,19 @@
                     </div>
 
                     <!-- Book Quantity -->
-                    <div class="col-md-6 col-sm-12 form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Book Quantity</span>
-                            </div>
-                            <input type="number" class="form-control" formControlName="quantity" required />
-                        </div>
-                        <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched"
-                            class="text-danger">
-                            Book Quantity is required.
-                        </div>
-                    </div>
+<!-- Book Quantity -->
+<div class="col-md-6 col-sm-12 form-group" *ngIf="flag === 'create'">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Book Quantity</span>
+        </div>
+        <input type="number" class="form-control" formControlName="quantity" required />
+    </div>
+    <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched" class="text-danger">
+        Book Quantity is required.
+    </div>
+</div>
+
                 </div>
 
                 <!-- Buttons Row -->

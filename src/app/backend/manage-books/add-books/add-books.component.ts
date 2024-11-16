@@ -44,50 +44,52 @@ export class AddBooksComponent implements OnInit {
     this.bookForm = this.fb.group({
       // book_id: ['', [Validators.required]], 
       isbn: ['', [Validators.required, this.isbnLengthValidator()]],
-      title: ['', [Validators.required, capitalizeFirstLetterValidator()]], 
+      title: ['', [Validators.required, capitalizeFirstLetterValidator()]],
       publication: ['', [Validators.required, capitalizeWordsValidator()]],
       author_name: ['', [Validators.required, capitalizeWordsValidator()]],
       price: ['', [Validators.required, Validators.min(0)]],
       edition: ['', [Validators.required]],
-      quantity: ['', [Validators.required]]
+      quantity: [this.flag === 'create' ? '' : null, this.flag === 'create' ? [Validators.required] : []]
     });
   }
 
   isbnLengthValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-        const value = control.value?.replace(/\D/g, '') || ''; // Remove non-numeric characters
-        return (value.length >= 10 && value.length <= 13) ? null : { invalidIsbn: true };
+      const value = control.value?.replace(/\D/g, '') || ''; // Remove non-numeric characters
+      return (value.length >= 10 && value.length <= 13) ? null : { invalidIsbn: true };
     };
-}
+  }
   onIsbnInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
 
     // Limit input length to a maximum of 13 characters
     if (value.length > 13) {
-        value = value.slice(0, 13);
+      value = value.slice(0, 13);
     }
 
     input.value = value;
     this.bookForm.get('isbn')?.setValue(value, { emitEvent: false });
-}
-
-get_data() {
-  if (this.flag === 'edit') {
-    const value = {
-      Table_name: "book",
-      id: this.Params_ids
-    };
-    this.commonService.getData_common(value).subscribe(data => {
-      this.get_form_data = data.data[0];
-      
-      // Ensure the 'quantity' field is enabled
-      this.bookForm.get('quantity')?.enable();
-
-      this.bookForm.patchValue(this.get_form_data);
-    });
   }
-}
+
+  get_data() {
+    if (this.flag === 'edit') {
+      const value = {
+        Table_name: "book",
+        id: this.Params_ids
+      };
+      this.commonService.getData_common(value).subscribe(data => {
+        this.get_form_data = data.data[0];
+
+        // Patch the form data
+        this.bookForm.patchValue(this.get_form_data);
+
+        // Disable the quantity field in edit mode
+        this.bookForm.get('quantity')?.disable();
+      });
+    }
+  }
+
 
   onSubmit() {
     if (this.bookForm.invalid) {
