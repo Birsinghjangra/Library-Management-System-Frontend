@@ -42,7 +42,7 @@
             <div class="table-responsive mt-3 my-custom-scrollbar">
                 <table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
                     <ng-container matColumnDef="Sno">
-                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> SRN </th>
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Sno. </th>
                         <td mat-cell *matCellDef="let element; let i = index" matTooltip="{{element.Sno}}">
                             {{ i + 1 }}  <!-- Display the incremented index -->
                           </td>

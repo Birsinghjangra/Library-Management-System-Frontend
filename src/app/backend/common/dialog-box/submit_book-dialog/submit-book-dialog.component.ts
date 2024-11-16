@@ -70,6 +70,8 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 export class SubmitBookDialogComponent implements OnInit {
   userdata: any;
   isbn: any;
+  current_book_fine:any;
+  totalFine:any
 
   constructor(
     private CommonService: CommonService,
@@ -80,8 +82,21 @@ export class SubmitBookDialogComponent implements OnInit {
   ) { this.userdata = data; }
 
   ngOnInit(): void {
+    
     console.log("user data",this.userdata)
     this.isbn = this.userdata['isbn'];
+    this.showfines();
+  }
+  
+  showfines(){
+    const payload = this.userdata
+    this.CommonService.calculate_fine(payload).subscribe(data=>{
+      console.log(data.data)
+      this.current_book_fine = data.data['carrentBook_fine'];
+      this.totalFine = parseFloat(data.data['total_fine']);
+      console.log(this.totalFine,this.current_book_fine)
+    })
+
   }
 
   submit_book() {
