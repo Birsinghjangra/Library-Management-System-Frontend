@@ -8,13 +8,16 @@ import { Router } from "@angular/router";
 })
 
 export class PageNotFoundComponenet implements OnInit{
+    key: any
+
     constructor(private router: Router){}
 
     ngOnInit(): void {
-        
+        this.key = localStorage.getItem('currentUser')
+        console.log(this.key);
     }
-    goToHome(){
-        this.router.navigate(['/admin/dashboard']);
-    }
+    // goToHome(){
+    //     this.router.navigate(['/admin/dashboard']);
+    // }
 
 }

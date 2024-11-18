@@ -70,8 +70,9 @@ import { SnackBarService } from 'src/app/services/snackbar.service';
 export class SubmitBookDialogComponent implements OnInit {
   userdata: any;
   isbn: any;
-  current_book_fine:any;
-  totalFine:any
+  current_book_fine: any;
+  totalFine: any;
+  selectedCondition: string = ''; // Variable to store the selected condition
 
   constructor(
     private CommonService: CommonService,
@@ -82,35 +83,62 @@ export class SubmitBookDialogComponent implements OnInit {
   ) { this.userdata = data; }
 
   ngOnInit(): void {
-    
-    console.log("user data",this.userdata)
+    console.log("user data", this.userdata);
     this.isbn = this.userdata['isbn'];
     this.showfines();
   }
-  
-  showfines(){
-    const payload = this.userdata
-    this.CommonService.calculate_fine(payload).subscribe(data=>{
-      console.log(data.data)
-      this.current_book_fine = data.data['carrentBook_fine'];
-      this.totalFine = parseFloat(data.data['total_fine']);
-      console.log(this.totalFine,this.current_book_fine)
-    })
 
+  showfines() {
+    const payload = this.userdata;
+    this.CommonService.calculate_fine(payload).subscribe(data => {
+      console.log(data.data);
+      this.current_book_fine = data.data['currentBook_fine'];
+      this.totalFine = parseFloat(data.data['total_fine']);
+      console.log(this.totalFine, this.current_book_fine);
+    });
+  }
+
+  onConditionChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedCondition = selectElement ? selectElement.value : '';
   }
 
   submit_book() {
-    const payload = this.userdata
+    // Submit book only if selected condition is valid
+    if (this.selectedCondition && this.selectedCondition !== 'book condition') {
+      this.toggleStatus(this.userdata.book_id, this.selectedCondition); // Pass selected condition to toggle status
+    }
+
+    const payload = this.userdata;
     this.CommonService.submitbook(payload).subscribe(data => {
-      let message = data.message
+      let message = data.message;
       if (data.status === 'success') {
         this.SnackBarService.openSnackBarSuccess([message]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/admin/issued_books']);
         });
       }
-    })
+    });
     this.dialogRef.close();
+  }
+
+  toggleStatus(book_id: string, selectedCondition: string): void {
+    if (selectedCondition && selectedCondition !== 'book condition') {
+      const payload = { book_id: book_id, status: selectedCondition };
+
+      // Call the API to toggle the status
+      this.CommonService.toggleStatus(payload).subscribe(
+        (response: any) => {
+          if (response && response.message) {
+            this.SnackBarService.openSnackBarSuccess([response.message]);
+          }
+        },
+        (error) => {
+          console.error('Error toggling status:', error);
+          // this.SnackBarService.openSnackBarError('Failed to update book condition. Please try again.', 'Close', { duration: 3000 });
+        }
+      );
+    }
   }
 
   onCancel(): void {

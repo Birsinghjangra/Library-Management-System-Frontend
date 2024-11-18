@@ -1,20 +1,12 @@
-<!-- <div class="error-container">
-    <div class="error-message">
-      <h1>404</h1>
-      <p>Page not found</p>
-      <button mat-button (click)="goToHome()">Go to Home</button>
-    </div>
-  </div> -->
-  
-  <h1 class="error-page">404</h1>
+<h1 class="error-page">404</h1>
 <h3 class="error">Oops, an error has occurred. Page not found!</h3>
 
-<button class=" btn btn-primary float right "
+<!-- <button [routerLink]="['/admin']" *ngIf="key" class=" btn btn-primary float right "
     style="display: flex; align-items: center; align-content: center; font-size: medium;">
-    <!-- <mat-icon>arrow_back</mat-icon>Go to Dashboard</button> -->
-<button *ngIf="!key" class=" btn btn-primary float right "
+    <mat-icon>arrow_back</mat-icon>Go to Dashboard</button>
+<button  [routerLink]="['/admin']" *ngIf="!key" class=" btn btn-primary float right "
     style="display: flex; align-items: center; align-content: center; font-size: medium;">
-    <!-- <mat-icon>arrow_back</mat-icon>Go to Login Page</button> -->
+    <mat-icon>arrow_back</mat-icon>Go to Login Page</button> -->
 
 <!-- <section class="page_404">
     <div class="container">

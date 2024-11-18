@@ -44,11 +44,12 @@
                                 <span class="input-group-text">Import</span>
                             </div>
                             <div class="flex-grow-1 mb-2 mb-md-0 position-relative">
-                                <input type="file" class="form-control text-sm" (change)="onFileSelected($event)">
+                                <input type="file" class="form-control text-sm" (change)="onFileSelected($event)"
+                                    style="border-radius: 0;">
                             </div>
                             <div class="flex-shrink-0">
                                 <button type="button" class="btn btn-dark btn-sm mr-1 iconbutton height"
-                                    (click)="importFile()">
+                                    (click)="importFile()" style="border-radius: 0 4px 4px 0;">
                                     <i class="fas fa-upload mr-1"></i><span class="text-sm">Import</span>
                                 </button>
                                 <a href="/download_csv">
@@ -62,118 +63,99 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 col-md-2 d-flex align-items-center">
-                    <div class="btn-group flex-grow-1 mr-3">
-                        <button type="button" class="btn btn-dark rounded btn-sm mr-1 iconbutton"
+            <div class="row align-items-center">
+                <!-- Toggle Button for Active/Inactive Users -->
+                <div class="col-12 col-md-2 d-flex">
+                    <div class="btn-group flex-grow-1">
+                        <button type="button" class="btn btn-dark rounded btn-sm iconbutton"
                             (click)="toggleShowInactiveUsers()">
-                            <i class="fas fa-sort mr-1"></i><span class="text-sm">{{ showInactiveUsers ? 'Active Users'
-                                : 'Inactive Users' }}</span>
+                            <i class="fas fa-sort mr-2"></i>
+                            <span class="text-sm">
+                                {{ showInactiveUsers ? 'Inactive Users' : 'Active Users' }}
+                            </span>
                         </button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="ml-lg-5">
-                        <div class="d-flex flex-wrap align-items-center">
-                            <button *ngFor="let cls of classList" class="btn btn-dark rounded btn-sm m-1 fixed-size-btn"
-                                (click)="filterByClass(cls)">
+
+                <!-- Dropdown for Selecting Class -->
+                <div class="col-12 col-md-6 d-flex justify-content-start mt-3 mt-md-0">
+                    <div>
+                        <select class="form-select custom-dropdown rounded btn-sm m-1 fixed-size-btn"
+                            (change)="onClassChange($event)">
+                            <option value="" disabled selected>Select Class</option>
+                            <option *ngFor="let cls of classList" [value]="cls">
                                 {{ cls }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive mt-3 my-custom-scrollbar">
+                <table #table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
+                    <ng-container matColumnDef="srn">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> SRN </th>
+                        <td mat-cell *matCellDef="let element"> {{element.srn}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="student_name">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.student_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="class">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Class </th>
+                        <td mat-cell *matCellDef="let element"> {{element.class}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="section">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Section </th>
+                        <td mat-cell *matCellDef="let element"> {{element.section}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="roll_no">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Roll No </th>
+                        <td mat-cell *matCellDef="let element"> {{element.roll_no}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Created On </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.createdOn | date:'yyyy-MM-dd' }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header"> Action </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <!-- Toggle isActive button with inline styles -->
+                            <button type="button" class="btn btn-sm float-left action_btn mr-1" [ngStyle]="{
+                'background-color': element.isActive === 1 ? '#28a745' : '#dc3545', 
+                'color': 'white'
+            }" title="Click to activate | de-activate" (click)="toggleStatus(element.srn, element.isActive)">
+                                <i class="far" [class.fa-thumbs-up]="element.isActive === 1"
+                                    [class.fa-thumbs-down]="element.isActive === 0"></i>
                             </button>
-                        </div>
-                    </div>
-                </div>
+
+                            <!-- Edit user link -->
+                            <a [routerLink]="['/admin/user_management/add_user/']"
+                                [queryParams]="{ srn: element.srn, flag: 'edit' }">
+                                <span type="button" class="btn btn-sm btn-dark float-left action_btn mr-1">
+                                    <i class="far fa-edit"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [hidden]="row.isHidden"></tr>
+                    <tr mat-no-data-row *matNoDataRow>
+                        <td class="mat-cell size text-center p-5" [attr.colspan]="displayedColumns.length">
+                            No record found!
+                        </td>
+                    </tr>
+                </table>
             </div>
-                <div class="table-responsive mt-3 my-custom-scrollbar">
-                    <table #table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
-                        <ng-container matColumnDef="srn">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> SRN </th>
-                            <td mat-cell *matCellDef="let element"> {{element.srn}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="student_name">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Name </th>
-                            <td mat-cell *matCellDef="let element"> {{element.student_name}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="class">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Class </th>
-                            <td mat-cell *matCellDef="let element"> {{element.class}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="section">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Section </th>
-                            <td mat-cell *matCellDef="let element"> {{element.section}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="roll_no">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Roll No </th>
-                            <td mat-cell *matCellDef="let element"> {{element.roll_no}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="createdOn">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Created On </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.createdOn | date:'yyyy-MM-dd' }} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="action">
-                            <th mat-header-cell *matHeaderCellDef class="sticky-header"> Action </th>
-                            <td mat-cell *matCellDef="let element; let i = index">
-                                <button type="button" class="btn btn-sm btn-success float-left action_btn mr-1"
-                                    data-original-title="Click to activate | de-activate"
-                                    (click)="toggleRowVisibility(i)">
-                                    <i class="far fa-thumbs-up"></i>
-                                </button>
-                                <a [routerLink]="['/admin/user_management/add_user/']"
-                                    [queryParams]="{ srn: element.srn, flag: 'edit' }">
-                                    <span type="button" class="btn btn-sm btn-dark float-left action_btn mr-1">
-                                        <i class="far fa-edit"></i>
-                                    </span>
-                                </a>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [hidden]="row.isHidden"></tr>
-                        <tr mat-no-data-row *matNoDataRow>
-                            <td class="mat-cell size text-center p-5" [attr.colspan]="displayedColumns.length">
-                                No record found!
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-            <div class="row pagination">
-                <div class="col-sm-12 col-md-5">
-                    <div class="dataTables_info" role="status" aria-live="polite">
-                        Showing {{ getDisplayedRange().start }} to {{ getDisplayedRange().end }} of {{ totalItems }}
-                        entries
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-7 d-flex justify-content-end">
-                    <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-                        <ul class="pagination mb-0">
-                            <li class="paginate_button page-item previous" [class.disabled]="currentPage === 1">
-                                <a href="#" (click)="onPageChange(currentPage - 1); $event.preventDefault();"
-                                    class="page-link">Previous</a>
-                            </li>
-                            <li *ngFor="let page of getPageNumbers()" class="paginate_button page-item"
-                                [class.active]="currentPage === page">
-                                <a href="#" (click)="onPageChange(page); $event.preventDefault();" class="page-link">{{
-                                    page }}</a>
-                            </li>
-                            <li class="paginate_button page-item next" [class.disabled]="currentPage === totalPages">
-                                <a href="#" (click)="onPageChange(currentPage + 1); $event.preventDefault();"
-                                    class="page-link">Next</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
         </div>
+        <mat-paginator [length]="totalRows" [pageSizeOptions]="pageSizeOptions" [pageIndex]="currentPage - 1"
+            (page)="pageChanged($event)" aria-label="Select page" class="mb-1"></mat-paginator>
     </div>
 </div>

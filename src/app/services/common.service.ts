@@ -65,5 +65,8 @@ export class CommonService {
     submitbook(value:any){
         return this.http.post<any>(`${this.apiUrl}/submitbook`,value);
     }
+    toggleStatus(value:any){
+        return this.http.post<any>(`${this.apiUrl}/toggleStatus`,value);
+    }
 
 }

@@ -1,5 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
 import { CommonService } from '../../services/common.service';
 import { SnackBarService } from '../../services/snackbar.service';
 import { Router } from '@angular/router';
@@ -16,8 +18,9 @@ interface User {
   roll_no: string;
   phone: string;
   address: string;
-  date_added: string; // or Date depending on how you handle dates
-  isHidden: boolean; // Use this property if you are implementing row visibility toggling
+  date_added: string;
+  isHidden: boolean;
+  isActive: number;
 }
 
 @Component({
@@ -27,19 +30,25 @@ interface User {
 })
 export class UserManagementComponent implements OnInit, AfterViewInit {
 
-  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
+  dataSource: MatTableDataSource<User> = new MatTableDataSource<User>([]);
   hasData: boolean = false;
   userdata: User[] = [];
-  showInactiveUsers: boolean = false;
   @Output() closeDialog = new EventEmitter<void>();
-  currentPage: number = 1;
-  pageSize: number = 10;
-  totalItems: number = 0;
-  totalPages: number = 0;
+  isLoading = false;
+  totalRows = 0;
+  pageSize = 10;
+  currentPage = 1;
+  mat_currentPage = 0;
+  pageSizeOptions: number[] = [10, 25, 100];
+  startIndex: number = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   selectedFile: File | null = null;
   @ViewChild('table', { static: false }) table!: ElementRef;
   classList: string[] = ['All', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
   selectedClass: string = ''; // Add selectedClass property for the filter
+  showInactiveUsers: boolean = false;
+
 
   displayedColumns = ['srn', 'student_name', 'class', 'section', 'roll_no', 'createdOn', 'action'];
 
@@ -50,21 +59,21 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     private paginationService: PaginationService,
     private http: HttpClient) { }
 
-    ngOnInit(): void {
-      this.loaddata();
-  
-  
-      // Set up filter predicate to consider both text and class filters
-      this.dataSource.filterPredicate = (data: User, filter: string) => {
-          const combinedFilter = JSON.parse(filter);
-          const matchesClass = combinedFilter.class === 'All' || data.class === combinedFilter.class;
-          const matchesText = data.student_name.toLowerCase().includes(combinedFilter.text) || 
-                              data.roll_no.toLowerCase().includes(combinedFilter.text) ||
-                              data.phone.toLowerCase().includes(combinedFilter.text) ||
-                              data.address.toLowerCase().includes(combinedFilter.text) ||
-                              data.srn.toLowerCase().includes(combinedFilter.text);
-          return matchesClass && matchesText;
-      };
+  ngOnInit(): void {
+    this.loaddata();
+
+
+    // Set up filter predicate to consider both text and class filters
+    this.dataSource.filterPredicate = (data: User, filter: string) => {
+      const combinedFilter = JSON.parse(filter);
+      const matchesClass = combinedFilter.class === 'All' || data.class === combinedFilter.class;
+      const matchesText = data.student_name.toLowerCase().includes(combinedFilter.text) ||
+        data.roll_no.toLowerCase().includes(combinedFilter.text) ||
+        data.phone.toLowerCase().includes(combinedFilter.text) ||
+        data.address.toLowerCase().includes(combinedFilter.text) ||
+        data.srn.toLowerCase().includes(combinedFilter.text);
+      return matchesClass && matchesText;
+    };
   }
   ngAfterViewInit(): void {
     const tableElement = this.table.nativeElement; // Correctly reference the table element
@@ -77,10 +86,14 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     };
 
     this.commonService.getData_common(value).subscribe((data: any) => {
-      this.userdata = data.data; // Load all user data
-      this.totalItems = this.userdata.length; // Set total items based on full data length
-      this.totalPages = Math.ceil(this.totalItems / this.pageSize); // Calculate total pages
-      this.paginateData(); // Load the initial page of data
+      this.userdata = data.data;
+      this.dataSource.data = this.userdata;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.paginator.pageIndex = this.mat_currentPage;
+      this.isLoading = false;
+      this.filterData();
+
     });
   }
 
@@ -121,69 +134,43 @@ export class UserManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-applyFilter(event: Event): void {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.setCombinedFilter(filterValue); // Call with text filter input
-}
-
-filterByClass(selectedClass: string): void {
-    this.selectedClass = selectedClass;
-    this.setCombinedFilter(''); // Call with empty text filter if no text is provided
-}
-setCombinedFilter(textFilter: string): void {
-  const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
-  this.dataSource.filter = filter;
-
-  // Reset to the first page after each filter change
-  this.currentPage = 1;
-  this.paginateData();
-}
-
-
-  toggleRowVisibility(index: number): void {
-    const rowData = this.dataSource.data[index];
-    rowData.isHidden = !rowData.isHidden;
-    localStorage.setItem(`isHidden_${rowData.srn}`, rowData.isHidden.toString());
-    this.filterData();
+    this.setCombinedFilter(filterValue);
+    this.filterData();  // Apply the filter based on input
   }
 
-  toggleShowInactiveUsers(): void {
-    this.showInactiveUsers = !this.showInactiveUsers;
-    this.filterData();
+  filterByClass(selectedClass: string): void {
+    this.selectedClass = selectedClass;
+    this.setCombinedFilter(''); // Call with empty text filter if no text is provided
+  }
+  setCombinedFilter(textFilter: string): void {
+    const filter = JSON.stringify({ class: this.selectedClass || 'All', text: textFilter.trim() });
+    this.dataSource.filter = filter;
   }
 
   filterData(): void {
     if (this.showInactiveUsers) {
-      this.dataSource.data = this.userdata.filter(user => user.isHidden);
+      // Show only inactive users
+      this.dataSource.data = this.userdata.filter(user => user.isActive === 0);
     } else {
-      this.dataSource.data = this.userdata;
+      // Show only active users
+      this.dataSource.data = this.userdata.filter(user => user.isActive === 1);
+    }
+
+    // If the selected class filter is applied, apply that as well
+    if (this.selectedClass && this.selectedClass !== 'All') {
+      this.dataSource.data = this.dataSource.data.filter(user => user.class === this.selectedClass);
     }
   }
 
-  paginateData(): void {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.dataSource.data = this.userdata.slice(startIndex, endIndex); // Slice the data for the current page
+  onClassChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement)?.value || '';
+    if (selectedValue) {
+      this.filterByClass(selectedValue);
+    }
+    this.filterData();  // Apply the class filter as well
   }
-
-  getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1); // Get array of page numbers
-  }
-
-  onPageChange(pageNumber: number): void {
-    console.log('Current Page before change:', this.currentPage);
-    console.log('Requested Page Number:', pageNumber);
-    if (pageNumber < 1 || pageNumber > this.totalPages) return; // Prevent out-of-bounds
-    this.currentPage = pageNumber;
-    this.paginateData(); // This should handle updating the displayed data
-    console.log('Current Page after change:', this.currentPage);
-}
-
-getDisplayedRange(): { start: number; end: number } {
-  const start = (this.currentPage - 1) * this.pageSize + 1;
-  const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
-  return { start, end };
-}
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
@@ -215,5 +202,38 @@ getDisplayedRange(): { start: number; end: number } {
         this.snackBar.openSnackBarError(['Failed to import file.']);
       }
     });
+  }
+  toggleStatus(srn: string, currentStatus: number): void {
+    const newStatus = currentStatus === 1 ? 0 : 1;
+
+    const payload = { srn: srn };
+
+    this.commonService.toggleStatus(payload).subscribe(
+      (response: any) => {
+        if (response && response.message) {
+          // this.snackBar.openSnackBarError(`User isActive toggled to ${newStatus}`, 'Close', { duration: 3000 });
+
+          const user = this.dataSource.data.find((u: any) => u.srn === srn);
+          if (user) {
+            user.isActive = newStatus;
+          }
+        }
+      },
+      (error) => {
+        console.error('Error toggling isActive:', error);
+        // this.snackBar.openSnackBarError('Failed to toggle isActive. Please try again.', 'Close', { duration: 3000 });
+      }
+    );
+  }
+
+  toggleShowInactiveUsers(): void {
+    this.showInactiveUsers = !this.showInactiveUsers;
+    this.filterData(); // Apply the filter whenever the status is toggled
+  }
+  pageChanged(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex + 1;
+    this.mat_currentPage = event.pageIndex;
+    this.startIndex = (this.currentPage - 1) * this.pageSize;
   }
 }

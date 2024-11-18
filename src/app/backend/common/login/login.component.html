@@ -1,5 +1,5 @@
 <div class="login-box container">
-  <div class="card card-outline card-primary">
+  <div class="card card-outline" style="border-top: 2px solid #DD4B39;">
     <div class="card-header text-center">
       <a href="../../index2.html" class="h1">LMS</a>
     </div>
@@ -24,7 +24,8 @@
             </div> -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Enter your email" required>
+          <input type="email" id="email" name="email" formControlName="email" class="form-control"
+            placeholder="Enter your email" required>
           <div *ngIf="submitted && f['email'].errors">
             <div *ngIf="f['email'].errors['required']">Email is required.</div>
             <div *ngIf="f['email'].errors['email']">Invalid email format.</div>
@@ -35,13 +36,14 @@
           <div class="input-group mb-3">
             <input type="password" id="passwordInput" name="password" formControlName="password" class="form-control"
               [attr.aria-describedby]="'password-toggle-btn'" placeholder="Enter your password" required>
-            <button class="btn btn-outline-secondary toggle-button" type="button" id="toggleButton" aria-label="Toggle password visibility"
-              (click)="togglePasswordVisibility()">
+            <button class="btn btn-outline-secondary toggle-button" type="button" id="toggleButton"
+              aria-label="Toggle password visibility" (click)="togglePasswordVisibility()"
+              style="border-radius: 0 4px 4px 0; border-color: #CED4DA;">
               <i id="eyeIcon" class="fa fa-eye-slash"></i>
             </button>
           </div>
         </div>
-      
+
         <div class="row mt-2 d-flex align-items-center">
           <div class="col-8 d-flex align-items-center">
             <div class="icheck-primary ml-2 mt-2">
@@ -57,7 +59,7 @@
             </button>
           </div>
         </div>
-        
+
       </form>
 
       <p class="mb-2 mt-2">

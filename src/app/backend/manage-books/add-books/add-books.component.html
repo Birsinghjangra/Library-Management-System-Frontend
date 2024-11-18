@@ -131,18 +131,18 @@
                     </div>
 
                     <!-- Book Quantity -->
-<!-- Book Quantity -->
-<div class="col-md-6 col-sm-12 form-group" *ngIf="flag === 'create'">
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Book Quantity</span>
-        </div>
-        <input type="number" class="form-control" formControlName="quantity" required />
-    </div>
-    <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched" class="text-danger">
-        Book Quantity is required.
-    </div>
-</div>
+                    <div class="col-md-6 col-sm-12 form-group" *ngIf="flag === 'create'">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Book Quantity</span>
+                            </div>
+                            <input type="number" class="form-control" formControlName="quantity" required />
+                        </div>
+                        <div *ngIf="bookForm.get('quantity')?.invalid && bookForm.get('quantity')?.touched"
+                            class="text-danger">
+                            Book Quantity is required.
+                        </div>
+                    </div>
 
                 </div>
 

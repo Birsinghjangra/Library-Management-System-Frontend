@@ -4,6 +4,8 @@ import { IssuedBooksRoutingModule } from "../issued-books/issued-books-routing.m
 import { MatTableModule } from '@angular/material/table';
 import { IssuedBooksComponent } from "./issued-books.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MaterialModule } from "src/app/material-module";
+
 
 @NgModule({
         declarations: [IssuedBooksComponent
@@ -12,8 +14,8 @@ import { MatTooltipModule } from "@angular/material/tooltip";
             CommonModule,
             IssuedBooksRoutingModule,
             MatTableModule,
-            MatTooltipModule
-        
+            MatTooltipModule,
+            MaterialModule        
         ]
 })
 export class IssuedBooksModule { }

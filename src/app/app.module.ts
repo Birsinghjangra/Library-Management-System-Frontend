@@ -35,8 +35,6 @@ import { LoaderComponent } from './backend/common/loader/loader.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoaderService } from './services/loader.service';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

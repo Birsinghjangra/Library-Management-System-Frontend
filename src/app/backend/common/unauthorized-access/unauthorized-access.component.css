@@ -1,26 +1,4 @@
-.unauthorized-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-  
-  button {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* .error-page {
+.error-page {
     color: #fff;
     font-size: 200px;
     line-height: 1;
@@ -40,4 +18,4 @@
 button{
     margin-left: 620px;
     margin-top: 12px;
-} */
+}
