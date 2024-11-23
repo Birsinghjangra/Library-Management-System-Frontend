@@ -91,6 +91,15 @@ const routes: Routes = [
           ),
           canActivate: [AuthGuard],
       },
+      {
+        path: 'school_info',
+        loadChildren: () =>
+          import('./school-information/school-information.module').then(
+            (m) => m.SchoolInformationModule
+          ),
+          canActivate: [AuthGuard],
+      },
+
       
     ],
   },

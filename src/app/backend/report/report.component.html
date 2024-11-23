@@ -6,7 +6,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item" [routerLink]="['/admin/dashboard']">Home</li>
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="['/admin/dashboard']">Home</a>
+                    </li>
                     <li class="breadcrumb-item active">Report</li>
                 </ol>
             </div>
@@ -21,39 +23,78 @@
         </div>
         <div class="card-body">
             <div class="row mb-3">
-                <div class="col-md-4 col-12">
+                <!-- Report Selection Dropdown -->
+                <div class="col-md-3 col-12">
                     <div class="input-group">
-                        <select required class="form-control">
-                            <option value="">Select</option>
-                            <option *ngFor="let option of reportOptions" [value]="option.value">{{ option.label }}</option>
+                        <select required class="form-control" (change)="onReportChange($event)">
+                            <option value="" disabled selected>Generate Report</option>
+                            <option *ngFor="let option of reportOptions" [value]="option.value">
+                                {{ option.label }}
+                            </option>
                         </select>
                     </div>
                 </div>
 
-                <div class="col-md-4 col-12">
+                <!-- Time Period Selection -->
+                <div class="col-md-3 col-12" *ngIf="showTimePeriod">
                     <div class="input-group">
-                        <select class="form-control">
-                            <option value="">Select</option>
-                            <option *ngFor="let fastOption of fastTagOptions" [value]="fastOption.value">{{ fastOption.label }}</option>
+                        <select class="form-control" (change)="onTimePeriodChange($event)">
+                            <option value="" disabled selected>Time Period</option>
+                            <option *ngFor="let fastOption of fastTagOptions" [value]="fastOption.value">
+                                {{ fastOption.label }}
+                            </option>
                         </select>
                     </div>
                 </div>
 
-                <div class="col-md-4 col-12">
+                <!-- Custom Date Inputs -->
+                <div class="col-md-5 col-12" *ngIf="showCustomDateRange">
                     <div class="input-group">
-                        <input type="date" class="form-control start_date hasDatepicker" placeholder="Start Date">
-                        <input type="date" class="form-control end_date hasDatepicker" placeholder="End Date">
+                        <input type="date" class="form-control start_date" [(ngModel)]="customStartDate"
+                            placeholder="Start Date">
+                        <input type="date" class="form-control" [(ngModel)]="customEndDate" placeholder="End Date">
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 col-12 mb-3">
-                <button type="submit" class="btn btn-dark btn-sm">
-                    <i class="far fa-newspaper mr-2"></i>Show Report
-                </button>
-                <button type="button" class="btn btn-primary btn-sm ml-2">
-                    <i class="fas fa-print mr-2"></i>Print Report
-                </button>
+            <div class="row mb-3">
+                <div class="col-md-12 col-12 d-flex align-items-center">
+                    <button type="button" class="btn btn-dark btn-sm" (click)="generateReport()">
+                        <i class="far fa-newspaper mr-2"></i>Show Report
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm ml-2 mr-3" (click)="toggleExportButtons()">
+                        <i class="fas fa-print mr-2"></i>Print Report
+                    </button>
+                    <ng-container *ngIf="showExportButtons && reportData.length > 0">
+                        <button type="button" class="btn btn-success btn-sm ml-5" (click)="downloadReport('xlsx')">
+                            <i class="fas fa-file-excel mr-2"></i>Export to Excel
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm ml-2" (click)="downloadReport('pdf')">
+                            <i class="fas fa-file-pdf mr-2"></i>Export to PDF
+                        </button>
+                    </ng-container>
+
+                </div>
+            </div>
+
+            <div class="table-responsive my-custom-scrollbar">
+                <table #table mat-table [dataSource]="dataSource" class="table table-bordered table-hover">
+                    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+                        <th mat-header-cell *matHeaderCellDef class="sticky-header">{{ column }}</th>
+                        <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <div *ngIf="!dataSource.data.length" class="text-center">
+                    <p>No data available for the selected report.</p>
+                </div>
+                <div class="datatable-footer">
+                    <mat-paginator [length]="dataSource.data.length" [pageSizeOptions]="[25, 50, 100]"
+                        aria-label="Select page"></mat-paginator>
+                </div>
             </div>
         </div>
     </div>

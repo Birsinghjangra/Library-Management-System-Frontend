@@ -68,5 +68,13 @@ export class CommonService {
     toggleStatus(value:any){
         return this.http.post<any>(`${this.apiUrl}/toggleStatus`,value);
     }
+    generatereport(value:any){
+        return this.http.post<any>(`${this.apiUrl}/getreport`,value);
+    }
 
+    exportReport(payload: any): Observable<Blob> {
+        return this.http.post(`${this.apiUrl}/exportreport`, payload, {
+            responseType: 'blob'
+        });
+    }
 }

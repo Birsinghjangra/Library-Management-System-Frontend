@@ -4,3 +4,8 @@ select.form-control {
 .start_date{
     border-radius: 4px 0 0 4px !important;
 }
+.custom{
+font-size: 25px;
+margin-top: 10px;
+text-align: center;
+}

@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { capitalizeWordsValidator } from 'src/app/validators/capitalize.validator';
 import { capitalizeFirstLetterValidator } from 'src/app/validators/capitalize-first-letter.validator';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'app-add-books',
@@ -75,10 +76,9 @@ export class AddBooksComponent implements OnInit {
   get_data() {
     if (this.flag === 'edit') {
       const value = {
-        Table_name: "book",
-        id: this.Params_ids
+        query: `select * from book where book_id = ${this.Params_ids}`
       };
-      this.commonService.getData_common(value).subscribe(data => {
+      this.commonService.generatereport(value).subscribe(data => {
         this.get_form_data = data.data[0];
 
         // Patch the form data

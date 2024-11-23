@@ -135,7 +135,7 @@
                                     [class.fa-thumbs-down]="element.isActive === 0"></i>
                             </button>
                             <a [routerLink]="['/admin/manage_books/add_books']"
-                                [queryParams]="{ id: element.id, flag: 'edit' }">
+                                [queryParams]="{ id: element.book_id, flag: 'edit' }">
                                 <span type="button" class="btn btn-sm btn-dark float-left action_btn mr-1">
                                     <i class="far fa-edit"></i>
                                 </span>

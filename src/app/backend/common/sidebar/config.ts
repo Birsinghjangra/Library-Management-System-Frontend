@@ -58,6 +58,11 @@ export const sidebarMenuConfig = [
       icon: 'nav-icon fas fa-chart-line', 
     },
     {
+      label: 'School Info',
+      route: 'school_info',
+      icon: 'nav-icon fas fa-user-shield', 
+    },
+    {
       label: 'Role Permission',
       route: 'role_permission',
       icon: 'nav-icon fas fa-user-shield', 

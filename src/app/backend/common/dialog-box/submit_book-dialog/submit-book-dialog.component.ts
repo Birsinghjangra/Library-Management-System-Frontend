@@ -98,18 +98,25 @@ export class SubmitBookDialogComponent implements OnInit {
     });
   }
 
-  onConditionChange(event: Event): void {
-    const selectElement = event.target as HTMLSelectElement;
-    this.selectedCondition = selectElement ? selectElement.value : '';
+  onConditionChange(event: any): void {
+    const selectedValue = event.target.value; // Directly access the value
+    this.selectedCondition = selectedValue;
+    console.log('Selected Condition:', this.selectedCondition);
   }
 
   submit_book() {
-    // Submit book only if selected condition is valid
-    if (this.selectedCondition && this.selectedCondition !== 'book condition') {
-      this.toggleStatus(this.userdata.book_id, this.selectedCondition); // Pass selected condition to toggle status
-    }
+    // // Submit book only if selected condition is valid
+    // if (this.selectedCondition && this.selectedCondition !== 'book condition') {
+    //   this.toggleStatus(this.userdata.book_id, this.selectedCondition); // Pass selected condition to toggle status
+    // }
 
     const payload = this.userdata;
+    if (this.selectedCondition == "damaged" || this.selectedCondition == "tear") {
+      payload["isDamage"] = 1
+    }
+    else if (this.selectedCondition == "lost") {
+      payload["isLost"] = 1
+    }
     this.CommonService.submitbook(payload).subscribe(data => {
       let message = data.message;
       if (data.status === 'success') {
@@ -122,24 +129,24 @@ export class SubmitBookDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  toggleStatus(book_id: string, selectedCondition: string): void {
-    if (selectedCondition && selectedCondition !== 'book condition') {
-      const payload = { book_id: book_id, status: selectedCondition };
+  // toggleStatus(book_id: string, selectedCondition: string): void {
+  //   if (selectedCondition && selectedCondition !== 'book condition') {
+  //     const payload = { book_id: book_id, status: selectedCondition };
 
-      // Call the API to toggle the status
-      this.CommonService.toggleStatus(payload).subscribe(
-        (response: any) => {
-          if (response && response.message) {
-            this.SnackBarService.openSnackBarSuccess([response.message]);
-          }
-        },
-        (error) => {
-          console.error('Error toggling status:', error);
-          // this.SnackBarService.openSnackBarError('Failed to update book condition. Please try again.', 'Close', { duration: 3000 });
-        }
-      );
-    }
-  }
+  //     // Call the API to toggle the status
+  //     this.CommonService.toggleStatus(payload).subscribe(
+  //       (response: any) => {
+  //         if (response && response.message) {
+  //           this.SnackBarService.openSnackBarSuccess([response.message]);
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error('Error toggling status:', error);
+  //         // this.SnackBarService.openSnackBarError('Failed to update book condition. Please try again.', 'Close', { duration: 3000 });
+  //       }
+  //     );
+  //   }
+  // }
 
   onCancel(): void {
     this.dialogRef.close();

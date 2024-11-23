@@ -54,6 +54,7 @@ export class AddUserComponent implements OnInit {
   }
 
   getData() {
+    console.log(this.Params_ids);
     const value = {
       Table_name: "student",
       srn: this.Params_ids // Use srn instead of id
@@ -91,6 +92,7 @@ export class AddUserComponent implements OnInit {
   
       this.commonService.save_data_operation(value).subscribe((data: any) => {
         const message = data.message;
+        console.log(value);
         if (data.status === 'success') {
           this.snackBarService.openSnackBarSuccess([message]);
           this.router.navigate(['/admin/user_management']);
