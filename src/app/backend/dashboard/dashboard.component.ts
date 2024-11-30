@@ -71,11 +71,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     myChart.resize();
   
     const option = {
-      title: {
-        text: 'Books Overview',
-        subtext: 'Total vs Issued Books',
-        left: 'center'
-      },
+      // title: {
+      //   text: 'Books Overview',
+      //   // subtext: 'Total vs Issued Books',
+      //   left: 'center'
+      // },
       tooltip: {
         trigger: 'axis'
       },
