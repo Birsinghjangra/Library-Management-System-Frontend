@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import * as echarts from 'echarts';
 
@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   total_books: any;
   issueBook_detail: any = 0;
   userdetail: any;
-  pieChartData:any;
+  pieChartData:any={};
   damaged:any;
   lost_book:any;
   fine:number=0;
@@ -147,6 +147,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       tooltip: {
         trigger: 'item',
         formatter: '{a} <br/>{b}: {c} ({d}%)'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
       },
       series: [
         {

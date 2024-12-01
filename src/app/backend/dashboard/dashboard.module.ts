@@ -8,9 +8,12 @@ import { DashboardComponent } from './dashboard.component';
     declarations:[
         DashboardComponent
     ],
-    imports:[CommonModule,
+        
+        imports:[
+            // ChartModule,
+            CommonModule,
         dashboardRouting,
-        // ChartModule
+        
     ],
     exports: [
           // Export PieChartComponent if you want to use it outside of this module

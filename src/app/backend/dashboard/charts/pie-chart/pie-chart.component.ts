@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit,  AfterViewInit, Input } from '@angular/core';
 import * as echarts from 'echarts';
 
 @Component({
-  selector: 'app-pie-chart',
+  selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.css']
+  // styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit, AfterViewInit {
+  @Input() piedata: any;
 
-  @Input() data: any;  // Input data (damaged_books, lost_books, total_books)
+  // @Input() data: any;  // Input data (damaged_books, lost_books, total_books)
   chartInstance: any;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log("data in pei chart",this.piedata)
     // You can handle any initialization here if necessary
   }
 
@@ -48,9 +50,9 @@ export class PieChartComponent implements OnInit, AfterViewInit {
           type: 'pie',
           radius: '50%',
           data: [
-            { value: this.data.damaged_books, name: 'Damaged Books' },
-            { value: this.data.lost_books, name: 'Lost Books' },
-            { value: this.data.total_books, name: 'Total Books' }
+            { value: this.piedata.damaged_books, name: 'Damaged Books' },
+            { value: this.piedata.lost_books, name: 'Lost Books' },
+            { value: this.piedata.total_books, name: 'Total Books' }
           ],
           emphasis: {
             itemStyle: {
