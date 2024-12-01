@@ -36,6 +36,39 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="small-box bg-lightblue">
+                    <div class="inner">
+                        <h3>{{ damaged }}</h3>
+                        <p>Damaged Book</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ lost_book }}</h3>
+                        <p>Lost Books</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{ fine }}</h3>
+                        <p>Total Fine</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                </div>
+            </div>
 
             <!-- Add a div for the chart -->
             
@@ -46,6 +79,16 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             <div id="booksChart" style="height: 300px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <div id="pieChart" style="height: 300px; width: 100%;"></div>
+                            <!-- <app-pie-chart [data]="pieChartData"></app-pie-chart> -->
                         </div>
                     </div>
                 </div>
